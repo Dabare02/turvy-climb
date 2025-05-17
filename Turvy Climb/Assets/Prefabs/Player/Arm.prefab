@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 2943600476023275409}
   - component: {fileID: 4844781457532190901}
   - component: {fileID: 3272613826531874796}
-  m_Layer: 0
-  m_Name: RopePiece (8)
+  m_Layer: 6
+  m_Name: BottomArmSegment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -176,7 +176,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: -0.25}
+  m_ConnectedAnchor: {x: 0, y: -0.24999987}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -224,8 +224,8 @@ GameObject:
   - component: {fileID: 9015589646112470556}
   - component: {fileID: 9011070060543153308}
   - component: {fileID: 6738402214476344327}
-  m_Layer: 0
-  m_Name: RopePiece
+  m_Layer: 6
+  m_Name: TopArmSegment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -434,8 +434,8 @@ GameObject:
   - component: {fileID: 3787169818639603768}
   - component: {fileID: 5574909850849100757}
   - component: {fileID: 6660337190914270964}
-  m_Layer: 0
-  m_Name: RopePiece (6)
+  m_Layer: 6
+  m_Name: ArmSegment6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -596,7 +596,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: -0.25}
+  m_ConnectedAnchor: {x: 0, y: -0.24999987}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -644,8 +644,8 @@ GameObject:
   - component: {fileID: 5776578815470151479}
   - component: {fileID: 909195703213874430}
   - component: {fileID: 4522702037107140256}
-  m_Layer: 0
-  m_Name: RopePiece (4)
+  m_Layer: 6
+  m_Name: ArmSegment4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -806,7 +806,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: -0.25}
+  m_ConnectedAnchor: {x: -0.000000044703473, y: -0.25}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -854,8 +854,8 @@ GameObject:
   - component: {fileID: 5619934893049118797}
   - component: {fileID: 6501919022402715372}
   - component: {fileID: 8052467574587947318}
-  m_Layer: 0
-  m_Name: RopePiece (1)
+  m_Layer: 6
+  m_Name: ArmSegment1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1016,7 +1016,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: -0.25}
+  m_ConnectedAnchor: {x: -0.000000029802315, y: -0.24999997}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1064,8 +1064,8 @@ GameObject:
   - component: {fileID: 1406948023148093249}
   - component: {fileID: 6864873953469529187}
   - component: {fileID: 7550592959004348089}
-  m_Layer: 0
-  m_Name: RopePiece (7)
+  m_Layer: 6
+  m_Name: ArmSegment7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1226,7 +1226,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: -0.25}
+  m_ConnectedAnchor: {x: -0.000000089406946, y: -0.25000012}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1274,8 +1274,8 @@ GameObject:
   - component: {fileID: 9184442090728071160}
   - component: {fileID: 3094183092361735393}
   - component: {fileID: 3975744048180661603}
-  m_Layer: 0
-  m_Name: RopePiece (3)
+  m_Layer: 6
+  m_Name: ArmSegment3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1436,7 +1436,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: -0.25}
+  m_ConnectedAnchor: {x: -0.000000037252896, y: -0.24999991}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1525,8 +1525,8 @@ GameObject:
   - component: {fileID: 2687118238374692678}
   - component: {fileID: 5784744652723504028}
   - component: {fileID: 1639199891796612832}
-  m_Layer: 0
-  m_Name: RopePiece (5)
+  m_Layer: 6
+  m_Name: ArmSegment5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1687,7 +1687,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: -0.25}
+  m_ConnectedAnchor: {x: -0.000000044703473, y: -0.25}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1735,8 +1735,8 @@ GameObject:
   - component: {fileID: 7136738865219337190}
   - component: {fileID: 979050666843141623}
   - component: {fileID: 4252750493818020709}
-  m_Layer: 0
-  m_Name: RopePiece (2)
+  m_Layer: 6
+  m_Name: ArmSegment2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1897,7 +1897,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 0, y: -0.25}
+  m_ConnectedAnchor: {x: -0.000000029802315, y: -0.24999997}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -1945,11 +1945,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3583700089226742832, guid: 8e291cb65bb5bdb4e98e894721818601, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: 0
+      value: -1.8409902
       objectReference: {fileID: 0}
     - target: {fileID: 3583700089226742832, guid: 8e291cb65bb5bdb4e98e894721818601, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: -2.25
+      value: 1.8409905
       objectReference: {fileID: 0}
     - target: {fileID: 6230380451239132634, guid: 8e291cb65bb5bdb4e98e894721818601, type: 3}
       propertyPath: m_LocalPosition.x
