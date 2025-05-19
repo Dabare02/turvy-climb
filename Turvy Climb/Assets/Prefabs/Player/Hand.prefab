@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5960837369491687015}
   - component: {fileID: 4692664125933263782}
-  - component: {fileID: 3583700089226742832}
+  - component: {fileID: 508253556234666548}
   m_Layer: 0
   m_Name: Anchor
   m_TagString: Untagged
@@ -60,7 +60,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!233 &3583700089226742832
+--- !u!233 &508253556234666548
 HingeJoint2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,7 +76,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 1.8409902, y: -1.8409903}
+  m_ConnectedAnchor: {x: -1.8409902, y: 1.8409905}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -95,6 +95,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6230380451239132634}
   - component: {fileID: 4169959755556754193}
+  - component: {fileID: 2078592497473213494}
   - component: {fileID: 5109745894126989199}
   - component: {fileID: 8538588131255146928}
   m_Layer: 0
@@ -172,6 +173,33 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!50 &2078592497473213494
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901807678683312239}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!58 &5109745894126989199
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -219,4 +247,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80224ec3716cd0b46a70af8439a85bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anchorTransform: {fileID: 0}
+  dragSpeed: 10

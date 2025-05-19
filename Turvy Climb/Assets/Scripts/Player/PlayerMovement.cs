@@ -1,22 +1,30 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Numerics;
 using UnityEngine;
+using Vector3 = UnityEngine.Vector3;
 
 public class PlayerMovement : MonoBehaviour
 {
-    private GameObject draggedPart;
+    private Rigidbody2D draggedPart;
     private bool _partDragging;
 
     void Update()
     {
         if (_partDragging && draggedPart != null)
         {
+            /*
             Vector3 camPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             draggedPart.transform.position = new Vector3(camPos.x, camPos.y, draggedPart.transform.position.z);
+            */
+
+            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector3 direction = mousePos - draggedPart.transform.position;
+            draggedPart.velocity = direction * draggedPart.GetComponent<DraggableBodyPart>().dragSpeed;
         }
     }
 
-    public void StartMovingBodyPart(GameObject bodyPart)
+    public void StartMovingBodyPart(Rigidbody2D bodyPart)
     {
         draggedPart = bodyPart;
         _partDragging = true;

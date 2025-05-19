@@ -6,17 +6,21 @@ public class DraggableBodyPart : MonoBehaviour
 {
     private PlayerMovement player;
 
-    // DEBUG
-    public Transform anchorTransform;
+    private Rigidbody2D _body;
+
+    [SerializeField]
+    public float dragSpeed = 50f;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
+
+        _body = GetComponent<Rigidbody2D>();
     }
 
     private void OnMouseDown()
     {
-        player.StartMovingBodyPart(gameObject);
+        player.StartMovingBodyPart(_body);
     }
 
     private void OnMouseUp()

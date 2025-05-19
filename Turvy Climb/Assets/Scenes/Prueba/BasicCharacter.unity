@@ -206,6 +206,10 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.y
       value: -0.24999994
       objectReference: {fileID: 0}
+    - target: {fileID: 3235065812708831040, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -1.8409903
+      objectReference: {fileID: 0}
     - target: {fileID: 4844781457532190901, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: 0.000000067055225
@@ -332,6 +336,7 @@ GameObject:
   - component: {fileID: 327108790}
   - component: {fileID: 327108791}
   - component: {fileID: 327108793}
+  - component: {fileID: 327108794}
   - component: {fileID: 327108792}
   m_Layer: 0
   m_Name: Body
@@ -423,7 +428,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80224ec3716cd0b46a70af8439a85bda, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  anchorTransform: {fileID: 0}
+  dragSpeed: 10
 --- !u!58 &327108793
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -459,6 +464,33 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!50 &327108794
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 327108789}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 0
 --- !u!1001 &545617645
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -538,6 +570,10 @@ PrefabInstance:
     - target: {fileID: 3094183092361735393, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
       propertyPath: m_ConnectedAnchor.y
       value: -0.24999991
+      objectReference: {fileID: 0}
+    - target: {fileID: 3235065812708831040, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 1.8409902
       objectReference: {fileID: 0}
     - target: {fileID: 4844781457532190901, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
       propertyPath: m_ConnectedAnchor.y
@@ -898,6 +934,14 @@ PrefabInstance:
     - target: {fileID: 3094183092361735393, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
       propertyPath: m_ConnectedAnchor.y
       value: -0.24999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 3235065812708831040, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 1.8409902
+      objectReference: {fileID: 0}
+    - target: {fileID: 3235065812708831040, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: -1.8409903
       objectReference: {fileID: 0}
     - target: {fileID: 4844781457532190901, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
       propertyPath: m_ConnectedAnchor.x
