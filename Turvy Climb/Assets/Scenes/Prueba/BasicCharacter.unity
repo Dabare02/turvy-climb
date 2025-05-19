@@ -358,6 +358,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa6c02bfe26fad48910cbe0343b4de0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerBody: {fileID: 327108789}
+  handRange: 3.7
 --- !u!1 &327108789
 GameObject:
   m_ObjectHideFlags: 0
@@ -533,7 +535,7 @@ SpringJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
-  m_Distance: 0.005
+  m_Distance: 1.4
   m_DampingRatio: 0.5
   m_Frequency: 1
 --- !u!231 &327108796
@@ -554,7 +556,7 @@ SpringJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
-  m_Distance: 0.005
+  m_Distance: 1.4
   m_DampingRatio: 0.5
   m_Frequency: 1
 --- !u!231 &327108797
@@ -575,7 +577,7 @@ SpringJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
-  m_Distance: 0.005
+  m_Distance: 1.4
   m_DampingRatio: 0.5
   m_Frequency: 1
 --- !u!231 &327108798
@@ -596,7 +598,7 @@ SpringJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
-  m_Distance: 0.005
+  m_Distance: 1.4
   m_DampingRatio: 0.5
   m_Frequency: 1
 --- !u!114 &327108800
