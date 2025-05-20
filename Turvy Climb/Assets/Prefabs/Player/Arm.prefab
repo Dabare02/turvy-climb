@@ -95,7 +95,7 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1017070458840678904}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -1939,6 +1939,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2264732616216565946}
     m_Modifications:
+    - target: {fileID: 508253556234666548, guid: 8e291cb65bb5bdb4e98e894721818601, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: -1.8409902
+      objectReference: {fileID: 0}
+    - target: {fileID: 508253556234666548, guid: 8e291cb65bb5bdb4e98e894721818601, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 1.8409905
+      objectReference: {fileID: 0}
     - target: {fileID: 901807678683312239, guid: 8e291cb65bb5bdb4e98e894721818601, type: 3}
       propertyPath: m_Name
       value: Hand
