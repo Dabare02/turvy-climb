@@ -14,29 +14,34 @@ public class PlayerMovement : MonoBehaviour
     // Parámetros para el arrastre del objeto.
     private Rigidbody2D draggedPart;
     private bool _isPartDragging;
-    // Parámetros para el rango de movimiento para el objeto.
-    private Vector2 originalPos;
-    private bool isMouseInRange = true;
 
-    [SerializeField] private GameObject playerBody;
-    [SerializeField] public float handMoveRange = 30.0f;    // Rango de movimiento para el objeto.
+    // Parámetros para el rango de movimiento para el objeto.
+    private Vector2 _originalPos;
+    private bool _isMouseInRange = true;
+    private Vector2 _rangeCenterPos;
+    private float _rangeRadius;
+
+    private int grippedHoldsAmount;
+
+    [SerializeField] private GameObject playerTorso;
+    //[SerializeField] private GameObject[] playerHands;
+    [SerializeField] public float handMoveRange = 4.0f;     // Rango de movimiento para la mano.
+    [SerializeField] public float torsoMoveRange = 5.0f;   // Rango de movimiento para el torso.
 
     void Update()
     {
         if (_isPartDragging && draggedPart != null)
         {
-            /*
-            Vector3 camPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            draggedPart.transform.position = new Vector3(camPos.x, camPos.y, draggedPart.transform.position.z);
-            */
-
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 newPos = mousePos;
 
-            isMouseInRange = Utilities.IsPointInsideCircle(playerBody.transform.position, handMoveRange, mousePos);
-            if (!isMouseInRange)
-            {   // Si el ratón se encuentra FUERA del rango de manos/pies.
-                newPos = Utilities.LineThroughCircleCenterIntersec(playerBody.transform.position, handMoveRange, mousePos);
+            // Se actualiza el centro del rango de movimiento.
+            if (draggedPart.CompareTag("Hand")) _rangeCenterPos = playerTorso.transform.position;
+
+            _isMouseInRange = Utilities.IsPointInsideCircle(_rangeCenterPos, _rangeRadius, mousePos);
+            if (!_isMouseInRange)
+            {   // Si el ratón se encuentra FUERA del rango de movimiento.
+                newPos = Utilities.LineThroughCircleCenterIntersec(_rangeCenterPos, _rangeRadius, mousePos);
             }
 
             // Mover objeto hacia dirección correcta con la velocidad adecuada.
@@ -49,10 +54,34 @@ public class PlayerMovement : MonoBehaviour
     {
         // Guardar objeto a arrastrar.
         draggedPart = bodyPart;
+
+        // Comprobar si es torso y si se está sujeto a algún saliente.
+        // Si no es el caso, no se permitirá cogerlo.
+        if (!draggedPart.CompareTag("Hand") && grippedHoldsAmount <= 0) return;
         _isPartDragging = true;
 
-        // Guardar pos inicial del objeto.
-        originalPos = draggedPart.transform.position;
+        // Posición original
+        _originalPos = draggedPart.transform.position;
+        
+        // Rango y centro de área por la que se podrá mover el objeto.
+        if (draggedPart.CompareTag("Hand"))
+        {
+            // No se asigna el centro en el caso de ser la mano porque este irá cambiando
+            // conforme se mueva el cuerpo para seguir a la mano.
+            _rangeRadius = handMoveRange;
+        }
+        else
+        {
+            /*
+            for (int i = 0; i < playerHands.Length; i++)
+            {
+                _rangeCenterPos += (Vector2)playerHands[i].transform.position;
+            }
+            _rangeCenterPos /= playerHands.Length;
+            */
+            _rangeCenterPos = _originalPos;
+            _rangeRadius = torsoMoveRange;
+        }
 
         Debug.Log("Moving " + draggedPart.name);
     }
@@ -67,7 +96,10 @@ public class PlayerMovement : MonoBehaviour
         // Aquí irá función comprobando que hacer según donde se suelte el objeto.
         //ResetPartPos();
 
-        originalPos = new Vector2(float.NaN, float.NaN);
+        _originalPos = new Vector2(float.NaN, float.NaN);
+        _rangeCenterPos = new Vector2(float.NaN, float.NaN);
+        _rangeRadius = 0.0f;
+
         draggedPart = null;
     }
 
@@ -75,7 +107,19 @@ public class PlayerMovement : MonoBehaviour
     {
         // Devolver objeto a pos inicial si el ratón se encontraba en posición fuera de rango
         // cuando dejó de arrastrar.
-        if (!isMouseInRange) draggedPart.transform.position = originalPos;
+        if (!_isMouseInRange) draggedPart.transform.position = _originalPos;
+    }
+
+    public void IncreaseGrippedHolds(int amount)
+    {
+        grippedHoldsAmount += amount;
+        Debug.Log("Gripped holds: " + grippedHoldsAmount);
+    }
+
+    public void DecreaseGrippedHolds(int amount)
+    {
+        grippedHoldsAmount -= amount;
+        Debug.Log("Gripped holds: " + grippedHoldsAmount);
     }
 
     private void OnDrawGizmosSelected()
@@ -83,14 +127,11 @@ public class PlayerMovement : MonoBehaviour
         if (_isPartDragging)
         {
             Gizmos.color = Color.red;
-
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (Utilities.IsPointInsideCircle(playerBody.transform.position, handMoveRange, mousePos))
-            {
-                Gizmos.color = Color.green;
-            }
 
-            Gizmos.DrawWireSphere(playerBody.transform.position, handMoveRange);
+            if (_isMouseInRange) Gizmos.color = Color.green;
+
+            Gizmos.DrawWireSphere(_rangeCenterPos, _rangeRadius);
         }
     }
 }

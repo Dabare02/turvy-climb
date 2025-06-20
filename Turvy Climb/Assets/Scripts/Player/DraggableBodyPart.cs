@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DraggableBodyPart : MonoBehaviour
 {
-    private PlayerMovement player;
+    protected PlayerMovement player;
 
     protected Rigidbody2D _body;
 
