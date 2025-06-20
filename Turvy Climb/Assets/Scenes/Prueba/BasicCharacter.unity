@@ -358,8 +358,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa6c02bfe26fad48910cbe0343b4de0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerBody: {fileID: 327108789}
+  playerTorso: {fileID: 327108789}
   handMoveRange: 4
+  torsoMoveRange: 3.5
 --- !u!1 &327108789
 GameObject:
   m_ObjectHideFlags: 0
@@ -372,11 +373,11 @@ GameObject:
   - component: {fileID: 327108791}
   - component: {fileID: 327108793}
   - component: {fileID: 327108794}
-  - component: {fileID: 327108800}
   - component: {fileID: 327108795}
   - component: {fileID: 327108796}
   - component: {fileID: 327108798}
   - component: {fileID: 327108797}
+  - component: {fileID: 327108799}
   m_Layer: 0
   m_Name: Torso
   m_TagString: Untagged
@@ -535,7 +536,7 @@ SpringJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
-  m_Distance: 1.4
+  m_Distance: 2.6035535
   m_DampingRatio: 0.5
   m_Frequency: 1
 --- !u!231 &327108796
@@ -556,7 +557,7 @@ SpringJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
-  m_Distance: 1.4
+  m_Distance: 2.6035535
   m_DampingRatio: 0.5
   m_Frequency: 1
 --- !u!231 &327108797
@@ -577,7 +578,7 @@ SpringJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
-  m_Distance: 1.4
+  m_Distance: 2.6035533
   m_DampingRatio: 0.5
   m_Frequency: 1
 --- !u!231 &327108798
@@ -598,10 +599,10 @@ SpringJoint2D:
   m_Anchor: {x: 0, y: 0}
   m_ConnectedAnchor: {x: 0, y: 0}
   m_AutoConfigureDistance: 0
-  m_Distance: 1.4
+  m_Distance: 0.005
   m_DampingRatio: 0.5
   m_Frequency: 1
---- !u!114 &327108800
+--- !u!114 &327108799
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -610,10 +611,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 327108789}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80224ec3716cd0b46a70af8439a85bda, type: 3}
+  m_Script: {fileID: 11500000, guid: 7c8ccb20145490246a8ca9dfd09a4a5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   dragSpeed: 10
+  springFrequency: 1
+  springDistance: 1.4
 --- !u!50 &487236342 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 3976759838454167874, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
