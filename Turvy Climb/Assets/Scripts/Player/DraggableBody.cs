@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DraggableBody : DraggableBodyPart
+public class DraggableTorso : DraggableBodyPart
 {
     [Tooltip("Puntos de ancla para cada brazo. Orden: [brazoIzquierdo, brazoDerecho, piernaIzquierda, piernaDerecha]")]
     [SerializeField] private Transform[] anchorPoints;
 
-    void Start()
+    void Awake()
     {
-        base.Start();
+        base.Awake();
 
         SpringJoint2D[] springs = GetComponents<SpringJoint2D>();
         for (int i = 0; i < springs.Length; i++) {

@@ -11,7 +11,7 @@ public class DraggableBodyPart : MonoBehaviour
     [SerializeField]
     public float dragSpeed = 10f;
 
-    protected void Start()
+    protected void Awake()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
 

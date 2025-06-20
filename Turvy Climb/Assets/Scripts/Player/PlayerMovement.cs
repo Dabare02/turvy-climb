@@ -7,6 +7,8 @@ using Vector3 = UnityEngine.Vector3;
 using Vector2 = UnityEngine.Vector2;
 using UnityEditor.Experimental.GraphView;
 
+// Se encarga estrictamente del movimiento del personaje por ratón. No se encarga de detección
+// de colisiones (por ejemplo, con salientes).
 public class PlayerMovement : MonoBehaviour
 {
     // Parámetros para el arrastre del objeto.
@@ -63,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
         // TODO: Comportamiento temporal.
         // Aquí irá función comprobando que hacer según donde se suelte el objeto.
-        ResetPartPos();
+        //ResetPartPos();
 
         originalPos = new Vector2(float.NaN, float.NaN);
         draggedPart = null;
