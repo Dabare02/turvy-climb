@@ -615,8 +615,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragSpeed: 10
-  springFrequency: 1
-  springDistance: 1.4
+  springFrequency: 1.5
+  springDistance: 2
+  springDampRatio: 0.5
 --- !u!50 &487236342 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 3976759838454167874, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
@@ -805,7 +806,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &644266944
 BoxCollider2D:
   m_ObjectHideFlags: 0

@@ -15,10 +15,13 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D draggedPart;
     private bool _isPartDragging;
     // Parámetros para el rango de movimiento para el objeto.
-    private Vector2 originalPos;
-    private bool isMouseInRange = true;
+    private Vector2 _originalPos;
+    private bool _isMouseInRange = true;
+    private Vector2 _rangeCenterPos;
+    private float _rangeRadius;
 
     [SerializeField] private GameObject playerTorso;
+    //[SerializeField] private GameObject[] playerHands;
     [SerializeField] public float handMoveRange = 4.0f;     // Rango de movimiento para la mano.
     [SerializeField] public float torsoMoveRange = 5.0f;   // Rango de movimiento para el torso.
 
@@ -29,26 +32,10 @@ public class PlayerMovement : MonoBehaviour
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 newPos = mousePos;
 
-            Vector2 rangeCenterPos = Vector2.zero;
-            float rangeRadius = 0.0f;
-
-            // Determinar el centro y radio del área donde se permite mover la parte de
-            // cuerpo agarrada.
-            if (draggedPart.CompareTag("Hand"))
-            {
-                rangeCenterPos = playerTorso.transform.position;
-                rangeRadius = handMoveRange;
-            }
-            else
-            {
-                rangeCenterPos = originalPos;
-                rangeRadius = torsoMoveRange;
-            }
-
-            isMouseInRange = Utilities.IsPointInsideCircle(rangeCenterPos, rangeRadius, mousePos);
-            if (!isMouseInRange)
+            _isMouseInRange = Utilities.IsPointInsideCircle(_rangeCenterPos, _rangeRadius, mousePos);
+            if (!_isMouseInRange)
             {   // Si el ratón se encuentra FUERA del rango de movimiento.
-                newPos = Utilities.LineThroughCircleCenterIntersec(rangeCenterPos, rangeRadius, mousePos);
+                newPos = Utilities.LineThroughCircleCenterIntersec(_rangeCenterPos, _rangeRadius, mousePos);
             }
 
             // Mover objeto hacia dirección correcta con la velocidad adecuada.
@@ -63,8 +50,27 @@ public class PlayerMovement : MonoBehaviour
         draggedPart = bodyPart;
         _isPartDragging = true;
 
-        // Guardar pos inicial del objeto.
-        originalPos = draggedPart.transform.position;
+        // Posición original
+        _originalPos = draggedPart.transform.position;
+        
+        // Rango y centro de área por la que se podrá mover el objeto.
+        if (draggedPart.CompareTag("Hand"))
+        {
+            _rangeCenterPos = playerTorso.transform.position;
+            _rangeRadius = handMoveRange;
+        }
+        else
+        {
+            /*
+            for (int i = 0; i < playerHands.Length; i++)
+            {
+                _rangeCenterPos += (Vector2)playerHands[i].transform.position;
+            }
+            _rangeCenterPos /= playerHands.Length;
+            */
+            _rangeCenterPos = _originalPos;
+            _rangeRadius = torsoMoveRange;
+        }
 
         Debug.Log("Moving " + draggedPart.name);
     }
@@ -79,7 +85,10 @@ public class PlayerMovement : MonoBehaviour
         // Aquí irá función comprobando que hacer según donde se suelte el objeto.
         //ResetPartPos();
 
-        originalPos = new Vector2(float.NaN, float.NaN);
+        _originalPos = new Vector2(float.NaN, float.NaN);
+        _rangeCenterPos = new Vector2(float.NaN, float.NaN);
+        _rangeRadius = 0.0f;
+
         draggedPart = null;
     }
 
@@ -87,7 +96,7 @@ public class PlayerMovement : MonoBehaviour
     {
         // Devolver objeto a pos inicial si el ratón se encontraba en posición fuera de rango
         // cuando dejó de arrastrar.
-        if (!isMouseInRange) draggedPart.transform.position = originalPos;
+        if (!_isMouseInRange) draggedPart.transform.position = _originalPos;
     }
 
     private void OnDrawGizmosSelected()
@@ -96,16 +105,10 @@ public class PlayerMovement : MonoBehaviour
         {
             Gizmos.color = Color.red;
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (isMouseInRange) Gizmos.color = Color.green;
+
+            if (_isMouseInRange) Gizmos.color = Color.green;
             
-            if (draggedPart.CompareTag("Hand"))
-            {
-                Gizmos.DrawWireSphere(playerTorso.transform.position, handMoveRange);
-            }
-            else
-            {
-                Gizmos.DrawWireSphere(originalPos, torsoMoveRange);
-            }
+            Gizmos.DrawWireSphere(_rangeCenterPos, _rangeRadius);
         }
     }
 }

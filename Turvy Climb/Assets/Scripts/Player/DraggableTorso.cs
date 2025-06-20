@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class DraggableTorso : DraggableBodyPart
 {
-    [SerializeField] private float springFrequency = 2f;
+    [SerializeField] private float springFrequency = 1f;
     [SerializeField] private float springDistance = 1.4f;
+    [Range(0, 1)]
+    [SerializeField] private float springDampRatio = 0.5f;
     //[Tooltip("Puntos de ancla para cada brazo. Orden: [brazoIzquierdo, brazoDerecho, piernaIzquierda, piernaDerecha]")]
     //[SerializeField] private Transform[] anchorPoints;
 
@@ -29,6 +31,9 @@ public class DraggableTorso : DraggableBodyPart
 
             // ASIGNAR FRECUENCIA DE MUELLE
             springs[i].frequency = springFrequency;
+
+            // ASIGNAR DAMPING RATIO DE MUELLE
+            springs[i].dampingRatio = springDampRatio;
         }
     }
 }
