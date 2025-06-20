@@ -7,6 +7,8 @@ using Vector3 = UnityEngine.Vector3;
 using Vector2 = UnityEngine.Vector2;
 using UnityEditor.Experimental.GraphView;
 
+// Se encarga estrictamente del movimiento del personaje por ratón. No se encarga de detección
+// de colisiones (por ejemplo, con salientes).
 public class PlayerMovement : MonoBehaviour
 {
     // Parámetros para el arrastre del objeto.
@@ -17,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isMouseInRange = true;
 
     [SerializeField] private GameObject playerBody;
-    [SerializeField] public float handRange = 30.0f;    // Rango de movimiento para el objeto.
+    [SerializeField] public float handMoveRange = 30.0f;    // Rango de movimiento para el objeto.
 
     void Update()
     {
@@ -31,10 +33,10 @@ public class PlayerMovement : MonoBehaviour
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 newPos = mousePos;
 
-            isMouseInRange = Utilities.IsPointInsideCircle(playerBody.transform.position, handRange, mousePos);
+            isMouseInRange = Utilities.IsPointInsideCircle(playerBody.transform.position, handMoveRange, mousePos);
             if (!isMouseInRange)
             {   // Si el ratón se encuentra FUERA del rango de manos/pies.
-                newPos = Utilities.LineThroughCircleCenterIntersec(playerBody.transform.position, handRange, mousePos);
+                newPos = Utilities.LineThroughCircleCenterIntersec(playerBody.transform.position, handMoveRange, mousePos);
             }
 
             // Mover objeto hacia dirección correcta con la velocidad adecuada.
@@ -63,7 +65,7 @@ public class PlayerMovement : MonoBehaviour
 
         // TODO: Comportamiento temporal.
         // Aquí irá función comprobando que hacer según donde se suelte el objeto.
-        ResetPartPos();
+        //ResetPartPos();
 
         originalPos = new Vector2(float.NaN, float.NaN);
         draggedPart = null;
@@ -83,12 +85,12 @@ public class PlayerMovement : MonoBehaviour
             Gizmos.color = Color.red;
 
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (Utilities.IsPointInsideCircle(playerBody.transform.position, handRange, mousePos))
+            if (Utilities.IsPointInsideCircle(playerBody.transform.position, handMoveRange, mousePos))
             {
                 Gizmos.color = Color.green;
             }
 
-            Gizmos.DrawWireSphere(playerBody.transform.position, handRange);
+            Gizmos.DrawWireSphere(playerBody.transform.position, handMoveRange);
         }
     }
 }

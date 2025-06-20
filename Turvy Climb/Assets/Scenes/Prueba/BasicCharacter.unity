@@ -359,7 +359,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBody: {fileID: 327108789}
-  handRange: 3.7
+  handMoveRange: 4
 --- !u!1 &327108789
 GameObject:
   m_ObjectHideFlags: 0
@@ -378,7 +378,7 @@ GameObject:
   - component: {fileID: 327108798}
   - component: {fileID: 327108797}
   m_Layer: 0
-  m_Name: Body
+  m_Name: Torso
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
