@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private bool isMouseInRange = true;
 
     [SerializeField] private GameObject playerBody;
-    [SerializeField] public float handRange = 30.0f;    // Rango de movimiento para el objeto.
+    [SerializeField] public float handMoveRange = 30.0f;    // Rango de movimiento para el objeto.
 
     void Update()
     {
@@ -31,10 +31,10 @@ public class PlayerMovement : MonoBehaviour
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 newPos = mousePos;
 
-            isMouseInRange = Utilities.IsPointInsideCircle(playerBody.transform.position, handRange, mousePos);
+            isMouseInRange = Utilities.IsPointInsideCircle(playerBody.transform.position, handMoveRange, mousePos);
             if (!isMouseInRange)
             {   // Si el ratón se encuentra FUERA del rango de manos/pies.
-                newPos = Utilities.LineThroughCircleCenterIntersec(playerBody.transform.position, handRange, mousePos);
+                newPos = Utilities.LineThroughCircleCenterIntersec(playerBody.transform.position, handMoveRange, mousePos);
             }
 
             // Mover objeto hacia dirección correcta con la velocidad adecuada.
@@ -83,12 +83,12 @@ public class PlayerMovement : MonoBehaviour
             Gizmos.color = Color.red;
 
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            if (Utilities.IsPointInsideCircle(playerBody.transform.position, handRange, mousePos))
+            if (Utilities.IsPointInsideCircle(playerBody.transform.position, handMoveRange, mousePos))
             {
                 Gizmos.color = Color.green;
             }
 
-            Gizmos.DrawWireSphere(playerBody.transform.position, handRange);
+            Gizmos.DrawWireSphere(playerBody.transform.position, handMoveRange);
         }
     }
 }

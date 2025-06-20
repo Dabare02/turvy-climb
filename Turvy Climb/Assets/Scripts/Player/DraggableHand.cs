@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DraggableHand : DraggableBodyPart
 {
+    private GameObject grippedHold;
+
     protected new void OnMouseDown()
     {
         _body.constraints = RigidbodyConstraints2D.FreezeRotation;
@@ -14,5 +16,23 @@ public class DraggableHand : DraggableBodyPart
     {
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
         base.OnMouseUp();
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Hold"))
+        {
+            grippedHold = other.gameObject;
+            Debug.Log("Grabbed hold");
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Hold") && (grippedHold == other.gameObject))
+        {
+            grippedHold = null;
+            Debug.Log("Stopped holding");
+        }
     }
 }
