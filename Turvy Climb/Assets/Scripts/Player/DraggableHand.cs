@@ -7,15 +7,31 @@ public class DraggableHand : DraggableBodyPart
 {
     private GameObject grippedHold;
 
+    // TEMP (Buscar mejor solución para establecer el saliente al que se empieza agarrado
+    // al principio del nivel).
+    private bool firstHold = true;
+
     public void GripHold(GameObject hold)
     {
-        transform.position = grippedHold.transform.position;
+        transform.position = hold.transform.position;
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
+
+        player.IncreaseGrippedHolds(1);
+    }
+
+    public void DropHold()
+    {
+        _body.constraints = RigidbodyConstraints2D.FreezeRotation;
+
+        player.DecreaseGrippedHolds(1);
     }
 
     protected new void OnMouseDown()
     {
-        _body.constraints = RigidbodyConstraints2D.FreezeRotation;
+        if (grippedHold != null)
+        {
+            DropHold();
+        }
         base.OnMouseDown();
     }
 
@@ -36,6 +52,14 @@ public class DraggableHand : DraggableBodyPart
             grippedHold = other.gameObject;
             Debug.Log("Hold in range.");
         }
+
+        // TEMP
+        if (firstHold)
+        {
+            GripHold(grippedHold);
+            firstHold = false;
+        }
+        // TEMP
     }
 
     void OnTriggerExit2D(Collider2D other)

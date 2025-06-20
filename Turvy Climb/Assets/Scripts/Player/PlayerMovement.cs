@@ -14,11 +14,14 @@ public class PlayerMovement : MonoBehaviour
     // Parámetros para el arrastre del objeto.
     private Rigidbody2D draggedPart;
     private bool _isPartDragging;
+
     // Parámetros para el rango de movimiento para el objeto.
     private Vector2 _originalPos;
     private bool _isMouseInRange = true;
     private Vector2 _rangeCenterPos;
     private float _rangeRadius;
+
+    private int grippedHoldsAmount;
 
     [SerializeField] private GameObject playerTorso;
     //[SerializeField] private GameObject[] playerHands;
@@ -31,6 +34,9 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector2 newPos = mousePos;
+
+            // Se actualiza el centro del rango de movimiento.
+            if (draggedPart.CompareTag("Hand")) _rangeCenterPos = playerTorso.transform.position;
 
             _isMouseInRange = Utilities.IsPointInsideCircle(_rangeCenterPos, _rangeRadius, mousePos);
             if (!_isMouseInRange)
@@ -48,6 +54,10 @@ public class PlayerMovement : MonoBehaviour
     {
         // Guardar objeto a arrastrar.
         draggedPart = bodyPart;
+
+        // Comprobar si es torso y si se está sujeto a algún saliente.
+        // Si no es el caso, no se permitirá cogerlo.
+        if (!draggedPart.CompareTag("Hand") && grippedHoldsAmount <= 0) return;
         _isPartDragging = true;
 
         // Posición original
@@ -56,7 +66,8 @@ public class PlayerMovement : MonoBehaviour
         // Rango y centro de área por la que se podrá mover el objeto.
         if (draggedPart.CompareTag("Hand"))
         {
-            _rangeCenterPos = playerTorso.transform.position;
+            // No se asigna el centro en el caso de ser la mano porque este irá cambiando
+            // conforme se mueva el cuerpo para seguir a la mano.
             _rangeRadius = handMoveRange;
         }
         else
@@ -99,6 +110,18 @@ public class PlayerMovement : MonoBehaviour
         if (!_isMouseInRange) draggedPart.transform.position = _originalPos;
     }
 
+    public void IncreaseGrippedHolds(int amount)
+    {
+        grippedHoldsAmount += amount;
+        Debug.Log("Gripped holds: " + grippedHoldsAmount);
+    }
+
+    public void DecreaseGrippedHolds(int amount)
+    {
+        grippedHoldsAmount -= amount;
+        Debug.Log("Gripped holds: " + grippedHoldsAmount);
+    }
+
     private void OnDrawGizmosSelected()
     {
         if (_isPartDragging)
@@ -107,7 +130,7 @@ public class PlayerMovement : MonoBehaviour
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             if (_isMouseInRange) Gizmos.color = Color.green;
-            
+
             Gizmos.DrawWireSphere(_rangeCenterPos, _rangeRadius);
         }
     }
