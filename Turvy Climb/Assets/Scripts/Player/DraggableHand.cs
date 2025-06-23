@@ -14,7 +14,7 @@ public class DraggableHand : DraggableBodyPart
 
     public void GripHold(Hold hold)
     {
-        transform.position = hold.transform.position;
+        transform.position = new Vector3(hold.transform.position.x, hold.transform.position.y, transform.position.z);
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
 
         player.IncreaseGrippedHolds(1);
