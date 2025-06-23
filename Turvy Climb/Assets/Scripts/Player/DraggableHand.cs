@@ -1,17 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // Representa una mano que se puede mover. Tambien se encarga de la detección de colisiones.
 public class DraggableHand : DraggableBodyPart
 {
-    private GameObject grippedHold;
+    private Hold holdInRange;
 
     // TEMP (Buscar mejor solución para establecer el saliente al que se empieza agarrado
     // al principio del nivel).
     private bool firstHold = true;
 
-    public void GripHold(GameObject hold)
+    public void GripHold(Hold hold)
     {
         transform.position = hold.transform.position;
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
@@ -28,18 +29,20 @@ public class DraggableHand : DraggableBodyPart
 
     protected new void OnMouseDown()
     {
-        if (grippedHold != null)
+        if (holdInRange != null)
         {
             DropHold();
+            holdInRange.UnGrip();
         }
         base.OnMouseDown();
     }
 
     protected new void OnMouseUp()
     {
-        if (grippedHold != null)
+        if (holdInRange != null && !holdInRange.gripped)
         {
-            GripHold(grippedHold);
+            holdInRange.Grip();
+            GripHold(holdInRange);
         }
 
         base.OnMouseUp();
@@ -47,26 +50,29 @@ public class DraggableHand : DraggableBodyPart
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Hold"))
+        Hold holdScr = other.GetComponent<Hold>();
+        if (holdScr != null && !holdScr.gripped)
         {
-            grippedHold = other.gameObject;
+            holdInRange = holdScr;
             Debug.Log("Hold in range.");
-        }
 
-        // TEMP
-        if (firstHold)
-        {
-            GripHold(grippedHold);
-            firstHold = false;
+            // TEMP
+            if (firstHold)
+            {
+                holdInRange.Grip();
+                GripHold(holdInRange);
+                firstHold = false;
+            }
+            // TEMP
         }
-        // TEMP
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Hold") && (grippedHold == other.gameObject))
+        Hold holdScr = other.GetComponent<Hold>();
+        if (holdScr != null && holdScr.gameObject == other.gameObject)
         {
-            grippedHold = null;
+            holdInRange = null;
             Debug.Log("Hold left range.");
         }
     }
