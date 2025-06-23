@@ -6,7 +6,10 @@ using UnityEngine;
 // Representa una mano que se puede mover. Tambien se encarga de la detección de colisiones.
 public class DraggableHand : DraggableBodyPart
 {
-    private Hold holdInRange;
+    public Hold holdInRange
+    {
+        get; private set;
+    }
 
     // TEMP (Buscar mejor solución para establecer el saliente al que se empieza agarrado
     // al principio del nivel).
@@ -17,14 +20,14 @@ public class DraggableHand : DraggableBodyPart
         transform.position = new Vector3(hold.transform.position.x, hold.transform.position.y, transform.position.z);
         _body.constraints = RigidbodyConstraints2D.FreezeAll;
 
-        player.IncreaseGrippedHolds(1);
+        _player.IncreaseGrippedHolds(1);
     }
 
     public void DropHold()
     {
         _body.constraints = RigidbodyConstraints2D.FreezeRotation;
 
-        player.DecreaseGrippedHolds(1);
+        _player.DecreaseGrippedHolds(1);
     }
 
     protected new void OnMouseDown()
