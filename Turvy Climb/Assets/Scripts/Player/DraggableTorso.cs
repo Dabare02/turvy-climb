@@ -11,21 +11,13 @@ public class DraggableTorso : DraggableBodyPart
     //[Tooltip("Puntos de ancla para cada brazo. Orden: [brazoIzquierdo, brazoDerecho, piernaIzquierda, piernaDerecha]")]
     //[SerializeField] private Transform[] anchorPoints;
 
-    void Awake()
+    new void Awake()
     {
         base.Awake();
 
         SpringJoint2D[] springs = GetComponents<SpringJoint2D>();
         for (int i = 0; i < springs.Length; i++)
         {
-            /*
-            // CALCULAR DISTANCIA DE SPRINGS.
-            // Podríamos calcular distance solo 1 vez, pero hacemos array por si en un futuro los
-            // anchorPoints tienen posiciones irregulares.
-            float distance = Vector2.Distance(anchorPoints[i].position, Vector2.zero);
-            springs[i].distance = distance;
-            */
-
             // ASIGNAR DISTANCIA DE MUELLE
             springs[i].distance = springDistance;
 
@@ -35,5 +27,23 @@ public class DraggableTorso : DraggableBodyPart
             // ASIGNAR DAMPING RATIO DE MUELLE
             springs[i].dampingRatio = springDampRatio;
         }
+    }
+
+    protected new void OnMouseDown()
+    {
+        // Comprobar si el jugador está sujeto a algún saliente.
+        // Si no es el caso, no se permitirá cogerlo.
+        if (!_player.IsBodyPartGrabbable(this)) return;
+
+        base.OnMouseDown();
+    }
+
+    protected new void OnMouseUp()
+    {
+        // Comprobar si el jugador está sujeto a algún saliente.
+        // Si no es el caso, no se permitirá cogerlo.
+        if (!_player.IsBodyPartGrabbable(this)) return;
+
+        base.OnMouseUp();
     }
 }

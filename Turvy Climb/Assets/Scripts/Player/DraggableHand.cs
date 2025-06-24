@@ -1,50 +1,92 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 
 // Representa una mano que se puede mover. Tambien se encarga de la detección de colisiones.
 public class DraggableHand : DraggableBodyPart
 {
-    private Hold holdInRange;
+    public Hold holdInRange
+    {
+        get; private set;
+    }
+
+    public bool isGripped
+    {
+        get
+        {
+            if (holdInRange != null && holdInRange.gripped) return true;
+            return false;
+        }
+    }
 
     // TEMP (Buscar mejor solución para establecer el saliente al que se empieza agarrado
     // al principio del nivel).
     private bool firstHold = true;
 
+    [SerializeField] private CircleCollider2D holdDetector;
+
+    public void SetRegularHoldDetectRange()
+    {
+        holdDetector.radius = _player.regularHoldDetectRange;
+    }
+    public void SetLargeHoldDetectRange()
+    {
+        holdDetector.radius = _player.largeHoldDetectRange;
+    }
+
     public void GripHold(Hold hold)
     {
-        transform.position = new Vector3(hold.transform.position.x, hold.transform.position.y, transform.position.z);
-        _body.constraints = RigidbodyConstraints2D.FreezeAll;
+        if (hold != null && !hold.gripped)
+        {
+            Debug.Log("Gripping hold " + hold.name);
+            // Indicar al saliente que hay una extremidad sujeta a este.
+            hold.gripped = true;
 
-        player.IncreaseGrippedHolds(1);
+            // Mover mano y congelar su RigidBody.
+            transform.position = new Vector3(hold.transform.position.x, hold.transform.position.y, transform.position.z);
+            _body.constraints = RigidbodyConstraints2D.FreezeAll;
+
+            // Indicar a Player que hay un saliente más al que está agarrado.
+            _player.IncreaseGrippedHolds(1);
+        }
     }
 
     public void DropHold()
     {
-        _body.constraints = RigidbodyConstraints2D.FreezeRotation;
+        if (holdInRange != null && holdInRange.gripped)
+        {
+            Debug.Log("Dropping hold " + holdInRange.name);
+            // Descongelar RigidBody.
+            _body.constraints = RigidbodyConstraints2D.FreezeRotation;
+            _body.AddForce(Vector2.zero);   // Para forzar update. No recomendado, quizás usar corutina con "yield return new WaitForFixedUpdate()".
 
-        player.DecreaseGrippedHolds(1);
+            // Indicar al saliente que ya no hay extremiades sujetas a este.
+            holdInRange.gripped = false;
+
+            // Indicar a Player que hay un saliente menos al que está agarrado.
+            _player.DecreaseGrippedHolds(1);
+        }
     }
 
     protected new void OnMouseDown()
     {
-        if (holdInRange != null)
-        {
-            DropHold();
-            holdInRange.UnGrip();
-        }
+        // Comprobar si hay al menos 1 mano agarrada a la pared (aparte de si misma).
+        // Si no es el caso, no se permitirá cogerlo.
+        if (!_player.IsBodyPartGrabbable(this)) return;
+
+        DropHold();
         base.OnMouseDown();
     }
 
     protected new void OnMouseUp()
     {
-        if (holdInRange != null && !holdInRange.gripped)
-        {
-            holdInRange.Grip();
-            GripHold(holdInRange);
-        }
+        // Comprobar si hay al menos 1 mano agarrada a la pared (aparte de si misma).
+        // Si no es el caso, no se permitirá cogerlo.
+        if (!_player.IsBodyPartGrabbable(this)) return;
 
+        GripHold(holdInRange);
         base.OnMouseUp();
     }
 
@@ -53,13 +95,12 @@ public class DraggableHand : DraggableBodyPart
         Hold holdScr = other.GetComponent<Hold>();
         if (holdScr != null && !holdScr.gripped)
         {
-            holdInRange = holdScr;
             Debug.Log("Hold in range.");
+            holdInRange = holdScr;
 
             // TEMP
             if (firstHold)
             {
-                holdInRange.Grip();
                 GripHold(holdInRange);
                 firstHold = false;
             }

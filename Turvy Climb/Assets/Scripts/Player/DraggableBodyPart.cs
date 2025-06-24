@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DraggableBodyPart : MonoBehaviour
 {
-    protected PlayerMovement player;
+    protected Player _player;
 
     protected Rigidbody2D _body;
 
@@ -13,18 +13,17 @@ public class DraggableBodyPart : MonoBehaviour
 
     protected void Awake()
     {
-        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerMovement>();
-
+        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         _body = GetComponent<Rigidbody2D>();
     }
 
     protected void OnMouseDown()
     {
-        player.StartMovingBodyPart(_body);
+        _player.StartMovingBodyPart(_body);
     }
 
     protected void OnMouseUp()
     {
-        player.StopMovingBodyPart();
+        _player.StopMovingBodyPart();
     }
 }

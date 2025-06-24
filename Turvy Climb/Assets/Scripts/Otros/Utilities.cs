@@ -28,4 +28,13 @@ public class Utilities : MonoBehaviour
     {
         return float.IsNaN(v.x) || float.IsNaN(v.y);
     }
+
+    public static void Shuffle<T> (List<T> list) {
+        for (int i = 0; i < list.Count; i++) {
+            int r = Random.Range(i, list.Count);
+            T tmp = list[i];
+            list [i] = list[r];
+            list[r] = tmp;
+        }
+    }
 }

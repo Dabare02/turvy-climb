@@ -249,6 +249,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragSpeed: 10
+  holdDetector: {fileID: 7723612793110525328}
 --- !u!1 &5761473579383413176
 GameObject:
   m_ObjectHideFlags: 0
