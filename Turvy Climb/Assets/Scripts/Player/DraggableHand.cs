@@ -19,26 +19,32 @@ public class DraggableHand : DraggableBodyPart
     {
         if (hold != null && !hold.gripped)
         {
-            //Debug.Log("Gripping hold " + hold.name);
-            hold.Grip();
+            Debug.Log("Gripping hold " + hold.name);
+            // Indicar al saliente que hay una extremidad sujeta a este.
+            hold.gripped = true;
 
+            // Mover mano y congelar su RigidBody.
             transform.position = new Vector3(hold.transform.position.x, hold.transform.position.y, transform.position.z);
             _body.constraints = RigidbodyConstraints2D.FreezeAll;
-            
+
+            // Indicar a Player que hay un saliente más al que está agarrado.
             _player.IncreaseGrippedHolds(1);
         }
     }
 
     public void DropHold()
     {
-        if (holdInRange != null)
+        if (holdInRange != null && holdInRange.gripped)
         {
-            //Debug.Log("Dropping hold " + holdInRange.name);
+            Debug.Log("Dropping hold " + holdInRange.name);
+            // Descongelar RigidBody.
             _body.constraints = RigidbodyConstraints2D.FreezeRotation;
             _body.AddForce(Vector2.zero);   // Para forzar update. No recomendado, quizás usar corutina con "yield return new WaitForFixedUpdate()".
 
-            holdInRange.UnGrip();
+            // Indicar al saliente que ya no hay extremiades sujetas a este.
+            holdInRange.gripped = false;
 
+            // Indicar a Player que hay un saliente menos al que está agarrado.
             _player.DecreaseGrippedHolds(1);
         }
     }
@@ -59,15 +65,15 @@ public class DraggableHand : DraggableBodyPart
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        holdInRange = other.GetComponent<Hold>();
-        if (holdInRange != null && !holdInRange.gripped)
+        Hold holdScr = other.GetComponent<Hold>();
+        if (holdScr != null && !holdScr.gripped)
         {
             Debug.Log("Hold in range.");
+            holdInRange = holdScr;
 
             // TEMP
             if (firstHold)
             {
-                Debug.Log("First hold");
                 GripHold(holdInRange);
                 firstHold = false;
             }

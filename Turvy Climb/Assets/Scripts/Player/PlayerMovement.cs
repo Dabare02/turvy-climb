@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
         _player = GetComponent<Player>();
     }
 
-    void FixedUpdate()
+    void Update()
     {
         // MOVIMIENTO: Agarrar y arrastrar mano o torso.
         MoveBodyPart();
@@ -69,8 +69,7 @@ public class PlayerMovement : MonoBehaviour
 
         // Comprobar si es torso y si se está sujeto a algún saliente.
         // Si no es el caso, no se permitirá cogerlo.
-        if (!draggedPart.CompareTag("Hand") && _player.grippedHoldsAmount <= 0) return;
-        _isPartDragging = true;
+        if (!draggedPart.CompareTag("Hand") && !_player.isPlayerAttachedToWall) return;
 
         // Posición original
         _originalPos = draggedPart.transform.position;
@@ -84,24 +83,26 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            //for (int i = 0; i < playerHands.Length; i++) { _rangeCenterPos += (Vector2)playerHands[i].transform.position; } _rangeCenterPos /= playerHands.Length;
+            //for (int i = 0; i < playerHands.Length; i++) { _rangeCenterPos += (Vector2)playerHands[i].transform.position; }; _rangeCenterPos /= playerHands.Length;
             _rangeCenterPos = _originalPos;
             _rangeRadius = _player.torsoMoveRange;
         }
+
+        _isPartDragging = true;
 
         Debug.Log("Moving " + draggedPart.name);
     }
 
     public void StopMovingBodyPart()
     {
-        Debug.Log("Stopped moving " + draggedPart.name);
         // Indicar finalización de arrastre.
         _isPartDragging = false;
 
         _originalPos = new Vector2(float.NaN, float.NaN);
         _rangeCenterPos = new Vector2(float.NaN, float.NaN);
         _rangeRadius = 0.0f;
-
+        
+        Debug.Log("Stopped moving " + draggedPart.name);
         draggedPart = null;
     }
 
