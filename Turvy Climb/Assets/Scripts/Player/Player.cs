@@ -26,6 +26,12 @@ public class Player : MonoBehaviour
     public float regularHoldDetectRange = 1.5f;
     public float largeHoldDetectRange = 3.0f;
 
+    /*
+    [Header("Attack Parameters")]
+    public AttackTypeSO punchAttackType;
+    public AttackTypeSO slingshotAttackType;
+    */
+
     void Start()
     {
         _movementHandler = GetComponent<PlayerMovement>();
