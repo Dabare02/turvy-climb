@@ -12,6 +12,15 @@ public class DraggableHand : DraggableBodyPart
         get; private set;
     }
 
+    public bool isGripped
+    {
+        get
+        {
+            if (holdInRange != null && holdInRange.gripped) return true;
+            return false;
+        }
+    }
+
     // TEMP (Buscar mejor solución para establecer el saliente al que se empieza agarrado
     // al principio del nivel).
     private bool firstHold = true;
@@ -63,15 +72,21 @@ public class DraggableHand : DraggableBodyPart
 
     protected new void OnMouseDown()
     {
-        DropHold();
+        // Comprobar si hay al menos 1 mano agarrada a la pared (aparte de si misma).
+        // Si no es el caso, no se permitirá cogerlo.
+        if (!_player.IsBodyPartGrabbable(this)) return;
 
+        DropHold();
         base.OnMouseDown();
     }
 
     protected new void OnMouseUp()
     {
-        GripHold(holdInRange);
+        // Comprobar si hay al menos 1 mano agarrada a la pared (aparte de si misma).
+        // Si no es el caso, no se permitirá cogerlo.
+        if (!_player.IsBodyPartGrabbable(this)) return;
 
+        GripHold(holdInRange);
         base.OnMouseUp();
     }
 

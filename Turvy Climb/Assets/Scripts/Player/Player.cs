@@ -23,12 +23,34 @@ public class Player : MonoBehaviour
     public float handMoveRange = 4.0f;
     public float torsoMoveRange = 5.0f;
     [Header("Hand Parameters")]
-    public float regularHoldDetectRange;
-    public float largeHoldDetectRange;
+    public float regularHoldDetectRange = 1.5f;
+    public float largeHoldDetectRange = 3.0f;
 
     void Start()
     {
         _movementHandler = GetComponent<PlayerMovement>();
+    }
+
+    public bool IsBodyPartGrabbable(DraggableBodyPart bodyPart)
+    {
+        if (bodyPart.CompareTag("Hand"))
+        {
+            DraggableHand hand = bodyPart.GetComponent<DraggableHand>();
+            if ((hand.isGripped && grippedHoldsAmount < 2)
+                || (!hand.isGripped && !isPlayerAttachedToWall))
+            {
+                return false;
+            }
+        }
+        else
+        {
+            if (!isPlayerAttachedToWall)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     public void StartMovingBodyPart(Rigidbody2D movingPart)

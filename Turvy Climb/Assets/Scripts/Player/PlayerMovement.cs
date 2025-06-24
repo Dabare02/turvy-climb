@@ -67,10 +67,6 @@ public class PlayerMovement : MonoBehaviour
         // Guardar objeto a arrastrar.
         draggedPart = bodyPart;
 
-        // Comprobar si es torso y si se está sujeto a algún saliente.
-        // Si no es el caso, no se permitirá cogerlo.
-        if (!draggedPart.CompareTag("Hand") && !_player.isPlayerAttachedToWall) return;
-
         // Posición original
         _originalPos = draggedPart.transform.position;
 
