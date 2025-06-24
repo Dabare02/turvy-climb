@@ -76,7 +76,7 @@ HingeJoint2D:
   m_BreakAction: 3
   m_AutoConfigureConnectedAnchor: 1
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: -1.8409905, y: 1.840991}
+  m_ConnectedAnchor: {x: 1.8409905, y: 1.840991}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5f67241c2d9d2d04a8ebb7c545ec3fca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitDetector: {fileID: 1641514067913899063}
 --- !u!1 &1944180809922092391
 GameObject:
   m_ObjectHideFlags: 0
@@ -303,7 +304,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944180809922092391}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "BreakableHold", menuName = "ScriptableObjects/Hold/BreakableHold")]
+[CreateAssetMenu(fileName = "BreakableHold", menuName = "ScriptableObjects/Hold/BreakableHold", order = 4)]
 public class BreakableHold : ScriptableObject
 {
     [Tooltip("\"True\" si el saliente se romperá tras estar agarrado a el durante un tiempo (saliente inestable)." + 

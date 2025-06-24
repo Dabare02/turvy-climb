@@ -377,6 +377,7 @@ GameObject:
   - component: {fileID: 189434897}
   - component: {fileID: 189434899}
   - component: {fileID: 189434898}
+  - component: {fileID: 189434900}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -438,6 +439,20 @@ MonoBehaviour:
   torsoMoveRange: 3.5
   regularHoldDetectRange: 1.5
   largeHoldDetectRange: 3
+  punchAttack: {fileID: 11400000, guid: fd92e6b3966d34d47b2d3594e10e7b61, type: 2}
+  slingshotAttack: {fileID: 0}
+--- !u!114 &189434900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 189434896}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2631f9ed28d22d4418a7da7d8d8bf6ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &316944907
 PrefabInstance:
   m_ObjectHideFlags: 0

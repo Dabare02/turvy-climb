@@ -1,11 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
-using Unity.VisualScripting;
 using UnityEngine;
-using Vector3 = UnityEngine.Vector3;
 using Vector2 = UnityEngine.Vector2;
-using UnityEditor.Experimental.GraphView;
 
 
 // Se encarga estrictamente del movimiento del personaje por ratón. No se encarga de detección
@@ -21,9 +17,9 @@ public class PlayerMovement : MonoBehaviour
 
     // Parámetros para el rango de movimiento para el objeto.
     private Vector2 _originalPos;
-    private bool _isMouseInRange = true;
     private Vector2 _rangeCenterPos;
     private float _rangeRadius;
+    private bool _isMouseInRange = true;
 
     void Start()
     {
@@ -76,13 +72,20 @@ public class PlayerMovement : MonoBehaviour
             // No se asigna el centro en el caso de ser la mano porque este irá cambiando
             // conforme se mueva el cuerpo para seguir a la mano.
             _rangeRadius = _player.handMoveRange;
+            
+            // Indicar al manejador de ataques que empieze a detectar si se va a realizar ataque.
+            _player.StartAttackDetection(draggedPart.GetComponent<DraggableHand>());
         }
         else
         {
             //for (int i = 0; i < playerHands.Length; i++) { _rangeCenterPos += (Vector2)playerHands[i].transform.position; }; _rangeCenterPos /= playerHands.Length;
             _rangeCenterPos = _originalPos;
             _rangeRadius = _player.torsoMoveRange;
+
+            // Indicar al manejador de ataques que empieze a detectar si se va a realizar ataque.
+            _player.StartAttackDetection(draggedPart.GetComponent<DraggableTorso>());
         }
+
 
         _isPartDragging = true;
 
@@ -97,6 +100,9 @@ public class PlayerMovement : MonoBehaviour
         _originalPos = new Vector2(float.NaN, float.NaN);
         _rangeCenterPos = new Vector2(float.NaN, float.NaN);
         _rangeRadius = 0.0f;
+
+        // Indicar al manejador de ataques que realize un ataque si está listo.
+        _player.CheckAttack();
         
         Debug.Log("Stopped moving " + draggedPart.name);
         draggedPart = null;

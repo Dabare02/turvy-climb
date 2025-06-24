@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     }
 
     private PlayerMovement _movementHandler;
+    private PlayerAttackHandler _attackHandler;
 
     [Header("Player parts")]
     public List<DraggableHand> playerHands;
@@ -26,15 +27,14 @@ public class Player : MonoBehaviour
     public float regularHoldDetectRange = 1.5f;
     public float largeHoldDetectRange = 3.0f;
 
-    /*
     [Header("Attack Parameters")]
-    public AttackTypeSO punchAttackType;
-    public AttackTypeSO slingshotAttackType;
-    */
+    public PlayerAttackTypeSO punchAttack;
+    public PlayerAttackTypeSO slingshotAttack;
 
     void Start()
     {
         _movementHandler = GetComponent<PlayerMovement>();
+        _attackHandler = GetComponent<PlayerAttackHandler>();
     }
 
     public bool IsBodyPartGrabbable(DraggableBodyPart bodyPart)
@@ -67,6 +67,16 @@ public class Player : MonoBehaviour
     public void StopMovingBodyPart()
     {
         _movementHandler.StopMovingBodyPart();
+    }
+
+    public void StartAttackDetection(DraggableBodyPart bodyPart)
+    {
+        _attackHandler.StartAttackDetection(bodyPart);
+    }
+
+    public void CheckAttack()
+    {
+        _attackHandler.CheckAttack();
     }
 
     public void IncreaseGrippedHolds(int amount)
