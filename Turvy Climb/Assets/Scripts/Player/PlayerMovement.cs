@@ -30,13 +30,13 @@ public class PlayerMovement : MonoBehaviour
         _player = GetComponent<Player>();
     }
 
-    void Update()
+    void FixedUpdate()
     {
         // MOVIMIENTO: Agarrar y arrastrar mano o torso.
         MoveBodyPart();
 
         // MOVIMIENTO: Quick grip / drop.
-        QuickGripDrop();
+        if (Input.GetKeyDown(KeyCode.Space)) QuickGripDrop();
     }
 
     // MOVIMIENTO: Agarrar y arrastrar mano o torso.
@@ -108,7 +108,19 @@ public class PlayerMovement : MonoBehaviour
     // MOVIMIENTO: Quick grip / drop.
     private void QuickGripDrop()
     {
-        
+        if (_player.isPlayerAttachedToWall)
+        {
+            _player.DropAllHolds();
+        }
+        else
+        {
+            GameObject selectedHand = _player.GetHandWithHoldInRange();
+            if (selectedHand != null)
+            {
+                DraggableHand hand = selectedHand.GetComponent<DraggableHand>();
+                hand.GripHold(hand.holdInRange);
+            }
+        }
     }
 
     private void OnDrawGizmosSelected()

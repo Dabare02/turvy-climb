@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class Player : MonoBehaviour
 {
     public int grippedHoldsAmount { get; private set; }
+    public bool isPlayerAttachedToWall
+    {
+        get { return grippedHoldsAmount > 0; }
+    }
 
     private PlayerMovement _movementHandler;
 
@@ -45,10 +50,44 @@ public class Player : MonoBehaviour
         Debug.Log("Gripped holds: " + grippedHoldsAmount);
     }
 
+    public void DropAllHolds()
+    {
+        for (int i = 0; i < playerHands.Count; i++)
+        {
+            DraggableHand hand = playerHands[i].GetComponent<DraggableHand>();
+            hand.DropHold();
+        }
+    }
+
+    public GameObject GetHandWithHoldInRange()
+    {
+        for (int i = 0; i < playerHands.Count; i++)
+        {
+            DraggableHand hand = playerHands[i].GetComponent<DraggableHand>();
+            if (hand.holdInRange != null) return playerHands[i];
+        }
+
+        return null;
+    }
+
     public GameObject GetRandomHand()
     {
         List<GameObject> shuffledHands = playerHands.ToList();
         Utilities.Shuffle(shuffledHands);
         return shuffledHands[0];
+    }
+
+    public GameObject GetRandomHandWithHoldInRange()
+    {
+        List<GameObject> shuffledHands = playerHands.ToList();
+        Utilities.Shuffle(shuffledHands);
+
+        for (int i = 0; i < shuffledHands.Count; i++)
+        {
+            DraggableHand hand = shuffledHands[i].GetComponent<DraggableHand>();
+            if (hand.holdInRange != null) return shuffledHands[i];
+        }
+
+        return null;
     }
 }

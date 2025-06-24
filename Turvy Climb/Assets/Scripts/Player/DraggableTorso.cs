@@ -18,14 +18,6 @@ public class DraggableTorso : DraggableBodyPart
         SpringJoint2D[] springs = GetComponents<SpringJoint2D>();
         for (int i = 0; i < springs.Length; i++)
         {
-            /*
-            // CALCULAR DISTANCIA DE SPRINGS.
-            // Podríamos calcular distance solo 1 vez, pero hacemos array por si en un futuro los
-            // anchorPoints tienen posiciones irregulares.
-            float distance = Vector2.Distance(anchorPoints[i].position, Vector2.zero);
-            springs[i].distance = distance;
-            */
-
             // ASIGNAR DISTANCIA DE MUELLE
             springs[i].distance = springDistance;
 
