@@ -17,11 +17,14 @@ public class Player : MonoBehaviour
     private PlayerMovement _movementHandler;
 
     [Header("Player parts")]
-    public List<GameObject> playerHands;
-    public GameObject playerTorso;
+    public List<DraggableHand> playerHands;
+    public DraggableTorso playerTorso;
     [Header("Movement area ranges")]
     public float handMoveRange = 4.0f;
     public float torsoMoveRange = 5.0f;
+    [Header("Hand Parameters")]
+    public float regularHoldDetectRange;
+    public float largeHoldDetectRange;
 
     void Start()
     {
@@ -50,42 +53,56 @@ public class Player : MonoBehaviour
         Debug.Log("Gripped holds: " + grippedHoldsAmount);
     }
 
+    // Soltar todos los salientes. Si increasedRange = true, las manos tendrán mayor rango de agarre
+    // al soltarse (utilizado principalmente para movimientos como QuickDrop).
     public void DropAllHolds()
     {
         for (int i = 0; i < playerHands.Count; i++)
         {
-            DraggableHand hand = playerHands[i].GetComponent<DraggableHand>();
-            hand.DropHold();
+            playerHands[i].DropHold();
         }
     }
 
-    public GameObject GetHandWithHoldInRange()
+    public void SetRegularHoldDetectRange()
     {
         for (int i = 0; i < playerHands.Count; i++)
         {
-            DraggableHand hand = playerHands[i].GetComponent<DraggableHand>();
-            if (hand.holdInRange != null) return playerHands[i];
+            playerHands[i].SetRegularHoldDetectRange();
+        }
+    }
+    public void SetLargeHoldDetectRange()
+    {
+        for (int i = 0; i < playerHands.Count; i++)
+        {
+            playerHands[i].SetLargeHoldDetectRange();
+        }
+    }
+
+    public DraggableHand GetHandWithHoldInRange()
+    {
+        for (int i = 0; i < playerHands.Count; i++)
+        {
+            if (playerHands[i].holdInRange != null) return playerHands[i];
         }
 
         return null;
     }
 
-    public GameObject GetRandomHand()
+    public DraggableHand GetRandomHand()
     {
-        List<GameObject> shuffledHands = playerHands.ToList();
+        List<DraggableHand> shuffledHands = playerHands.ToList();
         Utilities.Shuffle(shuffledHands);
         return shuffledHands[0];
     }
 
-    public GameObject GetRandomHandWithHoldInRange()
+    public DraggableHand GetRandomHandWithHoldInRange()
     {
-        List<GameObject> shuffledHands = playerHands.ToList();
+        List<DraggableHand> shuffledHands = playerHands.ToList();
         Utilities.Shuffle(shuffledHands);
 
         for (int i = 0; i < shuffledHands.Count; i++)
         {
-            DraggableHand hand = shuffledHands[i].GetComponent<DraggableHand>();
-            if (hand.holdInRange != null) return shuffledHands[i];
+            if (shuffledHands[i].holdInRange != null) return playerHands[i];
         }
 
         return null;

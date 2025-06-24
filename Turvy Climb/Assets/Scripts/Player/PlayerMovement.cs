@@ -111,16 +111,22 @@ public class PlayerMovement : MonoBehaviour
     {
         if (_player.isPlayerAttachedToWall)
         {
+            // Se hace que todas las manos se suelten de sus salientes con rango incrementado.
             _player.DropAllHolds();
+            _player.SetLargeHoldDetectRange();
         }
         else
         {
-            GameObject selectedHand = _player.GetHandWithHoldInRange();
+            // Se selecciona una de las manos y se hace que se agarre a un saliente.
+            // Orden de elección: LeftHand -> RightHand -> LeftFoot -> RightFoot
+            DraggableHand selectedHand = _player.GetHandWithHoldInRange();
             if (selectedHand != null)
             {
-                DraggableHand hand = selectedHand.GetComponent<DraggableHand>();
-                hand.GripHold(hand.holdInRange);
+                selectedHand.GripHold(selectedHand.holdInRange);
             }
+
+            // Se reestablece el rango de detección de salientes de todas las extremidades.
+            _player.SetRegularHoldDetectRange();
         }
     }
 
@@ -129,7 +135,6 @@ public class PlayerMovement : MonoBehaviour
         if (_isPartDragging)
         {
             Gizmos.color = Color.red;
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             if (_isMouseInRange) Gizmos.color = Color.green;
 

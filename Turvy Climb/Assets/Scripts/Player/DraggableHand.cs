@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -14,6 +15,17 @@ public class DraggableHand : DraggableBodyPart
     // TEMP (Buscar mejor solución para establecer el saliente al que se empieza agarrado
     // al principio del nivel).
     private bool firstHold = true;
+
+    [SerializeField] private CircleCollider2D holdDetector;
+
+    public void SetRegularHoldDetectRange()
+    {
+        holdDetector.radius = _player.regularHoldDetectRange;
+    }
+    public void SetLargeHoldDetectRange()
+    {
+        holdDetector.radius = _player.largeHoldDetectRange;
+    }
 
     public void GripHold(Hold hold)
     {
