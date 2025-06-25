@@ -107,15 +107,18 @@ public class PlayerAttackHandler : MonoBehaviour
     private IEnumerator AttackCoroutine()
     {
         // TODO: Añadir soporte para movimiento tirachinas.
+
         PunchHandler punchHandler = attackPart.GetComponent<PunchHandler>();
 
-        attackSpringJoint.enabled = false;
         punchHandler.attackMode = true;
+        attackSpringJoint.enabled = false;
         attackPartCollider.enabled = false;
         yield return new WaitForSeconds(_player.punchAttack.attackDuration);
-        punchHandler.attackMode = false;
-        attackSpringJoint.enabled = true;
         attackPartCollider.enabled = true;
+        attackSpringJoint.enabled = true;
+
+        yield return new WaitForSeconds(_player.punchAttack.extraAttackHitTime);
+        punchHandler.attackMode = false;
 
         StopAttackDetection();
     }

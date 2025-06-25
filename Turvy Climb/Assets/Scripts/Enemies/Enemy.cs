@@ -20,10 +20,12 @@ public class Enemy : MonoBehaviour
             hitPoints = 0;
             Die();
         }
+        Debug.Log("Enemy " + this.name + " has taken " + damage + " points of damage (" + hitPoints + " remaining).");
     }
 
     public void Die()
     {
+        Debug.Log("Enemy " + this.name + " died!");
         gameObject.SetActive(false);
     }
 }

@@ -7,4 +7,5 @@ public class PlayerAttackTypeSO : AttackTypeSO
 {
     public float rangeForPerformingAttack;
     public float launchForce;
+    public float extraAttackHitTime;
 }

@@ -31,10 +31,19 @@ public class Player : MonoBehaviour
     public PlayerAttackTypeSO punchAttack;
     public PlayerAttackTypeSO slingshotAttack;
 
-    void Start()
+    void Awake()
     {
         _movementHandler = GetComponent<PlayerMovement>();
         _attackHandler = GetComponent<PlayerAttackHandler>();
+    }
+
+    void Start()
+    {
+        for (int i = 0; i < playerHands.Count; i++)
+        {
+            PunchHandler punchHandler = playerHands[i].GetComponent<PunchHandler>();
+            punchHandler.punchAttack = punchAttack;
+        }
     }
 
     public bool IsBodyPartGrabbable(DraggableBodyPart bodyPart)

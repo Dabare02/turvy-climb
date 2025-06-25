@@ -18,3 +18,4 @@ MonoBehaviour:
   attackSound: {fileID: 0}
   rangeForPerformingAttack: 3.5
   launchForce: 10
+  extraAttackHitTime: 0.4
