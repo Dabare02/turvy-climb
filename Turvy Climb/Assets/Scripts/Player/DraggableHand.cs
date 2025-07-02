@@ -21,10 +21,6 @@ public class DraggableHand : DraggableBodyPart
         }
     }
 
-    // TEMP (Buscar mejor solución para establecer el saliente al que se empieza agarrado
-    // al principio del nivel).
-    private bool firstHold = true;
-
     [SerializeField] private CircleCollider2D holdDetector;
 
     public void SetRegularHoldDetectRange()
@@ -48,6 +44,9 @@ public class DraggableHand : DraggableBodyPart
             transform.position = new Vector3(hold.transform.position.x, hold.transform.position.y, transform.position.z);
             _body.constraints = RigidbodyConstraints2D.FreezeAll;
 
+            // Establecer nuevo saliente como holdInRange (en caso de que el trigger falle).
+            if (holdInRange == null) holdInRange = hold;
+
             // Indicar a Player que hay un saliente más al que está agarrado.
             _player.IncreaseGrippedHolds(1);
         }
@@ -55,6 +54,7 @@ public class DraggableHand : DraggableBodyPart
 
     public void DropHold()
     {
+        Debug.Log(holdInRange == null);
         if (holdInRange != null && holdInRange.gripped)
         {
             Debug.Log("Dropping hold " + holdInRange.name);
@@ -97,14 +97,6 @@ public class DraggableHand : DraggableBodyPart
         {
             Debug.Log("Hold in range.");
             holdInRange = holdScr;
-
-            // TEMP
-            if (firstHold)
-            {
-                GripHold(holdInRange);
-                firstHold = false;
-            }
-            // TEMP
         }
     }
 
