@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Hold
+  - Hand
   layers:
   - Default
   - TransparentFX
@@ -11,10 +13,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - ArmSegment
+  - BgElements
+  - Character
+  - NoCollision
   - 
   - 
   - 
@@ -40,4 +42,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 275937419
+    locked: 0
+  - name: LevelElements
+    uniqueID: 340971531
+    locked: 0
+  - name: Characters
+    uniqueID: 1459216879
     locked: 0
