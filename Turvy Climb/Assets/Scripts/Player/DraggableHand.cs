@@ -70,7 +70,7 @@ public class DraggableHand : DraggableBodyPart
         }
     }
 
-    protected new void OnMouseDown()
+    protected override void OnMouseDown()
     {
         // Comprobar si hay al menos 1 mano agarrada a la pared (aparte de si misma).
         // Si no es el caso, no se permitirá cogerlo.
@@ -80,7 +80,7 @@ public class DraggableHand : DraggableBodyPart
         base.OnMouseDown();
     }
 
-    protected new void OnMouseUp()
+    protected override void OnMouseUp()
     {
         // Comprobar si hay al menos 1 mano agarrada a la pared (aparte de si misma).
         // Si no es el caso, no se permitirá cogerlo.

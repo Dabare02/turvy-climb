@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Se encarga de funciones específicas del nivel, incluyendo la gestión del nivel de aguante
 public class LevelManager : MonoBehaviour
 {
     private const int LIMBS_AMOUNT = 4;
@@ -40,12 +41,12 @@ public class LevelManager : MonoBehaviour
 
     public void Restart()
     {
-        
+
     }
 
     public void QuitLevel()
     {
-        
+
     }
 
     public void GrabStartingHolds()
