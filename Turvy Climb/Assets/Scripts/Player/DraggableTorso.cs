@@ -11,7 +11,7 @@ public class DraggableTorso : DraggableBodyPart
     //[Tooltip("Puntos de ancla para cada brazo. Orden: [brazoIzquierdo, brazoDerecho, piernaIzquierda, piernaDerecha]")]
     //[SerializeField] private Transform[] anchorPoints;
 
-    new void Awake()
+    protected override void Awake()
     {
         base.Awake();
 
@@ -29,7 +29,7 @@ public class DraggableTorso : DraggableBodyPart
         }
     }
 
-    protected new void OnMouseDown()
+    protected override void OnMouseDown()
     {
         // Comprobar si el jugador está sujeto a algún saliente.
         // Si no es el caso, no se permitirá cogerlo.
@@ -38,7 +38,7 @@ public class DraggableTorso : DraggableBodyPart
         base.OnMouseDown();
     }
 
-    protected new void OnMouseUp()
+    protected override void OnMouseUp()
     {
         // Comprobar si el jugador está sujeto a algún saliente.
         // Si no es el caso, no se permitirá cogerlo.
