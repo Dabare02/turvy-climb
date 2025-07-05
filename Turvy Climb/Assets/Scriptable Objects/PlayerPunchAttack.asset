@@ -19,3 +19,4 @@ MonoBehaviour:
   rangeForPerformingAttack: 3.5
   launchForce: 10
   extraAttackHitTime: 0.3
+  staminaData: {fileID: 11400000, guid: 64ae816d150abc74bb528f4f2b088b25, type: 2}

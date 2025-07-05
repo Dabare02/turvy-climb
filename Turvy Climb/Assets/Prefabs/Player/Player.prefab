@@ -337,7 +337,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1459216879
-  m_SortingLayer: 4
+  m_SortingLayer: 3
   m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: 55556ca538e55324588e2e46c9dd8e08, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -575,6 +575,11 @@ MonoBehaviour:
   largeHoldDetectRange: 3
   punchAttack: {fileID: 11400000, guid: fd92e6b3966d34d47b2d3594e10e7b61, type: 2}
   slingshotAttack: {fileID: 0}
+  dragHandSTCost: {fileID: 11400000, guid: 0fe323455d56c1c40980bffcfdaee4bd, type: 2}
+  dragTorsoSTCost: {fileID: 11400000, guid: 8b9e336732101244b95d89d3d6e6c841, type: 2}
+  gripHoldSTCost: {fileID: 11400000, guid: c077d79dd0f78524aa897ecb59dd59a1, type: 2}
+  singleHoldSTCost: {fileID: 11400000, guid: b79f17fe26a840a4da94be9edcb29323, type: 2}
+  doubleHoldSTCost: {fileID: 11400000, guid: 8302edac06b81c344aa1acb7a9508cd4, type: 2}
 --- !u!114 &5121961164402566920
 MonoBehaviour:
   m_ObjectHideFlags: 0
