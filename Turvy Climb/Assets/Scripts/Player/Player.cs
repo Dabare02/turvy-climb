@@ -30,6 +30,14 @@ public class Player : MonoBehaviour
     [Header("Attack Parameters")]
     public PlayerAttackTypeSO punchAttack;
     public PlayerAttackTypeSO slingshotAttack;
+    [Header("Stamina Cost Parameters")]
+    public StaminaCostSO dragHandSTCost;
+    public StaminaCostSO dragTorsoSTCost;
+    public StaminaCostSO gripHoldSTCost;
+    [Tooltip("Coste de aguante drenado al estar colgando de una sola extremidad.")]
+    public StaminaCostSO singleHoldSTCost;
+    [Tooltip("Coste de aguante drenado al estar colgando de dos extremidades.")]
+    public StaminaCostSO doubleHoldSTCost;
 
     void Awake()
     {
