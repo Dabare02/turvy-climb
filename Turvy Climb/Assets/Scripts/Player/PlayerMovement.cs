@@ -94,28 +94,34 @@ public class PlayerMovement : MonoBehaviour
 
     public void StopMovingBodyPart()
     {
-        // Indicar finalización de arrastre.
-        _isPartDragging = false;
+        if (_isPartDragging && draggedPart != null)
+        {
+            // Indicar finalización de arrastre.
+            _isPartDragging = false;
 
-        _originalPos = new Vector2(float.NaN, float.NaN);
-        _rangeCenterPos = new Vector2(float.NaN, float.NaN);
-        _rangeRadius = 0.0f;
+            _originalPos = new Vector2(float.NaN, float.NaN);
+            _rangeCenterPos = new Vector2(float.NaN, float.NaN);
+            _rangeRadius = 0.0f;
 
-        // Indicar al manejador de ataques que realize un ataque si está listo.
-        _player.CheckAttack();
-        
-        Debug.Log("Stopped moving " + draggedPart.name);
-        draggedPart = null;
+            // Indicar al manejador de ataques que realize un ataque si está listo.
+            _player.CheckAttack();
+            
+            Debug.Log("Stopped moving " + draggedPart.name);
+            draggedPart = null;
+        }
     }
 
     // MOVIMIENTO: Quick grip / drop.
     private void QuickGripDrop()
     {
+        if (!_player.hasStamina) return;
+
         if (_player.isPlayerAttachedToWall)
         {
             // Se hace que todas las manos se suelten de sus salientes con rango incrementado.
             _player.DropAllHolds();
             _player.SetLargeHoldDetectRange();
+            StopMovingBodyPart();
         }
         else
         {

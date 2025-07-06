@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerStaminaManager : MonoBehaviour
+public class StaminaManager : MonoBehaviour
 {
     private float stamina;
     [SerializeField] private float maxStamina;
     [SerializeField] private float initialStamina;
 
-    // Corutina para ir cambiando la cnatidad de aguante gradualmente.
+    // Corutina para ir cambiando la cantidad de aguante gradualmente.
     private Coroutine continuousStaminaChange;
 
     // Evento disparado por la clase para indicar el cambio de aguante.
@@ -17,13 +17,31 @@ public class PlayerStaminaManager : MonoBehaviour
     // Evento disparado por la clase para indicar que la cantidad de aguante es 0.
     public UnityEvent OnStaminaDeplete;
 
+    void Awake()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        if (player != null)
+        {
+            OnStaminaDeplete.AddListener(player.GetComponent<Player>().OutOfStamina);
+        }
+
+        stamina = initialStamina;
+    }
+
+    void Update()
+    {
+        // DEBUG
+        if (Input.GetKeyDown(KeyCode.DownArrow)) DecreaseCurrentStamina(10);
+        if (Input.GetKeyDown(KeyCode.UpArrow)) IncreaseCurrentStamina(10);
+        // DEBUG
+    }
+
     public void DecreaseCurrentStamina(float amount)
     {
         stamina -= amount;
         if (stamina <= 0)
         {
             stamina = 0;
-            OnStaminaDeplete.Invoke();
         }
 
         NotifyStaminaChange();
@@ -66,13 +84,17 @@ public class PlayerStaminaManager : MonoBehaviour
 
     public IEnumerator ContinuousStaminaChange(float amount, float delay, bool isRegen = false)
     {
-        float stChangeAmount = amount;
-        if (isRegen) stChangeAmount = -stChangeAmount;
-        
-        while (stamina >= 0 && stamina <= maxStamina)
+        while (stamina > 0 && stamina <= maxStamina)
         {
-            stamina -= stChangeAmount;
-            NotifyStaminaChange();
+            if (isRegen)
+            {
+                IncreaseCurrentStamina(amount);
+            }
+            else
+            {
+                DecreaseCurrentStamina(amount);
+            }
+
             yield return new WaitForSeconds(delay);
         }
     }
@@ -81,5 +103,6 @@ public class PlayerStaminaManager : MonoBehaviour
     {
         Debug.Log("Stamina changed to " + stamina);
         OnStaminaChange.Invoke();
+        if (stamina <= 0) OnStaminaDeplete.Invoke();
     }
 }

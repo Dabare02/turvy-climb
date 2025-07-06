@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
     {
         get { return grippedHoldsAmount > 0; }
     }
+    public bool hasStamina { get; private set; }
 
     private PlayerMovement _movementHandler;
     private PlayerAttackHandler _attackHandler;
@@ -54,6 +55,8 @@ public class Player : MonoBehaviour
             PunchHandler punchHandler = playerHands[i].GetComponent<PunchHandler>();
             punchHandler.punchAttack = punchAttack;
         }
+
+        hasStamina = true;
     }
 
     // Indica si la parte de cuerpo especificada puede ser agarrada con el ratón.
@@ -63,14 +66,15 @@ public class Player : MonoBehaviour
         {   // Si es una mano, debe haber al menos una mano agarrada a un saliente (aparte de si misma).
             DraggableHand hand = bodyPart.GetComponent<DraggableHand>();
             if ((hand.isGripped && grippedHoldsAmount < 2)
-                || (!hand.isGripped && !isPlayerAttachedToWall))
+                || (!hand.isGripped && !isPlayerAttachedToWall)
+                || !hasStamina)
             {
                 return false;
             }
         }
         else
         {   // Si es el torso, el jugador debe de estar agarrado a, al menos, un saliente.
-            if (!isPlayerAttachedToWall)
+            if (!isPlayerAttachedToWall || !hasStamina)
             {
                 return false;
             }
@@ -81,7 +85,10 @@ public class Player : MonoBehaviour
 
     public void StartMovingBodyPart(Rigidbody2D movingPart)
     {
-        _movementHandler.StartMovingBodyPart(movingPart);
+        if (hasStamina)
+        {
+            _movementHandler.StartMovingBodyPart(movingPart);
+        }
     }
 
     public void StopMovingBodyPart()
@@ -94,9 +101,17 @@ public class Player : MonoBehaviour
         _attackHandler.StartAttackDetection(bodyPart);
     }
 
+    public void StopAttackDetection()
+    {
+        _attackHandler.StopAttackDetection();
+    }
+
     public void CheckAttack()
     {
-        _attackHandler.CheckAttack();
+        if (hasStamina)
+        {
+            _attackHandler.CheckAttack();
+        }
     }
 
     public void IncreaseGrippedHolds(int amount)
@@ -168,5 +183,14 @@ public class Player : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void OutOfStamina()
+    {
+        hasStamina = false;
+        DropAllHolds();
+        StopAttackDetection();
+        StopMovingBodyPart();
+        
     }
 }
