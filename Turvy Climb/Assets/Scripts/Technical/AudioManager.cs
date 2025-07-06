@@ -39,6 +39,7 @@ public class AudioManager : MonoBehaviour
         return Mathf.Pow(10f, logarithmic / 20f);
     }
 
+    /*
     public float GetMasterVolume()
     {
         mixer.GetFloat(MASTER_VOLUME_PARAM, out float vol);
@@ -85,4 +86,5 @@ public class AudioManager : MonoBehaviour
 
         Debug.Log("Setting master vol: " +  GetMasterVolume().ToString()); 
     }
+    */
 }
