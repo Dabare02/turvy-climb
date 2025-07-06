@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -19,6 +20,9 @@ public class Player : MonoBehaviour
 
     private PlayerMovement _movementHandler;
     private PlayerAttackHandler _attackHandler;
+
+    private UnityEvent<MoveEnum, float, float> startFewHandsHolding;
+    private UnityEvent<MoveEnum> stopFewHandsHolding;
 
     [Header("Player parts")]
     public List<DraggableHand> playerHands;
@@ -57,6 +61,18 @@ public class Player : MonoBehaviour
         }
 
         hasStamina = true;
+
+        // Suscripción de eventos.
+        GameObject levelmngObj = GameObject.FindGameObjectWithTag("LevelManager");
+        if (levelmngObj != null)
+        {
+            StaminaManager staminaManager = levelmngObj.GetComponent<StaminaManager>();
+
+            startFewHandsHolding = new UnityEvent<MoveEnum, float, float>();
+            stopFewHandsHolding = new UnityEvent<MoveEnum>();
+            startFewHandsHolding.AddListener(staminaManager.StartContinuousStaminaDrain);
+            stopFewHandsHolding.AddListener(staminaManager.StopContinuousStaminaChange);
+        }
     }
 
     // Indica si la parte de cuerpo especificada puede ser agarrada con el ratón.
@@ -117,12 +133,38 @@ public class Player : MonoBehaviour
     public void IncreaseGrippedHolds(int amount)
     {
         grippedHoldsAmount += amount;
+
+        switch (grippedHoldsAmount)
+        {
+            case 1:
+                startFewHandsHolding.Invoke(MoveEnum.FewHandsHolding, singleHoldSTCost.staminaCost, singleHoldSTCost.staminaChangeSpeed);
+                break;
+            case 2:
+                startFewHandsHolding.Invoke(MoveEnum.FewHandsHolding, doubleHoldSTCost.staminaCost, doubleHoldSTCost.staminaChangeSpeed);
+                break;
+            default:
+                stopFewHandsHolding.Invoke(MoveEnum.FewHandsHolding);
+                break;
+        }
         Debug.Log("Gripped holds: " + grippedHoldsAmount);
     }
 
     public void DecreaseGrippedHolds(int amount)
     {
         grippedHoldsAmount -= amount;
+
+        switch (grippedHoldsAmount)
+        {
+            case 1:
+                startFewHandsHolding.Invoke(MoveEnum.FewHandsHolding, singleHoldSTCost.staminaCost, singleHoldSTCost.staminaChangeSpeed);
+                break;
+            case 2:
+                startFewHandsHolding.Invoke(MoveEnum.FewHandsHolding, doubleHoldSTCost.staminaCost, doubleHoldSTCost.staminaChangeSpeed);
+                break;
+            default:
+                stopFewHandsHolding.Invoke(MoveEnum.FewHandsHolding);
+                break;
+        }
         Debug.Log("Gripped holds: " + grippedHoldsAmount);
     }
 

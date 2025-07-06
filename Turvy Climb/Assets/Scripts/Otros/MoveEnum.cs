@@ -8,7 +8,8 @@ public enum MoveEnum
     DragTorso,
     QuickGrip,
     QuickDrop,
-    GrabHold,
     Punch,
-    Slingshot
+    Slingshot,
+    GrabHold,
+    FewHandsHolding
 }
