@@ -15,14 +15,18 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-
-        if (_player == null)
+        GameObject plObj = GameObject.FindGameObjectWithTag("Player");
+        if (plObj == null)
         {
             Debug.LogWarning("There is no player, the level can't start!");
-            // TEMP: En el futuro, usar función de General Manager para cerrar el juego.
             gameObject.SetActive(false);
+            GeneralManager.Instance.Quit();
         }
+        else
+        {
+            _player = plObj.GetComponent<Player>();
+        }
+
     }
 
     void Start()
@@ -37,16 +41,6 @@ public class LevelManager : MonoBehaviour
             Debug.LogWarning("Array startingHolds must have a size of " + LIMBS_AMOUNT + ".");
             Array.Resize(ref startingHolds, LIMBS_AMOUNT);
         }
-    }
-
-    public void Restart()
-    {
-
-    }
-
-    public void QuitLevel()
-    {
-
     }
 
     public void GrabStartingHolds()

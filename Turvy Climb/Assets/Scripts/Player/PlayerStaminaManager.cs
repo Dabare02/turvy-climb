@@ -9,9 +9,13 @@ public class PlayerStaminaManager : MonoBehaviour
     [SerializeField] private float maxStamina;
     [SerializeField] private float initialStamina;
 
+    // Corutina para ir cambiando la cnatidad de aguante gradualmente.
     private Coroutine continuousStaminaChange;
 
+    // Evento disparado por la clase para indicar el cambio de aguante.
     public UnityEvent OnStaminaChange;
+    // Evento disparado por la clase para indicar que la cantidad de aguante es 0.
+    public UnityEvent OnStaminaDeplete;
 
     public void DecreaseCurrentStamina(float amount)
     {
@@ -19,7 +23,7 @@ public class PlayerStaminaManager : MonoBehaviour
         if (stamina <= 0)
         {
             stamina = 0;
-            // Drop all holds
+            OnStaminaDeplete.Invoke();
         }
 
         NotifyStaminaChange();

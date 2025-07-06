@@ -8,7 +8,9 @@ using Random = UnityEngine.Random;
 [RequireComponent(typeof(PlayerMovement))]
 public class Player : MonoBehaviour
 {
+    // Cantidad de salientes agarrados.
     public int grippedHoldsAmount { get; private set; }
+    // Indica si Player está agarrado a algún saliente.
     public bool isPlayerAttachedToWall
     {
         get { return grippedHoldsAmount > 0; }
@@ -24,7 +26,10 @@ public class Player : MonoBehaviour
     public float handMoveRange = 4.0f;
     public float torsoMoveRange = 5.0f;
     [Header("Hand Parameters")]
+    [Tooltip("Rango normal de detección de salientes.")]
     public float regularHoldDetectRange = 1.5f;
+    [Tooltip("Rango ampliado de detección de salientes, para situaciones como el uso de " +
+        "Quick Drop o Slingshot.")]
     public float largeHoldDetectRange = 3.0f;
 
     [Header("Attack Parameters")]
@@ -51,10 +56,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Indica si la parte de cuerpo especificada puede ser agarrada con el ratón.
     public bool IsBodyPartGrabbable(DraggableBodyPart bodyPart)
     {
         if (bodyPart.CompareTag("Hand"))
-        {
+        {   // Si es una mano, debe haber al menos una mano agarrada a un saliente (aparte de si misma).
             DraggableHand hand = bodyPart.GetComponent<DraggableHand>();
             if ((hand.isGripped && grippedHoldsAmount < 2)
                 || (!hand.isGripped && !isPlayerAttachedToWall))
@@ -63,7 +69,7 @@ public class Player : MonoBehaviour
             }
         }
         else
-        {
+        {   // Si es el torso, el jugador debe de estar agarrado a, al menos, un saliente.
             if (!isPlayerAttachedToWall)
             {
                 return false;
@@ -105,8 +111,7 @@ public class Player : MonoBehaviour
         Debug.Log("Gripped holds: " + grippedHoldsAmount);
     }
 
-    // Soltar todos los salientes. Si increasedRange = true, las manos tendrán mayor rango de agarre
-    // al soltarse (utilizado principalmente para movimientos como QuickDrop).
+    // Soltar todos los salientes.
     public void DropAllHolds()
     {
         for (int i = 0; i < playerHands.Count; i++)
@@ -115,6 +120,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Establecer el rango de detección de saliente de cada mano a la versión normal.
     public void SetRegularHoldDetectRange()
     {
         for (int i = 0; i < playerHands.Count; i++)
@@ -122,6 +128,7 @@ public class Player : MonoBehaviour
             playerHands[i].SetRegularHoldDetectRange();
         }
     }
+    // Establecer el rango de detección de saliente de cada mano a la versión ampliada.
     public void SetLargeHoldDetectRange()
     {
         for (int i = 0; i < playerHands.Count; i++)
@@ -130,6 +137,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Devuelve la primera mano que tenga un saliente en su rango de detección.
     public DraggableHand GetHandWithHoldInRange()
     {
         for (int i = 0; i < playerHands.Count; i++)
@@ -140,6 +148,7 @@ public class Player : MonoBehaviour
         return null;
     }
 
+    // Devuelve una mano aleatoria.
     public DraggableHand GetRandomHand()
     {
         List<DraggableHand> shuffledHands = playerHands.ToList();
@@ -147,6 +156,7 @@ public class Player : MonoBehaviour
         return shuffledHands[0];
     }
 
+    // Devuelve una mano que tenga un saliente en su rango de detección de forma aleatoria.
     public DraggableHand GetRandomHandWithHoldInRange()
     {
         List<DraggableHand> shuffledHands = playerHands.ToList();
