@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class StaminaManager : MonoBehaviour
     [SerializeField] private float initialStamina;
 
     // Corutina para ir cambiando la cantidad de aguante gradualmente.
-    private Coroutine continuousStaminaChange;
+    private List<Tuple<MoveEnum, Coroutine>> continuousStChange;
 
     // Evento disparado por la clase para indicar el cambio de aguante.
     public UnityEvent OnStaminaChange;
@@ -26,6 +27,13 @@ public class StaminaManager : MonoBehaviour
         }
 
         stamina = initialStamina;
+
+        // Inicializar lista de corutinas.
+        continuousStChange = new List<Tuple<MoveEnum, Coroutine>>();
+        foreach (MoveEnum m in Enum.GetValues(typeof(MoveEnum)))
+        {
+            continuousStChange.Add(new Tuple<MoveEnum, Coroutine>(m, null));
+        }
     }
 
     void Update()
@@ -65,21 +73,42 @@ public class StaminaManager : MonoBehaviour
         NotifyStaminaChange();
     }
 
-    public void StartContinuousStaminaDrain(float amount, float delay)
+    public void StartContinuousStaminaDrain(MoveEnum move, float amount, float delay)
     {
-        StopContinuousStaminaChange();
-        StartCoroutine(ContinuousStaminaChange(amount, delay));
+        StopContinuousStaminaChange(move);
+
+        int index = continuousStChange.FindIndex(x => x.Item1 == move);
+        continuousStChange[index] = new Tuple<MoveEnum, Coroutine>(move, StartCoroutine(ContinuousStaminaChange(amount, delay)));
+        /*
+        Debug.LogWarning("Stamina coroutine " + index + " is null? ");
+        Debug.LogWarning(continuousStChange[index].Item2 == null);
+        */
     }
 
-    public void StartContinuousStaminaRegen(float amount, float delay)
+    public void StartContinuousStaminaRegen(MoveEnum move, float amount, float delay)
     {
-        StopContinuousStaminaChange();
-        StartCoroutine(ContinuousStaminaChange(amount, delay, true));
+        StopContinuousStaminaChange(move);
+
+        int index = continuousStChange.FindIndex(x => x.Item1 == move);
+        continuousStChange[index] = new Tuple<MoveEnum, Coroutine>(move, StartCoroutine(ContinuousStaminaChange(amount, delay, true)));
+        /*
+        Debug.LogWarning("Stamina coroutine " + index + " is null? ");
+        Debug.LogWarning(continuousStChange[index].Item2 == null);
+        */
     }
 
-    public void StopContinuousStaminaChange()
+    public void StopContinuousStaminaChange(MoveEnum move)
     {
-        if (continuousStaminaChange != null) StopCoroutine(continuousStaminaChange);
+        int index = continuousStChange.FindIndex(x => x.Item1 == move);
+        if (continuousStChange[index].Item2 != null)
+        {
+            StopCoroutine(continuousStChange[index].Item2);
+            continuousStChange[index] = new Tuple<MoveEnum, Coroutine>(move, null);
+        }
+        /*
+        Debug.LogWarning("Stamina coroutine " + index + " is null? ");
+        Debug.LogWarning(continuousStChange[index].Item2 == null);
+        */
     }
 
     public IEnumerator ContinuousStaminaChange(float amount, float delay, bool isRegen = false)

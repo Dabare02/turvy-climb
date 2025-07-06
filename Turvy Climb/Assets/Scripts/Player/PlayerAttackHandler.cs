@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
 using UnityEngine;
+using UnityEngine.Events;
 using Vector2 = UnityEngine.Vector2;
 
 public class PlayerAttackHandler : MonoBehaviour
@@ -22,11 +23,19 @@ public class PlayerAttackHandler : MonoBehaviour
 
     private Coroutine attackCoroutine;
 
+    public UnityEvent<float> onPunch;
+
     void Awake()
     {
         _player = GetComponent<Player>();
-
         _springJoints = _player.playerTorso.GetComponents<SpringJoint2D>().ToList();
+
+        if (onPunch == null) onPunch = new UnityEvent<float>();
+        GameObject levelManagerObj = GameObject.FindGameObjectWithTag("LevelManager");
+        if (levelManagerObj != null)
+        {
+            onPunch.AddListener(levelManagerObj.GetComponent<StaminaManager>().DecreaseCurrentStamina);
+        }
     }
 
     void Update()
@@ -95,6 +104,9 @@ public class PlayerAttackHandler : MonoBehaviour
     {
         // TODO: Añadir soporte para movimiento tirachinas.
 
+        // Reducir el nivel de aguante (evento).
+        onPunch.Invoke(_player.punchAttack.staminaData.staminaCost);
+
         Rigidbody2D attackBody = attackPart.GetComponent<Rigidbody2D>();
         float launchForce = _player.punchAttack.launchForce;
 
@@ -132,7 +144,10 @@ public class PlayerAttackHandler : MonoBehaviour
     public void PunchInterrupt()
     {
         //Debug.Log("Punch interrupted!");
-        if (attackCoroutine != null) StopCoroutine(attackCoroutine);
+        if (attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+        }
         attackPartCollider.enabled = true;
         attackSpringJoint.enabled = true;
 
@@ -141,6 +156,7 @@ public class PlayerAttackHandler : MonoBehaviour
 
     public void StopAttackDetection()
     {
+        attackCoroutine = null;
         _attackDetection = false;
 
         _rangeCenterPos = new Vector2(float.NaN, float.NaN);

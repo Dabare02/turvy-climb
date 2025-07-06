@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Vector2 = UnityEngine.Vector2;
 
 
@@ -21,9 +22,21 @@ public class PlayerMovement : MonoBehaviour
     private float _rangeRadius;
     private bool _isMouseInRange = true;
 
+    public UnityEvent<MoveEnum, float, float> onPartMoveStart;
+    public UnityEvent<MoveEnum> onPartMoveStop;
+
     void Start()
     {
         _player = GetComponent<Player>();
+
+        GameObject levelManagerObj = GameObject.FindGameObjectWithTag("LevelManager");
+        if (levelManagerObj != null)
+        {
+            StaminaManager stManager = levelManagerObj.GetComponent<StaminaManager>();
+
+            onPartMoveStart.AddListener(stManager.StartContinuousStaminaDrain);
+            onPartMoveStop.AddListener(stManager.StopContinuousStaminaChange);
+        }
     }
 
     void Update()
@@ -72,9 +85,12 @@ public class PlayerMovement : MonoBehaviour
             // No se asigna el centro en el caso de ser la mano porque este irá cambiando
             // conforme se mueva el cuerpo para seguir a la mano.
             _rangeRadius = _player.handMoveRange;
-            
+
             // Indicar al manejador de ataques que empieze a detectar si se va a realizar ataque.
             _player.StartAttackDetection(draggedPart.GetComponent<DraggableHand>());
+
+            // Evento para empezar a drenar aguante.
+            onPartMoveStart.Invoke(MoveEnum.DragHand, _player.dragHandSTCost.staminaCost, _player.dragHandSTCost.staminaChangeSpeed);
         }
         else
         {
@@ -84,8 +100,10 @@ public class PlayerMovement : MonoBehaviour
 
             // Indicar al manejador de ataques que empieze a detectar si se va a realizar ataque.
             _player.StartAttackDetection(draggedPart.GetComponent<DraggableTorso>());
-        }
 
+            // Evento para empezar a drenar aguante.
+            onPartMoveStart.Invoke(MoveEnum.DragTorso, _player.dragTorsoSTCost.staminaCost, _player.dragTorsoSTCost.staminaChangeSpeed);
+        }
 
         _isPartDragging = true;
 
@@ -93,11 +111,15 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void StopMovingBodyPart()
-    {
+    {   
         if (_isPartDragging && draggedPart != null)
         {
             // Indicar finalización de arrastre.
             _isPartDragging = false;
+
+            // Evento para dejar de drenar aguante.
+            if (draggedPart.CompareTag("Hand")) onPartMoveStop.Invoke(MoveEnum.DragHand);
+            else onPartMoveStop.Invoke(MoveEnum.DragTorso);
 
             _originalPos = new Vector2(float.NaN, float.NaN);
             _rangeCenterPos = new Vector2(float.NaN, float.NaN);
@@ -105,7 +127,7 @@ public class PlayerMovement : MonoBehaviour
 
             // Indicar al manejador de ataques que realize un ataque si está listo.
             _player.CheckAttack();
-            
+
             Debug.Log("Stopped moving " + draggedPart.name);
             draggedPart = null;
         }
