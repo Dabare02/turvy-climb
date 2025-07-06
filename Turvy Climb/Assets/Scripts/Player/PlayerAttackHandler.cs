@@ -20,6 +20,8 @@ public class PlayerAttackHandler : MonoBehaviour
 
     private List<SpringJoint2D> _springJoints;
 
+    private Coroutine attackCoroutine;
+
     void Awake()
     {
         _player = GetComponent<Player>();
@@ -101,7 +103,7 @@ public class PlayerAttackHandler : MonoBehaviour
         Vector2 force = direction * launchForce;
         attackBody.AddForce(force, ForceMode2D.Impulse);
 
-        StartCoroutine(AttackCoroutine());
+        attackCoroutine = StartCoroutine(AttackCoroutine());
     }
 
     private IEnumerator AttackCoroutine()
@@ -113,12 +115,26 @@ public class PlayerAttackHandler : MonoBehaviour
         punchHandler.attackMode = true;
         attackSpringJoint.enabled = false;
         attackPartCollider.enabled = false;
+        // Esperar la duración del ataque antes de volver brazo a la normalidad.
         yield return new WaitForSeconds(_player.punchAttack.attackDuration);
+        //Debug.Log("Ending punch...");
         attackPartCollider.enabled = true;
         attackSpringJoint.enabled = true;
 
         yield return new WaitForSeconds(_player.punchAttack.extraAttackHitTime);
+        //Debug.Log("Punch ended.");
         punchHandler.attackMode = false;
+
+        StopAttackDetection();
+    }
+
+    // Función llamada por evento si el puñetazo se interrumpe prematuramente.
+    public void PunchInterrupt()
+    {
+        //Debug.Log("Punch interrupted!");
+        if (attackCoroutine != null) StopCoroutine(attackCoroutine);
+        attackPartCollider.enabled = true;
+        attackSpringJoint.enabled = true;
 
         StopAttackDetection();
     }

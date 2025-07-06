@@ -801,6 +801,38 @@ PrefabInstance:
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 8994764485526363935}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8761398034091062950}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PunchInterrupt
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerAttackHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4844781457532190901, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: -0.000000067055225
@@ -995,6 +1027,38 @@ PrefabInstance:
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 8994764485526363935}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8761398034091062950}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PunchInterrupt
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerAttackHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4844781457532190901, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
       propertyPath: m_ConnectedAnchor.y
       value: -0.24999987
@@ -1181,6 +1245,38 @@ PrefabInstance:
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 8994764485526363935}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8761398034091062950}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PunchInterrupt
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerAttackHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4844781457532190901, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
       propertyPath: m_ConnectedAnchor.x
       value: 0.000000067055225
@@ -1375,6 +1471,58 @@ PrefabInstance:
       propertyPath: m_ConnectedRigidBody
       value: 
       objectReference: {fileID: 8994764485526363935}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 8761398034091062950}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: PunchInterrupt
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PlayerAttackHandler, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 4518712330440963033, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
+      propertyPath: onAttackSuccess.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4844781457532190901, guid: c9dc2352d5bded946b239b49f7e5ffd0, type: 3}
       propertyPath: m_ConnectedAnchor.y
       value: -0.24999987

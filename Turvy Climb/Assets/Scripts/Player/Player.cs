@@ -43,10 +43,7 @@ public class Player : MonoBehaviour
     {
         _movementHandler = GetComponent<PlayerMovement>();
         _attackHandler = GetComponent<PlayerAttackHandler>();
-    }
 
-    void Start()
-    {
         for (int i = 0; i < playerHands.Count; i++)
         {
             PunchHandler punchHandler = playerHands[i].GetComponent<PunchHandler>();
