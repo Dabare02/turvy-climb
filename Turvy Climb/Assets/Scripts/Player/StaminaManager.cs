@@ -14,16 +14,16 @@ public class StaminaManager : MonoBehaviour
     private List<Tuple<MoveEnum, Coroutine>> continuousStChange;
 
     // Evento disparado por la clase para indicar el cambio de aguante.
-    public UnityEvent OnStaminaChange;
+    public UnityEvent<float> staminaChangeEvent;
     // Evento disparado por la clase para indicar que la cantidad de aguante es 0.
-    public UnityEvent OnStaminaDeplete;
+    public UnityEvent staminaDepleteEvent;
 
     void Awake()
     {
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (player != null)
         {
-            OnStaminaDeplete.AddListener(player.GetComponent<Player>().OutOfStamina);
+            staminaDepleteEvent.AddListener(player.GetComponent<Player>().OutOfStamina);
         }
 
         stamina = initialStamina;
@@ -75,8 +75,10 @@ public class StaminaManager : MonoBehaviour
 
     public void StartContinuousStaminaDrain(MoveEnum move, float amount, float delay)
     {
+        // Se detiene la corutina para el movimiento que se estaba realizando anteriormente (si lo había).
         StopContinuousStaminaChange(move);
 
+        // Se inicia una nueva corutina para el movimiento.
         int index = continuousStChange.FindIndex(x => x.Item1 == move);
         continuousStChange[index] = new Tuple<MoveEnum, Coroutine>(move, StartCoroutine(ContinuousStaminaChange(amount, delay)));
         /*
@@ -101,7 +103,7 @@ public class StaminaManager : MonoBehaviour
     {
         int index = continuousStChange.FindIndex(x => x.Item1 == move);
         if (continuousStChange[index].Item2 != null)
-        {
+        {   // Si no hay corutina para el movimiento, no se intenta detener.
             StopCoroutine(continuousStChange[index].Item2);
             continuousStChange[index] = new Tuple<MoveEnum, Coroutine>(move, null);
         }
@@ -131,7 +133,7 @@ public class StaminaManager : MonoBehaviour
     private void NotifyStaminaChange()
     {
         Debug.Log("Stamina changed to " + stamina);
-        OnStaminaChange.Invoke();
-        if (stamina <= 0) OnStaminaDeplete.Invoke();
+        staminaChangeEvent.Invoke(stamina);
+        if (stamina <= 0) staminaDepleteEvent.Invoke();
     }
 }
