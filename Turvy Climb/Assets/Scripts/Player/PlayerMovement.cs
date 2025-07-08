@@ -102,7 +102,10 @@ public class PlayerMovement : MonoBehaviour
             _player.StartAttackDetection(draggedPart.GetComponent<DraggableTorso>());
 
             // Evento para empezar a drenar aguante.
-            onPartMoveStart.Invoke(MoveEnum.DragTorso, _player.dragTorsoSTCost.staminaCost, _player.dragTorsoSTCost.staminaChangeSpeed);
+            if (_player.grippedHoldsAmount < 4)
+            {
+                onPartMoveStart.Invoke(MoveEnum.DragTorso, _player.dragTorsoSTCost.staminaCost, _player.dragTorsoSTCost.staminaChangeSpeed);
+            }
         }
 
         _isPartDragging = true;

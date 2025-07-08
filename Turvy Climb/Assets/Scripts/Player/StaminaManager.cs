@@ -9,9 +9,9 @@ public class StaminaManager : MonoBehaviour
     private float stamina;
     [SerializeField] private float maxStamina;
     [SerializeField] private float initialStamina;
-
     // Corutina para ir cambiando la cantidad de aguante gradualmente.
     private List<Tuple<MoveEnum, Coroutine>> continuousStChange;
+    private bool _staminaChangeLocked = true;
 
     // Evento disparado por la clase para indicar el cambio de aguante.
     public UnityEvent<float> staminaChangeEvent;
@@ -26,7 +26,7 @@ public class StaminaManager : MonoBehaviour
             staminaDepleteEvent.AddListener(player.GetComponent<Player>().OutOfStamina);
         }
 
-        stamina = initialStamina;
+        ResetStamina();
 
         // Inicializar lista de corutinas.
         continuousStChange = new List<Tuple<MoveEnum, Coroutine>>();
@@ -44,8 +44,21 @@ public class StaminaManager : MonoBehaviour
         // DEBUG
     }
 
+    public void ResetStamina()
+    {
+        stamina = initialStamina;
+    }
+
+    public void LockStaminaChange(bool cond)
+    {
+        _staminaChangeLocked = cond;
+        StopAllContinuousStaminaChange();
+    }
+
     public void DecreaseCurrentStamina(float amount)
     {
+        if (_staminaChangeLocked) return;
+
         stamina -= amount;
         if (stamina <= 0)
         {
@@ -57,6 +70,8 @@ public class StaminaManager : MonoBehaviour
 
     public void IncreaseCurrentStamina(float amount)
     {
+        if (_staminaChangeLocked) return;
+
         stamina += amount;
         if (stamina >= maxStamina)
         {
@@ -68,6 +83,8 @@ public class StaminaManager : MonoBehaviour
 
     public void IncreaseMaxStamina(float amount)
     {
+        if (_staminaChangeLocked) return;
+
         maxStamina += amount;
         stamina = maxStamina;
         NotifyStaminaChange();
@@ -75,42 +92,54 @@ public class StaminaManager : MonoBehaviour
 
     public void StartContinuousStaminaDrain(MoveEnum move, float amount, float delay)
     {
+        if (_staminaChangeLocked) return;
+
         // Se detiene la corutina para el movimiento que se estaba realizando anteriormente (si lo había).
         StopContinuousStaminaChange(move);
 
         // Se inicia una nueva corutina para el movimiento.
         int index = continuousStChange.FindIndex(x => x.Item1 == move);
         continuousStChange[index] = new Tuple<MoveEnum, Coroutine>(move, StartCoroutine(ContinuousStaminaChange(amount, delay)));
-        /*
-        Debug.LogWarning("Stamina coroutine " + index + " is null? ");
-        Debug.LogWarning(continuousStChange[index].Item2 == null);
-        */
+
+        Debug.Log("Started draining stamina for " + move);
     }
 
     public void StartContinuousStaminaRegen(MoveEnum move, float amount, float delay)
     {
+        if (_staminaChangeLocked) return;
+
+        // Se detiene la corutina para el movimiento que se estaba realizando anteriormente (si lo había).
         StopContinuousStaminaChange(move);
 
         int index = continuousStChange.FindIndex(x => x.Item1 == move);
         continuousStChange[index] = new Tuple<MoveEnum, Coroutine>(move, StartCoroutine(ContinuousStaminaChange(amount, delay, true)));
-        /*
-        Debug.LogWarning("Stamina coroutine " + index + " is null? ");
-        Debug.LogWarning(continuousStChange[index].Item2 == null);
-        */
     }
 
     public void StopContinuousStaminaChange(MoveEnum move)
     {
+        if (_staminaChangeLocked) return;
+
         int index = continuousStChange.FindIndex(x => x.Item1 == move);
         if (continuousStChange[index].Item2 != null)
         {   // Si no hay corutina para el movimiento, no se intenta detener.
             StopCoroutine(continuousStChange[index].Item2);
             continuousStChange[index] = new Tuple<MoveEnum, Coroutine>(move, null);
+
+            Debug.Log("Stopped draining stamina for " + move);
         }
-        /*
-        Debug.LogWarning("Stamina coroutine " + index + " is null? ");
-        Debug.LogWarning(continuousStChange[index].Item2 == null);
-        */
+    }
+
+    public void StopAllContinuousStaminaChange()
+    {
+        foreach (MoveEnum m in Enum.GetValues(typeof(MoveEnum)))
+        {
+            int index = continuousStChange.FindIndex(x => x.Item1 == m);
+            if (continuousStChange[index].Item2 != null)
+            {   // Si no hay corutina para el movimiento, no se intenta detener.
+                StopCoroutine(continuousStChange[index].Item2);
+                continuousStChange[index] = new Tuple<MoveEnum, Coroutine>(m, null);
+            }
+        }
     }
 
     public IEnumerator ContinuousStaminaChange(float amount, float delay, bool isRegen = false)

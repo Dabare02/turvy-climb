@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 // Se encarga de funciones específicas del nivel, incluyendo la gestión del nivel de aguante
+[RequireComponent(typeof(StaminaManager))]
 public class LevelManager : MonoBehaviour
 {
     private const int LIMBS_AMOUNT = 4;
@@ -32,6 +33,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         GrabStartingHolds();
+        GetComponent<StaminaManager>().LockStaminaChange(false);
     }
 
     void OnValidate()
