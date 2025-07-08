@@ -50,7 +50,7 @@ public class PunchHandler : MonoBehaviour
             attackSuccessEvent.Invoke();
             attackMode = false;
 
-            enemy.TakeDamage(punchAttack.damage);
+            enemy.TakeDamage(punchAttack.damage, MoveEnum.PUNCH);
         }
     }
 }

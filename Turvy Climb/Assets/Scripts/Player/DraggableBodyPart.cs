@@ -13,7 +13,7 @@ public class DraggableBodyPart : MonoBehaviour
 
     protected virtual void Awake()
     {
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        _player = FindObjectOfType<Player>();
         _body = GetComponent<Rigidbody2D>();
     }
 

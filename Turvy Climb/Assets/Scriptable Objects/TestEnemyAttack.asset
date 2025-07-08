@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37659ab3f99fbb049afadf526e8f041a, type: 3}
   m_Name: TestEnemyAttack
   m_EditorClassIdentifier: 
-  attackDamage: 5
-  attackRange: 2
-  attackSound: {fileID: 0}
+  damage: 1
+  range: 1
+  finishDuration: 0
+  cooldown: 1
+  isWeaponAlwaysReady: 1
+  sound: {fileID: 0}

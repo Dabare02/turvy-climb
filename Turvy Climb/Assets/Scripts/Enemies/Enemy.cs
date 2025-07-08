@@ -1,26 +1,41 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class Enemy : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     public EnemyDataSO enemyData;
-    [SerializeField] private EnemyWeapon weapon;
-    private int hitPoints;
-    public bool isDead { get; private set; }
-    public bool isStunned { get; private set; }
-    public bool isAttackReady { get; private set; }
+    [SerializeField] protected EnemyWeapon weapon;
+    [NonSerialized] public EnemyState state;
+    protected int hitPoints;
+    public bool isDead
+    {
+        get
+        {
+            return state == EnemyState.DEAD;
+        }
+    }
+    public bool isStunned
+    {
+        get
+        {
+            return state == EnemyState.STUNNED;
+        }
+    }
 
-    private Animator _anim;
+    protected Animator _anim;
+
+    protected Coroutine stunCoroutine;
 
     void Awake()
     {
         _anim = GetComponent<Animator>();
+        state = EnemyState.STANDBY;
 
-        weapon.attackData = enemyData.attackType;
-        weapon.parentAnim = _anim;
+        weapon.SetupWeapon(this, _anim, enemyData.attackType);
     }
 
     void Start()
@@ -28,12 +43,27 @@ public abstract class Enemy : MonoBehaviour
         ResetHealth();
     }
 
+    void Update()
+    {
+        if (isDead) return;
+
+        if (enemyData.attackType.isWeaponAlwaysReady)
+        {
+            weapon.ReadyWeapon();
+        }
+    }
+
     public void ResetHealth()
     {
         hitPoints = enemyData.initialHitPoints;
     }
 
-    public void TakeDamage(int damage, MoveEnum attackType = MoveEnum.None)
+    protected void Attack()
+    {
+        weapon.Attack();
+    }
+    
+    public void TakeDamage(int damage, MoveEnum attackType = MoveEnum.NONE)
     {
         if (!enemyData.inmuneToDamage)
         {
@@ -54,29 +84,43 @@ public abstract class Enemy : MonoBehaviour
         {
             switch (attackType)
             {
-                case MoveEnum.None:
+                case MoveEnum.NONE:
                     break;
-                case MoveEnum.Punch:
+                case MoveEnum.PUNCH:
                     Stun(false);
                     break;
-                case MoveEnum.Slingshot:
+                case MoveEnum.SLINGSHOT:
                     Stun(true);
                     break;
             }
         }
     }
+    
+    protected void Stun(bool isLargeStun)
+    {
+        stunCoroutine = StartCoroutine(StunCoroutine(isLargeStun));
+    }
+
+    private IEnumerator StunCoroutine(bool isLargeStun)
+    {
+        state = EnemyState.STUNNED;
+        weapon.ResetWeapon();
+
+        float stunDuration = isLargeStun ? enemyData.largeStunDuration : enemyData.regularStunDuration;
+        _anim.SetBool("Stunned", true);
+
+        yield return new WaitForSeconds(stunDuration);
+
+        _anim.SetBool("Stunned", false);
+
+        state = EnemyState.STANDBY;
+    }
 
     protected void Die()
     {
-        isDead = true;
+        state = EnemyState.DEAD;
+        weapon.ResetWeapon();
         Debug.Log("Enemy " + this.name + " died!");
         Destroy(gameObject);
     }
-
-    protected void Attack()
-    {
-        weapon.Attack();
-    }
-    
-    protected abstract void Stun(bool isLargeStun);
 }

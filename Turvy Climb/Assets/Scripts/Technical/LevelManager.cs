@@ -16,18 +16,13 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
-        GameObject plObj = GameObject.FindGameObjectWithTag("Player");
-        if (plObj == null)
+        _player = FindObjectOfType<Player>();
+        if (_player == null)
         {
             Debug.LogWarning("There is no player, the level can't start!");
             gameObject.SetActive(false);
             GeneralManager.Instance.Quit();
         }
-        else
-        {
-            _player = plObj.GetComponent<Player>();
-        }
-
     }
 
     void Start()
