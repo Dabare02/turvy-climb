@@ -5,7 +5,7 @@ public class AttackTypeSO : ScriptableObject
 {
     public int damage;
     public float range;
-    public float duration;
+    public float finishDuration;
     public float delay;
     public AudioClip sound;
 }

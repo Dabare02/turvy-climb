@@ -9,6 +9,7 @@ public class PlayerAttackTypeSO : AttackTypeSO
         "cuente como si se estuviera iniciando el ataque.")]
     public float rangeForPerformingAttack;
     public float launchForce;
+    public float duration;
     [Tooltip("Cantidad de tiempo adicional que el ataque se mnantiene en un estado en el " +
         "hace daño después de que se termine el período de ataque.")]
     public float extraAttackHitTime;

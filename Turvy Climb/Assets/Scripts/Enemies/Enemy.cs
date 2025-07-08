@@ -7,29 +7,25 @@ using UnityEngine.Events;
 public abstract class Enemy : MonoBehaviour
 {
     public EnemyDataSO enemyData;
+    [SerializeField] private EnemyWeapon weapon;
     private int hitPoints;
     public bool isDead { get; private set; }
     public bool isStunned { get; private set; }
+    public bool isAttackReady { get; private set; }
 
-    public UnityEvent<float> playerDamaged;
+    private Animator _anim;
 
     void Awake()
     {
-        GameObject staminaMngObj = GameObject.FindGameObjectWithTag("LevelManager");
-        if (staminaMngObj != null)
-        {
-            playerDamaged.AddListener(staminaMngObj.GetComponent<StaminaManager>().DecreaseCurrentStamina);
-        }
+        _anim = GetComponent<Animator>();
+
+        weapon.attackData = enemyData.attackType;
+        weapon.parentAnim = _anim;
     }
 
     void Start()
     {
         ResetHealth();
-    }
-
-    void OnDisable()
-    {
-        playerDamaged.RemoveAllListeners();
     }
 
     public void ResetHealth()
@@ -39,33 +35,35 @@ public abstract class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage, MoveEnum attackType = MoveEnum.None)
     {
-        hitPoints -= damage;
-        Debug.Log("Enemy " + this.name + " has taken " + damage + " points of damage (" + hitPoints + " remaining).");
-        if (hitPoints <= 0)
+        if (!enemyData.inmuneToDamage)
         {
-            hitPoints = 0;
-            Die();
-            return;
+            hitPoints -= damage;
+            Debug.Log("Enemy " + this.name + " has taken " + damage + " points of damage (" + hitPoints + " remaining).");
+
+            _anim.Play("damaged");
+
+            if (hitPoints <= 0)
+            {
+                hitPoints = 0;
+                Die();
+                return;
+            }
         }
 
-        switch (attackType)
+        if (!enemyData.inmuneToStun)
         {
-            case MoveEnum.None:
-                break;
-            case MoveEnum.Punch:
-                Stun(false);
-                break;
-            case MoveEnum.Slingshot:
-                Stun(true);
-                break;
+            switch (attackType)
+            {
+                case MoveEnum.None:
+                    break;
+                case MoveEnum.Punch:
+                    Stun(false);
+                    break;
+                case MoveEnum.Slingshot:
+                    Stun(true);
+                    break;
+            }
         }
-    }
-
-    protected abstract void Stun(bool isLargeStun);
-
-    protected void DamagePlayer()
-    {
-        playerDamaged.Invoke(enemyData.attackType.damage);
     }
 
     protected void Die()
@@ -74,4 +72,11 @@ public abstract class Enemy : MonoBehaviour
         Debug.Log("Enemy " + this.name + " died!");
         Destroy(gameObject);
     }
+
+    protected void Attack()
+    {
+        weapon.Attack();
+    }
+    
+    protected abstract void Stun(bool isLargeStun);
 }
