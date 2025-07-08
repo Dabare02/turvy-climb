@@ -58,7 +58,7 @@ public class StaminaManager : MonoBehaviour
     public void DecreaseCurrentStamina(float amount)
     {
         if (_staminaChangeLocked) return;
-
+        
         stamina -= amount;
         if (stamina <= 0)
         {
@@ -92,8 +92,6 @@ public class StaminaManager : MonoBehaviour
 
     public void StartContinuousStaminaDrain(MoveEnum move, float amount, float delay)
     {
-        if (_staminaChangeLocked) return;
-
         // Se detiene la corutina para el movimiento que se estaba realizando anteriormente (si lo había).
         StopContinuousStaminaChange(move);
 
@@ -106,19 +104,16 @@ public class StaminaManager : MonoBehaviour
 
     public void StartContinuousStaminaRegen(MoveEnum move, float amount, float delay)
     {
-        if (_staminaChangeLocked) return;
-
         // Se detiene la corutina para el movimiento que se estaba realizando anteriormente (si lo había).
         StopContinuousStaminaChange(move);
 
+        // Se inicia una nueva corutina para el movimiento.
         int index = continuousStChange.FindIndex(x => x.Item1 == move);
         continuousStChange[index] = new Tuple<MoveEnum, Coroutine>(move, StartCoroutine(ContinuousStaminaChange(amount, delay, true)));
     }
 
     public void StopContinuousStaminaChange(MoveEnum move)
     {
-        if (_staminaChangeLocked) return;
-
         int index = continuousStChange.FindIndex(x => x.Item1 == move);
         if (continuousStChange[index].Item2 != null)
         {   // Si no hay corutina para el movimiento, no se intenta detener.
