@@ -2,20 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(PlayerMovement))]
 public class Player : MonoBehaviour
 {
+    // Cantidad de salientes agarrados.
     public int grippedHoldsAmount { get; private set; }
+    // Indica si Player está agarrado a algún saliente.
     public bool isPlayerAttachedToWall
     {
         get { return grippedHoldsAmount > 0; }
     }
+    public bool hasStamina { get; private set; }
 
     private PlayerMovement _movementHandler;
     private PlayerAttackHandler _attackHandler;
+
+    private UnityEvent<MoveEnum, float, float> startFewHandsHolding;
+    private UnityEvent<MoveEnum> stopFewHandsHolding;
 
     [Header("Player parts")]
     public List<DraggableHand> playerHands;
@@ -24,7 +31,10 @@ public class Player : MonoBehaviour
     public float handMoveRange = 4.0f;
     public float torsoMoveRange = 5.0f;
     [Header("Hand Parameters")]
+    [Tooltip("Rango normal de detección de salientes.")]
     public float regularHoldDetectRange = 1.5f;
+    [Tooltip("Rango ampliado de detección de salientes, para situaciones como el uso de " +
+        "Quick Drop o Slingshot.")]
     public float largeHoldDetectRange = 3.0f;
 
     [Header("Attack Parameters")]
@@ -49,22 +59,38 @@ public class Player : MonoBehaviour
             PunchHandler punchHandler = playerHands[i].GetComponent<PunchHandler>();
             punchHandler.punchAttack = punchAttack;
         }
+
+        hasStamina = true;
+
+        // Suscripción de eventos.
+        GameObject levelmngObj = GameObject.FindGameObjectWithTag("LevelManager");
+        if (levelmngObj != null)
+        {
+            StaminaManager staminaManager = levelmngObj.GetComponent<StaminaManager>();
+
+            startFewHandsHolding = new UnityEvent<MoveEnum, float, float>();
+            stopFewHandsHolding = new UnityEvent<MoveEnum>();
+            startFewHandsHolding.AddListener(staminaManager.StartContinuousStaminaDrain);
+            stopFewHandsHolding.AddListener(staminaManager.StopContinuousStaminaChange);
+        }
     }
 
+    // Indica si la parte de cuerpo especificada puede ser agarrada con el ratón.
     public bool IsBodyPartGrabbable(DraggableBodyPart bodyPart)
     {
         if (bodyPart.CompareTag("Hand"))
-        {
+        {   // Si es una mano, debe haber al menos una mano agarrada a un saliente (aparte de si misma).
             DraggableHand hand = bodyPart.GetComponent<DraggableHand>();
             if ((hand.isGripped && grippedHoldsAmount < 2)
-                || (!hand.isGripped && !isPlayerAttachedToWall))
+                || (!hand.isGripped && !isPlayerAttachedToWall)
+                || !hasStamina)
             {
                 return false;
             }
         }
         else
-        {
-            if (!isPlayerAttachedToWall)
+        {   // Si es el torso, el jugador debe de estar agarrado a, al menos, un saliente.
+            if (!isPlayerAttachedToWall || !hasStamina)
             {
                 return false;
             }
@@ -75,7 +101,10 @@ public class Player : MonoBehaviour
 
     public void StartMovingBodyPart(Rigidbody2D movingPart)
     {
-        _movementHandler.StartMovingBodyPart(movingPart);
+        if (hasStamina)
+        {
+            _movementHandler.StartMovingBodyPart(movingPart);
+        }
     }
 
     public void StopMovingBodyPart()
@@ -88,25 +117,58 @@ public class Player : MonoBehaviour
         _attackHandler.StartAttackDetection(bodyPart);
     }
 
+    public void StopAttackDetection()
+    {
+        _attackHandler.StopAttackDetection();
+    }
+
     public void CheckAttack()
     {
-        _attackHandler.CheckAttack();
+        if (hasStamina)
+        {
+            _attackHandler.CheckAttack();
+        }
     }
 
     public void IncreaseGrippedHolds(int amount)
     {
         grippedHoldsAmount += amount;
+
+        switch (grippedHoldsAmount)
+        {
+            case 1:
+                startFewHandsHolding.Invoke(MoveEnum.FewHandsHolding, singleHoldSTCost.staminaCost, singleHoldSTCost.staminaChangeSpeed);
+                break;
+            case 2:
+                startFewHandsHolding.Invoke(MoveEnum.FewHandsHolding, doubleHoldSTCost.staminaCost, doubleHoldSTCost.staminaChangeSpeed);
+                break;
+            default:
+                stopFewHandsHolding.Invoke(MoveEnum.FewHandsHolding);
+                break;
+        }
         Debug.Log("Gripped holds: " + grippedHoldsAmount);
     }
 
     public void DecreaseGrippedHolds(int amount)
     {
         grippedHoldsAmount -= amount;
+
+        switch (grippedHoldsAmount)
+        {
+            case 1:
+                startFewHandsHolding.Invoke(MoveEnum.FewHandsHolding, singleHoldSTCost.staminaCost, singleHoldSTCost.staminaChangeSpeed);
+                break;
+            case 2:
+                startFewHandsHolding.Invoke(MoveEnum.FewHandsHolding, doubleHoldSTCost.staminaCost, doubleHoldSTCost.staminaChangeSpeed);
+                break;
+            default:
+                stopFewHandsHolding.Invoke(MoveEnum.FewHandsHolding);
+                break;
+        }
         Debug.Log("Gripped holds: " + grippedHoldsAmount);
     }
 
-    // Soltar todos los salientes. Si increasedRange = true, las manos tendrán mayor rango de agarre
-    // al soltarse (utilizado principalmente para movimientos como QuickDrop).
+    // Soltar todos los salientes.
     public void DropAllHolds()
     {
         for (int i = 0; i < playerHands.Count; i++)
@@ -115,6 +177,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Establecer el rango de detección de saliente de cada mano a la versión normal.
     public void SetRegularHoldDetectRange()
     {
         for (int i = 0; i < playerHands.Count; i++)
@@ -122,6 +185,7 @@ public class Player : MonoBehaviour
             playerHands[i].SetRegularHoldDetectRange();
         }
     }
+    // Establecer el rango de detección de saliente de cada mano a la versión ampliada.
     public void SetLargeHoldDetectRange()
     {
         for (int i = 0; i < playerHands.Count; i++)
@@ -130,6 +194,7 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Devuelve la primera mano que tenga un saliente en su rango de detección.
     public DraggableHand GetHandWithHoldInRange()
     {
         for (int i = 0; i < playerHands.Count; i++)
@@ -140,6 +205,7 @@ public class Player : MonoBehaviour
         return null;
     }
 
+    // Devuelve una mano aleatoria.
     public DraggableHand GetRandomHand()
     {
         List<DraggableHand> shuffledHands = playerHands.ToList();
@@ -147,6 +213,7 @@ public class Player : MonoBehaviour
         return shuffledHands[0];
     }
 
+    // Devuelve una mano que tenga un saliente en su rango de detección de forma aleatoria.
     public DraggableHand GetRandomHandWithHoldInRange()
     {
         List<DraggableHand> shuffledHands = playerHands.ToList();
@@ -158,5 +225,14 @@ public class Player : MonoBehaviour
         }
 
         return null;
+    }
+
+    public void OutOfStamina()
+    {
+        hasStamina = false;
+        DropAllHolds();
+        StopAttackDetection();
+        StopMovingBodyPart();
+        
     }
 }

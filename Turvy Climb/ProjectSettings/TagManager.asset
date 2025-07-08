@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Hold
   - Hand
+  - GeneralManager
+  - LevelManager
   layers:
   - Default
   - TransparentFX

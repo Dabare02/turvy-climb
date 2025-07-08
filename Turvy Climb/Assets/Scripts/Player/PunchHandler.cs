@@ -15,7 +15,7 @@ public class PunchHandler : MonoBehaviour
     [NonSerialized] public PlayerAttackTypeSO punchAttack;
 
     // Events
-    public UnityEvent onAttackSuccess;
+    public UnityEvent attackSuccessEvent;
 
     public bool attackMode
     {
@@ -47,7 +47,7 @@ public class PunchHandler : MonoBehaviour
         {
             //Debug.Log("Enemy " + enemy.name + " detected!");
             //if (_handCollider != null) _handCollider.enabled = true;
-            onAttackSuccess.Invoke();
+            attackSuccessEvent.Invoke();
             attackMode = false;
 
             enemy.TakeDamage(punchAttack.attackDamage);
