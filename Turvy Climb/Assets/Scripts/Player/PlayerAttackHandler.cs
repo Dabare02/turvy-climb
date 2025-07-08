@@ -128,7 +128,7 @@ public class PlayerAttackHandler : MonoBehaviour
         attackSpringJoint.enabled = false;
         attackPartCollider.enabled = false;
         // Esperar la duración del ataque antes de volver brazo a la normalidad.
-        yield return new WaitForSeconds(_player.punchAttack.attackDuration);
+        yield return new WaitForSeconds(_player.punchAttack.duration);
         //Debug.Log("Ending punch...");
         attackPartCollider.enabled = true;
         attackSpringJoint.enabled = true;

@@ -4,5 +4,7 @@ using UnityEngine;
 public class EnemyDataSO : CharacterDataSO
 {
     public float speed;
+    public float regularStunDuration;
+    public float largeStunDuration;
     public AttackTypeSO attackType;
 }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum MoveEnum
 {
+    None,
     DragHand,
     DragTorso,
     QuickGrip,
