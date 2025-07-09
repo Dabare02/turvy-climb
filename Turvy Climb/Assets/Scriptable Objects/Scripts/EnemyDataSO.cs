@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "EnemyData", menuName = "ScriptableObjects/CharacterData/EnemyData", order = 3)]
+[CreateAssetMenu(fileName = "EnemyData", menuName = "ScriptableObjects/EnemyData/EnemyData")]
 public class EnemyDataSO : CharacterDataSO
 {
     public float speed;
@@ -8,5 +8,5 @@ public class EnemyDataSO : CharacterDataSO
     public float largeStunDuration;
     public bool inmuneToDamage;
     public bool inmuneToStun;
-    public AttackTypeSO attackType;
+    public EnemyAttackTypeSO attackType;
 }

@@ -1,7 +1,7 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "AttackType", menuName = "ScriptableObjects/AttackType", order = 5)]
-public class AttackTypeSO : ScriptableObject
+[CreateAssetMenu(fileName = "EnemyAttack", menuName = "ScriptableObjects/EnemyData/EnemyAttack")]
+public class EnemyAttackTypeSO : ScriptableObject
 {
     public float damage;
     public float range;

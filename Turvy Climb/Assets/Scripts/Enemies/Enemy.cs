@@ -1,10 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(Animator))]
 public class Enemy : MonoBehaviour
 {
     public EnemyDataSO enemyData;
@@ -30,23 +33,26 @@ public class Enemy : MonoBehaviour
 
     protected Coroutine stunCoroutine;
 
-    void Awake()
+    protected void Awake()
     {
         _anim = GetComponent<Animator>();
         state = EnemyState.STANDBY;
 
+        // Darle a la arma los parámetros necesarios.
         weapon.SetupWeapon(this, _anim, enemyData.attackType);
     }
 
-    void Start()
+    protected void Start()
     {
         ResetHealth();
     }
 
-    void Update()
+    protected void Update()
     {
         if (isDead) return;
 
+        // En el caso de que su arma sea un aura de daño permanente, se tendrá que
+        // resetear el arma tanto como se pueda.
         if (enemyData.attackType.isWeaponAlwaysReady && state == EnemyState.STANDBY)
         {
             weapon.ReadyWeapon();
@@ -58,6 +64,7 @@ public class Enemy : MonoBehaviour
         hitPoints = enemyData.initialHitPoints;
     }
 
+    // Usado si el enemigo tiene una arma que usar (y no un aura de daño).
     protected void Attack()
     {
         weapon.Attack();
@@ -76,14 +83,14 @@ public class Enemy : MonoBehaviour
             {
                 hitPoints = 0;
                 Die();
-                return;
+                return; // Si está muerto, no se quiere comprobar si esta aturdido.
             }
         }
 
         if (!enemyData.inmuneToStun)
         {
             switch (attackType)
-            {
+            {   // La cantidad de tiempo que estará aturdido depende del enemigo y del tipo de ataque.
                 case MoveEnum.NONE:
                     break;
                 case MoveEnum.PUNCH:

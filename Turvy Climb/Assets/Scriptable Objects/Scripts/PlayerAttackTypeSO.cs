@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "PlayerAttack", menuName = "ScriptableObjects/Player/PlayerAttack", order = 1)]
+[CreateAssetMenu(fileName = "PlayerAttack", menuName = "ScriptableObjects/Player/PlayerAttack")]
 public class PlayerAttackTypeSO : ScriptableObject
 {
     public int damage;

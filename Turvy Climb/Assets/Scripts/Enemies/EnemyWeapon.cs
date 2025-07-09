@@ -10,7 +10,7 @@ public class EnemyWeapon : MonoBehaviour
 {
     [Tooltip("Collider tipo trigger que detectará al jugador. Si no se asigna nada, se buscará algún collider en el propio GameObject que sea trigger.")]
     public Collider2D hitDetector;
-    protected AttackTypeSO attackData;
+    protected EnemyAttackTypeSO attackData;
     protected Animator _anim;
     protected Enemy _enemy;
 
@@ -47,7 +47,7 @@ public class EnemyWeapon : MonoBehaviour
         playerDamaged.RemoveAllListeners();
     }
 
-    public void SetupWeapon(Enemy enemy, Animator enemyAnimator, AttackTypeSO atkData)
+    public void SetupWeapon(Enemy enemy, Animator enemyAnimator, EnemyAttackTypeSO atkData)
     {
         _enemy = enemy;
         _anim = enemyAnimator;
@@ -128,7 +128,6 @@ public class EnemyWeapon : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Something detected.");
         if (other.CompareTag("Player"))
         {
             if (_enemy.state == EnemyState.ATTACKING || _enemy.state == EnemyState.WEAPON_READY)
