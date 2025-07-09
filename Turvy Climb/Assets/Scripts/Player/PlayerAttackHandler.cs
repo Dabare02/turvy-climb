@@ -160,6 +160,7 @@ public class PlayerAttackHandler : MonoBehaviour
         _rangeCenterPos = new Vector2(float.NaN, float.NaN);
         _rangeRadius = 0.0f;
 
+        _isAttackReady = false;
         attackPart = null;
     }
 

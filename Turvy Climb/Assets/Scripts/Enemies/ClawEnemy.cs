@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine.Editor;
 using UnityEngine;
 
 public class ClawEnemy : Enemy
@@ -9,36 +10,72 @@ public class ClawEnemy : Enemy
     public CircleCollider2D playerCloseDetector;
     public CircleCollider2D playerImminentDetector;
 
-    void OnTriggerStay2D(Collider2D other)
+    private bool _attacking;
+    private bool _readying;
+
+    protected new void Update()
+    {
+        base.Update();
+
+        if (state == EnemyState.STUNNED)
+        {
+            playerCloseDetector.enabled = false;
+            playerImminentDetector.enabled = false;
+        }
+        else
+        {
+            playerCloseDetector.enabled = true;
+            playerImminentDetector.enabled = true;
+        }
+
+        if (_readying)
+        {
+            weapon.ReadyWeapon();
+            //Debug.Log("Readying. " + state);
+        }
+        if (_attacking)
+        {
+            weapon.Attack();
+            //Debug.Log("Attacking. " + state);
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
     {
         if (!other.CompareTag("Player")) return;
 
-        List<Collider2D> inColliders = new List<Collider2D>();
-        ContactFilter2D cFilter = new ContactFilter2D();
-        other.OverlapCollider(cFilter.NoFilter(), inColliders);
+        //Debug.Log("Trigger enter");
+        if (playerCloseDetector.IsTouching(other))
+        {
+            //Debug.Log("Close");
+            _readying = true;
+        }
+        if (playerImminentDetector.IsTouching(other))
+        {
+            //Debug.Log("Imminent");
+            _attacking = true;
+        }
 
-        //Debug.Log(state);
-        if (inColliders.Contains(playerCloseDetector))
-        {
-            //Debug.Log("Claw detected something is aproaching...");
-            weapon.ReadyWeapon();
-        }
-        if (inColliders.Contains(playerImminentDetector))
-        {
-            Debug.Log("Claw attacks!");
-            weapon.Attack();
-        }
+        //Debug.Log("Readying? " + _readying + ", attacking? " + _attacking);
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        List<Collider2D> inColliders = new List<Collider2D>();
-        ContactFilter2D cFilter = new ContactFilter2D();
-        other.OverlapCollider(cFilter.NoFilter(), inColliders);
+        if (!other.CompareTag("Player")) return;
 
-        if (!inColliders.Contains(playerCloseDetector))
+        //Debug.Log("Trigger exit");
+        if (!playerImminentDetector.IsTouching(other))
         {
+            //Debug.Log("Not imminent");
+            _attacking = false;
+        }
+        if (!playerCloseDetector.IsTouching(other))
+        {
+            //Debug.Log("Not close");
+            _readying = false;
             weapon.UnreadyWeapon();
         }
+
+        //Debug.Log("Readying? " + _readying + ", attacking? " + _attacking);
     }
 }

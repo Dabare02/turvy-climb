@@ -57,6 +57,11 @@ public abstract class Enemy : MonoBehaviour
         {
             weapon.ReadyWeapon();
         }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Debug.Log(state);
+        }
     }
 
     public void ResetHealth()
@@ -91,13 +96,13 @@ public abstract class Enemy : MonoBehaviour
         {
             switch (attackType)
             {   // La cantidad de tiempo que estará aturdido depende del enemigo y del tipo de ataque.
-                case MoveEnum.NONE:
-                    break;
                 case MoveEnum.PUNCH:
                     Stun(false);
                     break;
                 case MoveEnum.SLINGSHOT:
                     Stun(true);
+                    break;
+                default:
                     break;
             }
         }
@@ -109,12 +114,14 @@ public abstract class Enemy : MonoBehaviour
     }
 
     private IEnumerator StunCoroutine(bool isLargeStun)
-    {
+    {   
+        // Inciar
         state = EnemyState.STUNNED;
-        weapon.ResetWeapon();
+        //weapon.ResetWeapon();
 
         float stunDuration = isLargeStun ? enemyData.largeStunDuration : enemyData.regularStunDuration;
         _anim.SetBool("Stunned", true);
+        //_anim.SetBool("UsingWeapon", false);
 
         yield return new WaitForSeconds(stunDuration);
 

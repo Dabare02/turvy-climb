@@ -175,7 +175,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 hand.TempDisableGrip(_player.tempGripDisableDuration);
             }
-            
+
+            _player.StopAttackDetection();
             StopMovingBodyPart();
         }
     }
