@@ -87,13 +87,13 @@ public class EnemyWeapon : MonoBehaviour
     protected IEnumerator UseWeaponCoroutine()
     {
         _enemy.state = EnemyState.ATTACKING;
-        //_anim.SetBool("UsingWeapon", true);
+        //_anim.SetTrigger("UsingWeapon", true);
         Debug.Log("Enemy " + _enemy.name + " is attacking!");
 
-        //AnimationClip weaponUse = _anim.runtimeAnimatorController.animationClips.ToList().Find(x => x.name == "UseWeapon");
+        //AnimationClip weaponUse = _anim.runtimeAnimatorController.animationClips.ToList().Find(x => x.name == "use_weapon");
         //yield return new WaitForSeconds(weaponUse.length + attackData.finishDuration);
-
-        //_anim.SetBool("UsingWeapon", false);
+        
+        //_anim.SetTrigger("UsingWeapon", false);
         hitDetector.enabled = false;
         _enemy.state = EnemyState.STANDBY;
         Debug.Log("Enemy " + _enemy.name + " hasn't hit anything...");
@@ -128,9 +128,12 @@ public class EnemyWeapon : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        //Debug.Log("Enemy " + name + " detected " + other.name);
+        if (!other.isTrigger && other.CompareTag("Player"))
         {
-            if (_enemy.state == EnemyState.ATTACKING || _enemy.state == EnemyState.WEAPON_READY)
+            PunchHandler punchHandler = other.GetComponent<PunchHandler>();
+            if ((_enemy.state == EnemyState.ATTACKING || _enemy.state == EnemyState.WEAPON_READY)
+                && !punchHandler.attackMode)
             {
                 DamagePlayer();
             }
