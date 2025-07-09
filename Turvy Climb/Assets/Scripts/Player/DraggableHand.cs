@@ -20,8 +20,19 @@ public class DraggableHand : DraggableBodyPart
             return false;
         }
     }
+    public bool gripEnabled
+    {
+        get; private set;
+    }
 
     [SerializeField] private CircleCollider2D holdDetector;
+
+    new void Awake()
+    {
+        base.Awake();
+
+        gripEnabled = true;
+    }
 
     public void SetRegularHoldDetectRange()
     {
@@ -34,7 +45,7 @@ public class DraggableHand : DraggableBodyPart
 
     public void GripHold(Hold hold)
     {
-        if (hold != null && !hold.gripped)
+        if (gripEnabled && hold != null && !hold.gripped)
         {
             Debug.Log("Gripping hold " + hold.name);
             // Indicar al saliente que hay una extremidad sujeta a este.
@@ -54,7 +65,6 @@ public class DraggableHand : DraggableBodyPart
 
     public void DropHold()
     {
-        Debug.Log(holdInRange == null);
         if (holdInRange != null && holdInRange.gripped)
         {
             Debug.Log("Dropping hold " + holdInRange.name);
@@ -68,6 +78,18 @@ public class DraggableHand : DraggableBodyPart
             // Indicar a Player que hay un saliente menos al que está agarrado.
             _player.DecreaseGrippedHolds(1);
         }
+    }
+
+    public void TempDisableGrip(float seconds)
+    {
+        StartCoroutine(DisableGripCoroutine(seconds));
+    }
+
+    private IEnumerator DisableGripCoroutine(float seconds)
+    {
+        gripEnabled = false;
+        yield return new WaitForSeconds(seconds);
+        gripEnabled = true;
     }
 
     protected override void OnMouseDown()

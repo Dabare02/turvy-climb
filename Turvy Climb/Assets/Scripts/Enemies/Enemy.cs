@@ -8,7 +8,7 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     public EnemyDataSO enemyData;
     [SerializeField] protected EnemyWeapon weapon;
@@ -77,7 +77,7 @@ public class Enemy : MonoBehaviour
             hitPoints -= damage;
             Debug.Log("Enemy " + this.name + " has taken " + damage + " points of damage (" + hitPoints + " remaining).");
 
-            //_anim.SetTrigger("Damaged");
+            _anim.SetTrigger("Damaged");
 
             if (hitPoints <= 0)
             {
@@ -114,11 +114,11 @@ public class Enemy : MonoBehaviour
         weapon.ResetWeapon();
 
         float stunDuration = isLargeStun ? enemyData.largeStunDuration : enemyData.regularStunDuration;
-        //_anim.SetBool("Stunned", true);
+        _anim.SetBool("Stunned", true);
 
         yield return new WaitForSeconds(stunDuration);
 
-        //_anim.SetBool("Stunned", false);
+        _anim.SetBool("Stunned", false);
 
         state = EnemyState.STANDBY;
     }

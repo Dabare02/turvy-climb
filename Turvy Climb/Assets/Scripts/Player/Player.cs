@@ -36,6 +36,9 @@ public class Player : MonoBehaviour
     [Tooltip("Rango ampliado de detección de salientes, para situaciones como el uso de " +
         "Quick Drop o Slingshot.")]
     public float largeHoldDetectRange = 3.0f;
+    [Tooltip("En el caso de inhabilitar el agarre de salientes de una mano, cuanto tiempo"
+        + " debería durar esto?")]
+    public float tempGripDisableDuration = 0.8f;
 
     [Header("Attack Parameters")]
     public PlayerAttackTypeSO punchAttack;

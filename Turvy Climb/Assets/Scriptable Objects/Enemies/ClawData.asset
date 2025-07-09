@@ -15,8 +15,8 @@ MonoBehaviour:
   maxHitPoints: 1
   initialHitPoints: 1
   speed: 0
-  regularStunDuration: 0
-  largeStunDuration: 3
+  regularStunDuration: 3
+  largeStunDuration: 0
   inmuneToDamage: 1
   inmuneToStun: 0
   attackType: {fileID: 11400000, guid: 1d816a5f1df01eb47824137cd804c2f7, type: 2}
