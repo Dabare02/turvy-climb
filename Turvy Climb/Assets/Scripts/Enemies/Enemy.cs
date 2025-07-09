@@ -47,7 +47,7 @@ public class Enemy : MonoBehaviour
     {
         if (isDead) return;
 
-        if (enemyData.attackType.isWeaponAlwaysReady)
+        if (enemyData.attackType.isWeaponAlwaysReady && state == EnemyState.STANDBY)
         {
             weapon.ReadyWeapon();
         }
@@ -62,7 +62,7 @@ public class Enemy : MonoBehaviour
     {
         weapon.Attack();
     }
-    
+
     public void TakeDamage(int damage, MoveEnum attackType = MoveEnum.NONE)
     {
         if (!enemyData.inmuneToDamage)
@@ -70,7 +70,7 @@ public class Enemy : MonoBehaviour
             hitPoints -= damage;
             Debug.Log("Enemy " + this.name + " has taken " + damage + " points of damage (" + hitPoints + " remaining).");
 
-            _anim.Play("damaged");
+            //_anim.SetTrigger("Damaged");
 
             if (hitPoints <= 0)
             {
@@ -95,7 +95,7 @@ public class Enemy : MonoBehaviour
             }
         }
     }
-    
+
     protected void Stun(bool isLargeStun)
     {
         stunCoroutine = StartCoroutine(StunCoroutine(isLargeStun));
@@ -107,11 +107,11 @@ public class Enemy : MonoBehaviour
         weapon.ResetWeapon();
 
         float stunDuration = isLargeStun ? enemyData.largeStunDuration : enemyData.regularStunDuration;
-        _anim.SetBool("Stunned", true);
+        //_anim.SetBool("Stunned", true);
 
         yield return new WaitForSeconds(stunDuration);
 
-        _anim.SetBool("Stunned", false);
+        //_anim.SetBool("Stunned", false);
 
         state = EnemyState.STANDBY;
     }

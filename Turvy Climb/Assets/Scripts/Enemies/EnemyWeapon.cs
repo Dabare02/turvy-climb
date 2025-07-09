@@ -8,6 +8,7 @@ using UnityEngine.Events;
 
 public class EnemyWeapon : MonoBehaviour
 {
+    [Tooltip("Collider tipo trigger que detectará al jugador. Si no se asigna nada, se buscará algún collider en el propio GameObject que sea trigger.")]
     public Collider2D hitDetector;
     protected AttackTypeSO attackData;
     protected Animator _anim;
@@ -20,6 +21,15 @@ public class EnemyWeapon : MonoBehaviour
 
     void Awake()
     {
+        if (hitDetector == null)
+        {
+            hitDetector = GetComponents<Collider2D>().ToList().Find(x => x.isTrigger);
+            if (hitDetector == null)
+            {
+                Debug.LogWarning("Hit detector needs to be trigger. If you assigned one, make sure to turn on that option. If not, make sure you add a trigger collider to the weapon GameObject.");
+            }
+        }
+
         GameObject staminaMngObj = GameObject.FindGameObjectWithTag("LevelManager");
         if (staminaMngObj != null)
         {
@@ -77,16 +87,18 @@ public class EnemyWeapon : MonoBehaviour
     protected IEnumerator UseWeaponCoroutine()
     {
         _enemy.state = EnemyState.ATTACKING;
-        _anim.SetBool("UsingWeapon", true);
+        //_anim.SetBool("UsingWeapon", true);
         Debug.Log("Enemy " + _enemy.name + " is attacking!");
 
-        AnimationClip weaponUse = _anim.runtimeAnimatorController.animationClips.ToList().Find(x => x.name == "UseWeapon");
-        yield return new WaitForSeconds(weaponUse.length + attackData.finishDuration);
+        //AnimationClip weaponUse = _anim.runtimeAnimatorController.animationClips.ToList().Find(x => x.name == "UseWeapon");
+        //yield return new WaitForSeconds(weaponUse.length + attackData.finishDuration);
 
-        _anim.SetBool("UsingWeapon", false);
+        //_anim.SetBool("UsingWeapon", false);
         hitDetector.enabled = false;
         _enemy.state = EnemyState.STANDBY;
         Debug.Log("Enemy " + _enemy.name + " hasn't hit anything...");
+
+        yield break;
     }
 
     // Dispara evento para hacer daño al jugador.
@@ -108,8 +120,8 @@ public class EnemyWeapon : MonoBehaviour
     {
         yield return new WaitForSeconds(attackData.cooldown);
 
-        _anim.SetTrigger("BackToStandby");
-        yield return new WaitUntil(() => _anim.IsInTransition(0));
+        //_anim.SetTrigger("BackToStandby");
+        //yield return new WaitUntil(() => _anim.IsInTransition(0));
         _enemy.state = EnemyState.STANDBY;
         Debug.Log("Enemy " + _enemy.name + "\'s attack cooldown is over.");
     }

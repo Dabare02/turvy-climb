@@ -52,7 +52,7 @@ public class StaminaManager : MonoBehaviour
     public void LockStaminaChange(bool cond)
     {
         _staminaChangeLocked = cond;
-        StopAllContinuousStaminaChange();
+        if (cond) StopAllContinuousStaminaChange();
     }
 
     public void DecreaseCurrentStamina(float amount)
