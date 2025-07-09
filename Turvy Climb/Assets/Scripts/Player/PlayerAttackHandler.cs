@@ -57,12 +57,12 @@ public class PlayerAttackHandler : MonoBehaviour
 
                 attackSpringJoint = _springJoints.Find(x => x.connectedBody == attackPart.GetComponent<Rigidbody2D>());
                 break;
-            /*
-            case DraggableTorso:
-                _rangeCenterPos = bodyPart.transform.position;
-                _rangeRadius = _player.slingshotAttack.rangeForPerformingAttack;
-                break;
-            */
+                /*
+                case DraggableTorso:
+                    _rangeCenterPos = bodyPart.transform.position;
+                    _rangeRadius = _player.slingshotAttack.rangeForPerformingAttack;
+                    break;
+                */
         }
 
         _attackDetection = true;
@@ -126,11 +126,9 @@ public class PlayerAttackHandler : MonoBehaviour
 
         punchHandler.attackMode = true;
         attackSpringJoint.enabled = false;
-        attackPartCollider.enabled = false;
         // Esperar la duración del ataque antes de volver brazo a la normalidad.
-        yield return new WaitForSeconds(_player.punchAttack.attackDuration);
+        yield return new WaitForSeconds(_player.punchAttack.duration);
         //Debug.Log("Ending punch...");
-        attackPartCollider.enabled = true;
         attackSpringJoint.enabled = true;
 
         yield return new WaitForSeconds(_player.punchAttack.extraAttackHitTime);

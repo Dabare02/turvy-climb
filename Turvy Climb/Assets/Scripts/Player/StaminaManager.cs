@@ -20,10 +20,10 @@ public class StaminaManager : MonoBehaviour
 
     void Awake()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
+        Player player = FindObjectOfType<Player>();
         if (player != null)
         {
-            staminaDepleteEvent.AddListener(player.GetComponent<Player>().OutOfStamina);
+            staminaDepleteEvent.AddListener(player.OutOfStamina);
         }
 
         ResetStamina();
@@ -52,7 +52,7 @@ public class StaminaManager : MonoBehaviour
     public void LockStaminaChange(bool cond)
     {
         _staminaChangeLocked = cond;
-        StopAllContinuousStaminaChange();
+        if (cond) StopAllContinuousStaminaChange();
     }
 
     public void DecreaseCurrentStamina(float amount)

@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
     // Indica si la parte de cuerpo especificada puede ser agarrada con el ratón.
     public bool IsBodyPartGrabbable(DraggableBodyPart bodyPart)
     {
-        if (bodyPart.CompareTag("Hand"))
+        if (bodyPart.GetType() == typeof(DraggableHand))
         {   // Si es una mano, debe haber al menos una mano agarrada a un saliente (aparte de si misma).
             DraggableHand hand = bodyPart.GetComponent<DraggableHand>();
             if ((hand.isGripped && grippedHoldsAmount < 2)

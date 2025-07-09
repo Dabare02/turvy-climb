@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
             Vector2 newPos = mousePos;
 
             // Se actualiza el centro del rango de movimiento.
-            if (draggedPart.CompareTag("Hand")) _rangeCenterPos = _player.playerTorso.transform.position;
+            if (draggedPart.GetComponent<DraggableHand>() != null) _rangeCenterPos = _player.playerTorso.transform.position;
 
             _isMouseInRange = Utilities.IsPointInsideCircle(_rangeCenterPos, _rangeRadius, mousePos);
             if (!_isMouseInRange)
@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
         _originalPos = draggedPart.transform.position;
 
         // Rango y centro de área por la que se podrá mover el objeto.
-        if (draggedPart.CompareTag("Hand"))
+        if (draggedPart.GetComponent<DraggableHand>() != null)
         {
             // No se asigna el centro en el caso de ser la mano porque este irá cambiando
             // conforme se mueva el cuerpo para seguir a la mano.
@@ -121,7 +121,7 @@ public class PlayerMovement : MonoBehaviour
             _isPartDragging = false;
 
             // Evento para dejar de drenar aguante.
-            if (draggedPart.CompareTag("Hand")) onPartMoveStop.Invoke(MoveEnum.DragHand);
+            if (draggedPart.GetComponent<DraggableHand>() != null) onPartMoveStop.Invoke(MoveEnum.DragHand);
             else onPartMoveStop.Invoke(MoveEnum.DragTorso);
 
             _originalPos = new Vector2(float.NaN, float.NaN);

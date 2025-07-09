@@ -36,7 +36,7 @@ public class PunchHandler : MonoBehaviour
 
     void Start()
     {
-        hitDetector.radius = punchAttack.attackRange;
+        hitDetector.radius = punchAttack.range;
         hitDetector.enabled = false;
     }
 
@@ -50,7 +50,7 @@ public class PunchHandler : MonoBehaviour
             attackSuccessEvent.Invoke();
             attackMode = false;
 
-            enemy.TakeDamage(punchAttack.attackDamage);
+            enemy.TakeDamage(punchAttack.damage, MoveEnum.PUNCH);
         }
     }
 }
