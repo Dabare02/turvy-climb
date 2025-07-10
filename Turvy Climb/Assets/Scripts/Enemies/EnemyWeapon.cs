@@ -19,7 +19,7 @@ public class EnemyWeapon : MonoBehaviour
     private Coroutine useWeaponCoroutine;
     private Coroutine atkCooldownCoroutine;
 
-    void Awake()
+    protected void Awake()
     {
         if (hitDetector == null)
         {
@@ -37,12 +37,12 @@ public class EnemyWeapon : MonoBehaviour
         }
     }
 
-    void Start()
+    protected void Start()
     {
         ResetWeapon();
     }
 
-    void OnDisable()
+    protected void OnDisable()
     {
         playerDamaged.RemoveAllListeners();
     }
@@ -56,9 +56,19 @@ public class EnemyWeapon : MonoBehaviour
 
     public void ResetWeapon()
     {
-        hitDetector.enabled = false;
-        if (useWeaponCoroutine != null) StopCoroutine(useWeaponCoroutine);
-        if (atkCooldownCoroutine != null) StopCoroutine(atkCooldownCoroutine);
+        //hitDetector.enabled = false;
+        if (useWeaponCoroutine != null)
+        {
+            StopCoroutine(useWeaponCoroutine);
+            useWeaponCoroutine = null;
+        }
+        if (atkCooldownCoroutine != null)
+        {
+            StopCoroutine(atkCooldownCoroutine);
+            atkCooldownCoroutine = null;
+        }
+
+        _enemy.state = EnemyState.STANDBY;
     }
 
     // Prepara el arma para atacar.
@@ -67,10 +77,22 @@ public class EnemyWeapon : MonoBehaviour
         if (_enemy.state == EnemyState.STANDBY)
         {
             _enemy.state = EnemyState.WEAPON_READY;
-            Debug.Log("Enemy " + _enemy.name + "\'s weapon is ready!");
+            //Debug.Log("Enemy " + _enemy.name + "\'s weapon is ready!");
 
-            //_anim.SetTrigger("ReadyWeapon");
-            hitDetector.enabled = true;
+            _anim.SetTrigger("ReadyWeapon");
+            //hitDetector.enabled = true;
+        }
+    }
+
+    public void UnreadyWeapon()
+    {
+        if (_enemy.state == EnemyState.WEAPON_READY)
+        {
+            _enemy.state = EnemyState.STANDBY;
+            //Debug.Log("Enemy " + _enemy.name + " retreated their weapon.");
+
+            _anim.SetTrigger("UnreadyWeapon");
+            //hitDetector.enabled = false;
         }
     }
 
@@ -86,51 +108,61 @@ public class EnemyWeapon : MonoBehaviour
 
     protected IEnumerator UseWeaponCoroutine()
     {
+        // Ataque
         _enemy.state = EnemyState.ATTACKING;
-        //_anim.SetBool("UsingWeapon", true);
-        Debug.Log("Enemy " + _enemy.name + " is attacking!");
+        _anim.SetBool("UsingWeapon", true);
+        //Debug.Log("Enemy " + _enemy.name + " is attacking!");
 
-        //AnimationClip weaponUse = _anim.runtimeAnimatorController.animationClips.ToList().Find(x => x.name == "UseWeapon");
-        //yield return new WaitForSeconds(weaponUse.length + attackData.finishDuration);
+        // Esperar a que termine la animacion de ataque.
+        AnimationClip weaponUse = _anim.runtimeAnimatorController.animationClips.ToList().Find(x => x.name == "use_weapon");
+        yield return new WaitForSeconds(weaponUse.length);
 
-        //_anim.SetBool("UsingWeapon", false);
-        hitDetector.enabled = false;
-        _enemy.state = EnemyState.STANDBY;
-        Debug.Log("Enemy " + _enemy.name + " hasn't hit anything...");
-
-        yield break;
+        // Parar ataque e inciar cooldown.
+        _anim.SetBool("UsingWeapon", false);
+        if (atkCooldownCoroutine != null) StopCoroutine(atkCooldownCoroutine);
+        atkCooldownCoroutine = StartCoroutine(AttackCooldownCoroutine());
     }
 
     // Dispara evento para hacer daño al jugador.
     protected void DamagePlayer()
     {
         _enemy.state = EnemyState.PLAYER_DAMAGED;
-        Debug.Log("Enemy " + _enemy.name + " damaged Player for " + attackData.damage + " stamina!");
 
         playerDamaged.Invoke(attackData.damage);
+        Debug.Log("Enemy " + _enemy.name + " attacked Player for " + attackData.damage + " stamina!");
 
-        if (useWeaponCoroutine != null) StopCoroutine(useWeaponCoroutine);
-        hitDetector.enabled = false;
+        if (useWeaponCoroutine != null)
+        {
+            StopCoroutine(useWeaponCoroutine);
+            useWeaponCoroutine = null;
+        }
 
+        _anim.SetBool("UsingWeapon", false);
         if (atkCooldownCoroutine != null) StopCoroutine(atkCooldownCoroutine);
-        StartCoroutine(AttackCooldownCoroutine());
+        atkCooldownCoroutine = StartCoroutine(AttackCooldownCoroutine());
     }
 
+    // Coruitna para cooldown
     protected IEnumerator AttackCooldownCoroutine()
     {
+        _enemy.state = EnemyState.COOLDOWN;
+
+        //hitDetector.enabled = false;
         yield return new WaitForSeconds(attackData.cooldown);
 
-        //_anim.SetTrigger("BackToStandby");
-        //yield return new WaitUntil(() => _anim.IsInTransition(0));
         _enemy.state = EnemyState.STANDBY;
-        Debug.Log("Enemy " + _enemy.name + "\'s attack cooldown is over.");
+        //Debug.Log("Enemy " + _enemy.name + "\'s attack cooldown is over.");
     }
 
-    void OnTriggerEnter2D(Collider2D other)
+    protected void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
+        //Debug.Log("Enemy " + name + " detected " + other.name);
+        if (!other.isTrigger && other.CompareTag("Player"))
         {
-            if (_enemy.state == EnemyState.ATTACKING || _enemy.state == EnemyState.WEAPON_READY)
+            // TEMP: En el futuro, hacer que slingshot handler y punch handler hereden de una clase que tenga este parametro attackMode.
+            PunchHandler punchHandler = other.GetComponent<PunchHandler>();
+            if ((_enemy.state == EnemyState.ATTACKING || _enemy.state == EnemyState.WEAPON_READY)
+                && !punchHandler.attackMode)
             {
                 DamagePlayer();
             }

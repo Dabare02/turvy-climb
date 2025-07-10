@@ -8,7 +8,7 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     public EnemyDataSO enemyData;
     [SerializeField] protected EnemyWeapon weapon;
@@ -57,6 +57,11 @@ public class Enemy : MonoBehaviour
         {
             weapon.ReadyWeapon();
         }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            Debug.Log(state);
+        }
     }
 
     public void ResetHealth()
@@ -77,7 +82,7 @@ public class Enemy : MonoBehaviour
             hitPoints -= damage;
             Debug.Log("Enemy " + this.name + " has taken " + damage + " points of damage (" + hitPoints + " remaining).");
 
-            //_anim.SetTrigger("Damaged");
+            _anim.SetTrigger("Damaged");
 
             if (hitPoints <= 0)
             {
@@ -91,13 +96,13 @@ public class Enemy : MonoBehaviour
         {
             switch (attackType)
             {   // La cantidad de tiempo que estará aturdido depende del enemigo y del tipo de ataque.
-                case MoveEnum.NONE:
-                    break;
                 case MoveEnum.PUNCH:
                     Stun(false);
                     break;
                 case MoveEnum.SLINGSHOT:
                     Stun(true);
+                    break;
+                default:
                     break;
             }
         }
@@ -109,16 +114,18 @@ public class Enemy : MonoBehaviour
     }
 
     private IEnumerator StunCoroutine(bool isLargeStun)
-    {
+    {   
+        // Inciar
         state = EnemyState.STUNNED;
-        weapon.ResetWeapon();
+        //weapon.ResetWeapon();
 
         float stunDuration = isLargeStun ? enemyData.largeStunDuration : enemyData.regularStunDuration;
-        //_anim.SetBool("Stunned", true);
+        _anim.SetBool("Stunned", true);
+        //_anim.SetBool("UsingWeapon", false);
 
         yield return new WaitForSeconds(stunDuration);
 
-        //_anim.SetBool("Stunned", false);
+        _anim.SetBool("Stunned", false);
 
         state = EnemyState.STANDBY;
     }

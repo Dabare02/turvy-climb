@@ -4,6 +4,7 @@ public enum EnemyState
     WEAPON_READY,
     ATTACKING,
     PLAYER_DAMAGED,
+    COOLDOWN,
     STUNNED,
     DEAD
 }

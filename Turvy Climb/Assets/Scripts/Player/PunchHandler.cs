@@ -43,7 +43,7 @@ public class PunchHandler : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         Enemy enemy = other.GetComponent<Enemy>();
-        if (enemy != null && attackMode)
+        if (!other.isTrigger && enemy != null && attackMode)
         {
             //Debug.Log("Enemy " + enemy.name + " detected!");
             //if (_handCollider != null) _handCollider.enabled = true;

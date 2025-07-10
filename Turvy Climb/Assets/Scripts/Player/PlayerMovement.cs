@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.XR;
 using Vector2 = UnityEngine.Vector2;
 
 
@@ -114,7 +115,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void StopMovingBodyPart()
-    {   
+    {
+        Debug.Log("Is part moving? " + _isPartDragging + ". Is draggedPart null? " + (draggedPart == null));
         if (_isPartDragging && draggedPart != null)
         {
             // Indicar finalización de arrastre.
@@ -160,6 +162,22 @@ public class PlayerMovement : MonoBehaviour
 
             // Se reestablece el rango de detección de salientes de todas las extremidades.
             _player.SetRegularHoldDetectRange();
+        }
+    }
+
+    public void DropBodyPart(DraggableBodyPart bodyPart)
+    {
+        if (bodyPart != null && draggedPart != null
+            && bodyPart.name == draggedPart.name)
+        {
+            DraggableHand hand = draggedPart.GetComponent<DraggableHand>();
+            if (hand != null)
+            {
+                hand.TempDisableGrip(_player.tempGripDisableDuration);
+            }
+
+            _player.StopAttackDetection();
+            StopMovingBodyPart();
         }
     }
 
