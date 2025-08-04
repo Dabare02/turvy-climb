@@ -473,6 +473,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaa6c02bfe26fad48910cbe0343b4de0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onPartMoveStart:
+    m_PersistentCalls:
+      m_Calls: []
+  onPartMoveStop:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &189434899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -495,6 +501,14 @@ MonoBehaviour:
   torsoMoveRange: 3.5
   regularHoldDetectRange: 1.5
   largeHoldDetectRange: 3
+  tempGripDisableDuration: 0.8
+  punchAttack: {fileID: 0}
+  slingshotAttack: {fileID: 0}
+  dragHandSTCost: {fileID: 0}
+  dragTorsoSTCost: {fileID: 0}
+  gripHoldSTCost: {fileID: 0}
+  singleHoldSTCost: {fileID: 0}
+  doubleHoldSTCost: {fileID: 0}
 --- !u!1001 &251225875
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -690,9 +704,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingLayerID: 1459216879
+  m_SortingLayer: 3
+  m_SortingOrder: 2
   m_Sprite: {fileID: -2413806693520163455, guid: 55556ca538e55324588e2e46c9dd8e08, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
