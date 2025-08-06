@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     public UnityEvent<MoveEnum, float, float> onPartMoveStart;
     public UnityEvent<MoveEnum> onPartMoveStop;
+    public UnityEvent onSlingshotStopEvent;
 
     void Start()
     {
@@ -187,6 +188,16 @@ public class PlayerMovement : MonoBehaviour
             if (_isMouseInRange) Gizmos.color = Color.green;
 
             Gizmos.DrawWireSphere(_rangeCenterPos, _rangeRadius);
+
+
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            Vector2 newPos = mousePos;
+            if (!_isMouseInRange)
+            {
+                newPos = Utilities.LineThroughCircleCenterIntersec(_rangeCenterPos, _rangeRadius, mousePos);
+            }
+
+            Gizmos.DrawWireSphere(newPos, 0.1f);
         }
     }
 }

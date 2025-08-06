@@ -17,8 +17,8 @@ public class ClawEnemy : Enemy
     {
         base.Update();
 
-        playerCloseDetector.enabled = state == EnemyState.STUNNED;
-        playerImminentDetector.enabled = state == EnemyState.STUNNED;
+        playerCloseDetector.enabled = !(state == EnemyState.STUNNED);
+        playerImminentDetector.enabled = !(state == EnemyState.STUNNED);
 
         if (_readying)
         {

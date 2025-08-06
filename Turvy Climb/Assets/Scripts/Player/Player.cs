@@ -59,11 +59,14 @@ public class Player : MonoBehaviour
         _movementHandler = GetComponent<PlayerMovement>();
         _attackHandler = GetComponent<PlayerAttackHandler>();
 
+        // Asignar datos de ataque a cada elemento que interviene en dicho ataque.
         for (int i = 0; i < playerHands.Count; i++)
         {
-            PunchHandler punchHandler = playerHands[i].GetComponent<PunchHandler>();
-            punchHandler.punchAttack = punchAttack;
+            SpecificAttackHandler punchHandler = playerHands[i].GetComponent<PunchHandler>();
+            punchHandler.attackData = punchAttack;
         }
+        SpecificAttackHandler slingshotHandler = playerTorso.GetComponent<SlingshotHandler>();
+        slingshotHandler.attackData = slingshotAttack;
 
         hasStamina = true;
 
@@ -75,8 +78,10 @@ public class Player : MonoBehaviour
 
             startFewHandsHolding = new UnityEvent<MoveEnum, float, float>();
             stopFewHandsHolding = new UnityEvent<MoveEnum>();
+            _movementHandler.onSlingshotStopEvent = new UnityEvent();
             startFewHandsHolding.AddListener(staminaManager.StartContinuousStaminaDrain);
             stopFewHandsHolding.AddListener(staminaManager.StopContinuousStaminaChange);
+            _movementHandler.onSlingshotStopEvent.AddListener(_attackHandler.SlingshotInterrupt);
         }
     }
 
@@ -230,6 +235,31 @@ public class Player : MonoBehaviour
         }
 
         return null;
+    }
+
+    /* FUNCIONES TÉCNICAS */
+    public void EnableBodyColliders(bool cond)
+    {
+        for (int i = 0; i < playerHands.Count; i++)
+        {
+            playerHands[i].GetComponent<CircleCollider2D>().enabled = cond;
+        }
+        playerTorso.GetComponent<CircleCollider2D>().enabled = cond;
+    }
+
+    public void ChangeSpringJointsFrequency(float newFrequency = -1f)
+    {
+        playerTorso.ChangeSpringFrequency(newFrequency);
+    }
+
+    public void ChangeSpringJointsDistance(float newDistance = -1f)
+    {
+        playerTorso.ChangeSpringDistance(newDistance);
+    }
+
+    public void ChangeSpringJointsDampRatio(float newDamp = -1f)
+    {
+        playerTorso.ChangeSpringDampenRatio(newDamp);
     }
 
     public void OutOfStamina()
