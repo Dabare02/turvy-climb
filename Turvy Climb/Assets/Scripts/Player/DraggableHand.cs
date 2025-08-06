@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.XR;
 
 // Representa una mano que se puede mover. Tambien se encarga de la detección de colisiones.
 public class DraggableHand : DraggableBodyPart
@@ -47,7 +48,6 @@ public class DraggableHand : DraggableBodyPart
     {
         if (gripEnabled && hold != null && !hold.gripped)
         {
-            Debug.Log("Gripping hold " + hold.name);
             // Indicar al saliente que hay una extremidad sujeta a este.
             hold.gripped = true;
 
@@ -60,6 +60,8 @@ public class DraggableHand : DraggableBodyPart
 
             // Indicar a Player que hay un saliente más al que está agarrado.
             _player.IncreaseGrippedHolds(1);
+            
+            Debug.Log(this.name + " is gripping hold " + holdInRange.name);
         }
     }
 
@@ -67,7 +69,7 @@ public class DraggableHand : DraggableBodyPart
     {
         if (holdInRange != null && holdInRange.gripped)
         {
-            Debug.Log("Dropping hold " + holdInRange.name);
+            Debug.Log(this.name + " is dropping hold " + holdInRange.name);
             // Descongelar RigidBody.
             _body.constraints = RigidbodyConstraints2D.FreezeRotation;
             _body.AddForce(Vector2.zero);   // Para forzar update. No recomendado, quizás usar corutina con "yield return new WaitForFixedUpdate()".
@@ -97,7 +99,7 @@ public class DraggableHand : DraggableBodyPart
         // Comprobar si hay al menos 1 mano agarrada a la pared (aparte de si misma).
         // Si no es el caso, no se permitirá cogerlo.
         if (!_player.IsBodyPartGrabbable(this)) return;
-
+        
         DropHold();
         base.OnMouseDown();
     }
@@ -117,7 +119,7 @@ public class DraggableHand : DraggableBodyPart
         Hold holdScr = other.GetComponent<Hold>();
         if (holdScr != null && !holdScr.gripped)
         {
-            Debug.Log("Hold in range.");
+            Debug.Log("Hold " + holdScr.name + " in range of" + this.name);
             holdInRange = holdScr;
         }
     }
@@ -128,7 +130,7 @@ public class DraggableHand : DraggableBodyPart
         if (holdScr != null && holdScr.gameObject == other.gameObject)
         {
             holdInRange = null;
-            Debug.Log("Hold left range.");
+            Debug.Log("Hold " + holdScr.name + " left range of" + this.name);
         }
     }
 }

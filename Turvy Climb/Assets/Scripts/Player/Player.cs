@@ -262,6 +262,28 @@ public class Player : MonoBehaviour
         playerTorso.ChangeSpringDampenRatio(newDamp);
     }
 
+    public void ActivateGravity(bool cond)
+    {
+        float gravScale = cond ? 1f : 0f;
+
+        for (int i = 0; i < playerHands.Count; i++)
+        {
+            playerHands[i].GetComponent<Rigidbody2D>().gravityScale = gravScale;
+        }
+        playerTorso.GetComponent<Rigidbody2D>().gravityScale = gravScale;
+    }
+
+    public void ActivateEnemyInmunity(bool cond)
+    {
+        string layerName = cond ? "PlayerEnemyPassthrough" : "Player";
+
+        for (int i = 0; i < playerHands.Count; i++)
+        {
+            playerHands[i].gameObject.layer = LayerMask.NameToLayer(layerName);
+        }
+        playerTorso.gameObject.layer = LayerMask.NameToLayer(layerName);
+    }
+
     public void OutOfStamina()
     {
         hasStamina = false;

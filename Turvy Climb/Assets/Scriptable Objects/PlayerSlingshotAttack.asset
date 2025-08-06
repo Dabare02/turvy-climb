@@ -16,7 +16,7 @@ MonoBehaviour:
   range: 1.5
   rangeForPerformingAttack: 2.5
   launchForce: 6
-  duration: 1
+  duration: 0.25
   extraAttackHitTime: 0
   staminaData: {fileID: 11400000, guid: b79f17fe26a840a4da94be9edcb29323, type: 2}
   sound: {fileID: 0}

@@ -168,9 +168,11 @@ public class PlayerAttackHandler : MonoBehaviour
         Vector2 direction = _rangeCenterPos - (Vector2)attackPart.transform.position;
         Vector2 force = direction * launchForce;
 
-        // Aflojar SpringJoints.
-        // _player.ChangeSpringJointsDistance(2f);
-        // _player.ChangeSpringJointsFrequency(0f);
+        // Aflojar SpringJoints y apagar gravedad.
+        _player.ChangeSpringJointsDistance(2f);
+        _player.ChangeSpringJointsFrequency(0f);
+        _player.ActivateGravity(false);
+        _player.ActivateEnemyInmunity(true);
 
         // Realizar ataque.
         _player.DropAllHolds();
@@ -193,15 +195,28 @@ public class PlayerAttackHandler : MonoBehaviour
         //Debug.Log("Slingshot ended.");
         slingshotHandler.attackMode = false;
 
-        // Resetear SpringJoints
-        // _player.ChangeSpringJointsDistance();
-        // _player.ChangeSpringJointsFrequency();
+        // Resetear SpringJoints y reestablecer gravedad.
+        _player.ChangeSpringJointsDistance();
+        _player.ChangeSpringJointsFrequency();
+        _player.ActivateGravity(true);
+        _player.ActivateEnemyInmunity(false);
 
         StopAttackDetection();
     }
 
     public void SlingshotInterrupt()
     {
+        // COndiciones para no ejecutar función.
+        if (attackPart != null)
+        {
+            SlingshotHandler attackHandler = attackPart.GetComponent<SlingshotHandler>();
+            if (attackHandler == null) return;
+        }
+        else
+        {
+            return;
+        }
+
         //Debug.Log("Slingshot interrupted!");
         if (attackCoroutine != null)
         {
@@ -210,8 +225,10 @@ public class PlayerAttackHandler : MonoBehaviour
 
         attackPart.GetComponent<SlingshotHandler>().attackMode = false;
 
-        // _player.ChangeSpringJointsDistance();
-        // _player.ChangeSpringJointsFrequency();
+        _player.ChangeSpringJointsDistance();
+        _player.ChangeSpringJointsFrequency();
+        _player.ActivateGravity(true);
+        _player.ActivateEnemyInmunity(false);
 
         StopAttackDetection();
     }
