@@ -43,7 +43,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // MOVIMIENTO: Agarrar y arrastrar mano o torso.
-        MoveBodyPart();
+        if (_isPartDragging && draggedPart != null) MoveBodyPart();
 
         // MOVIMIENTO: Quick grip / drop.
         if (Input.GetKeyDown(KeyCode.Space)) QuickGripDrop();
@@ -52,24 +52,21 @@ public class PlayerMovement : MonoBehaviour
     // MOVIMIENTO: Agarrar y arrastrar mano o torso.
     private void MoveBodyPart()
     {
-        if (_isPartDragging && draggedPart != null)
-        {
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 newPos = mousePos;
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 newPos = mousePos;
 
-            // Se actualiza el centro del rango de movimiento.
-            if (draggedPart.GetComponent<DraggableHand>() != null) _rangeCenterPos = _player.playerTorso.transform.position;
+        // Se actualiza el centro del rango de movimiento.
+        if (draggedPart.GetComponent<DraggableHand>() != null) _rangeCenterPos = _player.playerTorso.transform.position;
 
-            _isMouseInRange = Utilities.IsPointInsideCircle(_rangeCenterPos, _rangeRadius, mousePos);
-            if (!_isMouseInRange)
-            {   // Si el ratón se encuentra FUERA del rango de movimiento.
-                newPos = Utilities.LineThroughCircleCenterIntersec(_rangeCenterPos, _rangeRadius, mousePos);
-            }
-
-            // Mover objeto hacia dirección correcta con la velocidad adecuada.
-            Vector2 direction = newPos - (Vector2)draggedPart.transform.position;
-            draggedPart.velocity = direction * draggedPart.GetComponent<DraggableBodyPart>().dragSpeed;
+        _isMouseInRange = Utilities.IsPointInsideCircle(_rangeCenterPos, _rangeRadius, mousePos);
+        if (!_isMouseInRange)
+        {   // Si el ratón se encuentra FUERA del rango de movimiento.
+            newPos = Utilities.LineThroughCircleCenterIntersec(_rangeCenterPos, _rangeRadius, mousePos);
         }
+
+        // Mover objeto hacia dirección correcta con la velocidad adecuada.
+        Vector2 direction = newPos - (Vector2)draggedPart.transform.position;
+        draggedPart.velocity = direction * draggedPart.GetComponent<DraggableBodyPart>().dragSpeed;
     }
 
     public void StartMovingBodyPart(Rigidbody2D bodyPart)

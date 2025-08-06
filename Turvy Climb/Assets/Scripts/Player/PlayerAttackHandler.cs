@@ -40,7 +40,10 @@ public class PlayerAttackHandler : MonoBehaviour
 
     void Update()
     {
-        DetectAttackReadiness();
+        if (attackPart != null)
+        {
+            DetectAttackReadiness();
+        }
     }
 
     public void StartAttackDetection(DraggableBodyPart bodyPart)
@@ -53,30 +56,22 @@ public class PlayerAttackHandler : MonoBehaviour
         switch (attackPart)
         {
             case DraggableHand:
+                _rangeCenterPos = _player.playerTorso.transform.position;
                 _rangeRadius = _player.punchAttack.rangeForPerformingAttack;
 
                 attackSpringJoint = _springJoints.Find(x => x.connectedBody == attackPart.GetComponent<Rigidbody2D>());
                 break;
-                /*
-                case DraggableTorso:
-                    _rangeCenterPos = bodyPart.transform.position;
-                    _rangeRadius = _player.slingshotAttack.rangeForPerformingAttack;
-                    break;
-                */
-        }
+            case DraggableTorso:
+                _rangeCenterPos = bodyPart.transform.position;
+                _rangeRadius = _player.slingshotAttack.rangeForPerformingAttack;
+                break;
+    }
 
         _attackDetection = true;
     }
 
     private void DetectAttackReadiness()
     {
-        if (attackPart == null) return;
-        
-        if (attackPart.GetType() == typeof(DraggableHand))
-        {
-            _rangeCenterPos = _player.playerTorso.transform.position;
-        }
-
         bool prevReadiness = _isAttackReady;  // DEBUG
         _isAttackReady = !Utilities.IsPointInsideCircle(_rangeCenterPos,
                                                         _rangeRadius,
@@ -91,7 +86,11 @@ public class PlayerAttackHandler : MonoBehaviour
             if (attackPart.GetType() == typeof(DraggableHand)
                 && !((DraggableHand)attackPart).isGripped)
             {
-                Attack();
+                Punch();
+            }
+            else if (attackPart.GetType() == typeof(DraggableTorso))
+            {
+                Slingshot();
             }
         }
         else
@@ -100,7 +99,7 @@ public class PlayerAttackHandler : MonoBehaviour
         }
     }
 
-    public void Attack()
+    public void Punch()
     {
         // TODO: Añadir soporte para movimiento tirachinas.
 
@@ -115,10 +114,10 @@ public class PlayerAttackHandler : MonoBehaviour
         Vector2 force = direction * launchForce;
         attackBody.AddForce(force, ForceMode2D.Impulse);
 
-        attackCoroutine = StartCoroutine(AttackCoroutine());
+        attackCoroutine = StartCoroutine(PunchCoroutine());
     }
 
-    private IEnumerator AttackCoroutine()
+    private IEnumerator PunchCoroutine()
     {
         // TODO: Añadir soporte para movimiento tirachinas.
 
@@ -150,6 +149,16 @@ public class PlayerAttackHandler : MonoBehaviour
         attackSpringJoint.enabled = true;
 
         StopAttackDetection();
+    }
+
+    public void Slingshot()
+    {
+        
+    }
+
+    private IEnumerator SlingshotCoroutine()
+    {
+        yield return null;
     }
 
     public void StopAttackDetection()

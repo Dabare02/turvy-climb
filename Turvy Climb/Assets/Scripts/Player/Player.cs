@@ -46,6 +46,8 @@ public class Player : MonoBehaviour
     [Header("Stamina Cost Parameters")]
     public StaminaCostSO dragHandSTCost;
     public StaminaCostSO dragTorsoSTCost;
+    [Tooltip("Aguante regenerado al agarrarse a un saliente al que el jugador no se" +
+        " ha agarrado previamente.")]
     public StaminaCostSO gripHoldSTCost;
     [Tooltip("Coste de aguante drenado al estar colgando de una sola extremidad.")]
     public StaminaCostSO singleHoldSTCost;
