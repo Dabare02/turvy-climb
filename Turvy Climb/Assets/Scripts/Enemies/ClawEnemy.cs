@@ -17,21 +17,17 @@ public class ClawEnemy : Enemy
     {
         base.Update();
 
-        if (state == EnemyState.STUNNED)
-        {
-            playerCloseDetector.enabled = false;
-            playerImminentDetector.enabled = false;
-        }
-        else
-        {
-            playerCloseDetector.enabled = true;
-            playerImminentDetector.enabled = true;
-        }
+        playerCloseDetector.enabled = state == EnemyState.STUNNED;
+        playerImminentDetector.enabled = state == EnemyState.STUNNED;
 
         if (_readying)
         {
             weapon.ReadyWeapon();
             //Debug.Log("Readying. " + state);
+        }
+        else
+        {
+            weapon.UnreadyWeapon();
         }
         if (_attacking)
         {
@@ -73,7 +69,6 @@ public class ClawEnemy : Enemy
         {
             //Debug.Log("Not close");
             _readying = false;
-            weapon.UnreadyWeapon();
         }
 
         //Debug.Log("Readying? " + _readying + ", attacking? " + _attacking);

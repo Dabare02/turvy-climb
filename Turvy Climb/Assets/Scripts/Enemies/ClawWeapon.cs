@@ -7,7 +7,7 @@ public class ClawWeapon : EnemyWeapon
 {
     public UnityEvent<DraggableBodyPart> dropHand;
 
-    public new void Awake()
+    protected new void Awake()
     {
         base.Awake();
 

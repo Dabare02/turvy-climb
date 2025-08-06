@@ -236,6 +236,5 @@ public class Player : MonoBehaviour
         DropAllHolds();
         StopAttackDetection();
         StopMovingBodyPart();
-        
     }
 }

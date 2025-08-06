@@ -49,8 +49,6 @@ public abstract class Enemy : MonoBehaviour
 
     protected void Update()
     {
-        if (isDead) return;
-
         // En el caso de que su arma sea un aura de daño permanente, se tendrá que
         // resetear el arma tanto como se pueda.
         if (enemyData.attackType.isWeaponAlwaysReady && state == EnemyState.STANDBY)
@@ -58,10 +56,12 @@ public abstract class Enemy : MonoBehaviour
             weapon.ReadyWeapon();
         }
 
+        // DEBUG v
         if (Input.GetKeyDown(KeyCode.X))
         {
             Debug.Log(state);
         }
+        // DEBUG ^
     }
 
     public void ResetHealth()
@@ -69,7 +69,7 @@ public abstract class Enemy : MonoBehaviour
         hitPoints = enemyData.initialHitPoints;
     }
 
-    // Usado si el enemigo tiene una arma que usar (y no un aura de daño).
+    // Usado si el enemigo tiene una arma que usar (y no un área de daño).
     protected void Attack()
     {
         weapon.Attack();
@@ -77,12 +77,13 @@ public abstract class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage, MoveEnum attackType = MoveEnum.NONE)
     {
+        bool stunned = false;
+
+        // Determinar la cantidad de daño recibido y morir si procede.
         if (!enemyData.inmuneToDamage)
         {
             hitPoints -= damage;
             Debug.Log("Enemy " + this.name + " has taken " + damage + " points of damage (" + hitPoints + " remaining).");
-
-            _anim.SetTrigger("Damaged");
 
             if (hitPoints <= 0)
             {
@@ -92,20 +93,29 @@ public abstract class Enemy : MonoBehaviour
             }
         }
 
-        if (!enemyData.inmuneToStun)
-        {
-            switch (attackType)
-            {   // La cantidad de tiempo que estará aturdido depende del enemigo y del tipo de ataque.
-                case MoveEnum.PUNCH:
+        // Determinar si el enemigo se aturde y aturdir si procede.
+        switch (attackType)
+        {   // La cantidad de tiempo que estará aturdido depende del enemigo y del tipo de ataque.
+            case MoveEnum.PUNCH:
+                if (!enemyData.inmuneToRegularStun)
+                {
+                    stunned = true;
                     Stun(false);
-                    break;
-                case MoveEnum.SLINGSHOT:
+                }
+
+                break;
+            case MoveEnum.SLINGSHOT:
+                if (!enemyData.inmuneToLargeStun)
+                {
+                    stunned = true;
                     Stun(true);
-                    break;
-                default:
-                    break;
-            }
+                }
+
+                break;
         }
+
+        // Reproducir animación de daño en caso de no ser aturdido.
+        if (!stunned) _anim.SetTrigger("Damaged");
     }
 
     protected void Stun(bool isLargeStun)
@@ -116,15 +126,12 @@ public abstract class Enemy : MonoBehaviour
     private IEnumerator StunCoroutine(bool isLargeStun)
     {   
         // Inciar
+        weapon.ResetWeapon();
         state = EnemyState.STUNNED;
-        //weapon.ResetWeapon();
-
         float stunDuration = isLargeStun ? enemyData.largeStunDuration : enemyData.regularStunDuration;
+
         _anim.SetBool("Stunned", true);
-        //_anim.SetBool("UsingWeapon", false);
-
         yield return new WaitForSeconds(stunDuration);
-
         _anim.SetBool("Stunned", false);
 
         state = EnemyState.STANDBY;
@@ -132,8 +139,9 @@ public abstract class Enemy : MonoBehaviour
 
     protected void Die()
     {
-        state = EnemyState.DEAD;
         weapon.ResetWeapon();
+        state = EnemyState.DEAD;
+
         Debug.Log("Enemy " + this.name + " died!");
         Destroy(gameObject);
     }

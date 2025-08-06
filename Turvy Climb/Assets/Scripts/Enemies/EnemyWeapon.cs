@@ -68,6 +68,7 @@ public class EnemyWeapon : MonoBehaviour
             atkCooldownCoroutine = null;
         }
 
+        _anim.SetBool("UsingWeapon", false);
         _enemy.state = EnemyState.STANDBY;
     }
 
