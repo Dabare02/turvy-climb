@@ -4767,10 +4767,6 @@ PrefabInstance:
       propertyPath: startingHolds.Array.data[3]
       value: 
       objectReference: {fileID: 982358117}
-    - target: {fileID: 8660746188147244398, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
-      propertyPath: initialStamina
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

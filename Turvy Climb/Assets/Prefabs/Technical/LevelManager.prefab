@@ -64,9 +64,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxStamina: 50
   initialStamina: 50
-  OnStaminaChange:
+  staminaChangeEvent:
     m_PersistentCalls:
       m_Calls: []
-  OnStaminaDeplete:
+  staminaDepleteEvent:
     m_PersistentCalls:
       m_Calls: []

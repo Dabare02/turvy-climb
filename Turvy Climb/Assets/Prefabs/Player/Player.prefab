@@ -663,7 +663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragSpeed: 10
-  springFrequency: 1.5
+  springFrequency: 1
   springDistance: 2
   springDampRatio: 0.5
 --- !u!114 &617422298762039071

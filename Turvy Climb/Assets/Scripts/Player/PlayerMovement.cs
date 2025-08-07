@@ -170,7 +170,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // Se selecciona una de las manos y se hace que se agarre a un saliente.
             // Orden de elección: LeftHand -> RightHand -> LeftFoot -> RightFoot
-            DraggableHand selectedHand = _player.GetHandWithHoldInRange();
+            DraggableHand selectedHand = _player.GetHighestHandWHoldInRange();
             if (selectedHand != null)
             {
                 selectedHand.GripHold(selectedHand.ClosestHold());
@@ -206,16 +206,6 @@ public class PlayerMovement : MonoBehaviour
             if (_isMouseInRange) Gizmos.color = Color.green;
 
             Gizmos.DrawWireSphere(_rangeCenterPos, _rangeRadius);
-
-
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 newPos = mousePos;
-            if (!_isMouseInRange)
-            {
-                newPos = Utilities.LineThroughCircleCenterIntersec(_rangeCenterPos, _rangeRadius, mousePos);
-            }
-
-            Gizmos.DrawWireSphere(newPos, 0.1f);
         }
     }
 }

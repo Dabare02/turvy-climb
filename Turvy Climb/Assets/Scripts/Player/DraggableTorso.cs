@@ -42,7 +42,7 @@ public class DraggableTorso : DraggableBodyPart
     /// Cambia la frecuencia de los SpringJoint2D de cada extremidad. No asignar valor a newFrequency para devolver frecuencia a su valor por defecto.
     /// </summary>
     /// <param name="newFrequency"></param>
-    public void ChangeSpringFrequency(float newFrequency)
+    public void ChangeSpringFrequency(float newFrequency = -1f)
     {
         float newF = newFrequency;
         if (newFrequency < 0f) newF = springFrequency;
@@ -57,7 +57,7 @@ public class DraggableTorso : DraggableBodyPart
     /// Cambia la distancia de los SpringJoint2D de cada extremidad. No asignar valor a newDistance para devolver distancia a su valor por defecto.
     /// </summary>
     /// <param name="newDistance"></param>
-    public void ChangeSpringDistance(float newDistance)
+    public void ChangeSpringDistance(float newDistance = -1f)
     {
         float newD = newDistance;
         if (newDistance < 0f) newD = springDistance;
@@ -72,7 +72,7 @@ public class DraggableTorso : DraggableBodyPart
     /// Cambia el ratio de amortiguación de los SpringJoint2D de cada extremidad. No asignar valor a newDamp para devolver ratio de amortiguación a su valor por defecto.
     /// </summary>
     /// <param name="newDamp"></param>
-    public void ChangeSpringDampenRatio(float newDamp)
+    public void ChangeSpringDampenRatio(float newDamp = -1f)
     {
         float newDR = newDamp;
         if (newDamp < 0f) newDR = springDampRatio;

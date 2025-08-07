@@ -215,6 +215,23 @@ public class Player : MonoBehaviour
         return null;
     }
 
+    // Devuelve la mano con un saliente en su rango de detección que se encuentre más arriba.
+    public DraggableHand GetHighestHandWHoldInRange()
+    {
+        DraggableHand hand = playerHands[0];
+        for (int i = 0; i < playerHands.Count; i++)
+        {
+            if (playerHands[i].holdsInRange.Count > 0
+                && playerHands[i].transform.position.y
+                > hand.transform.position.y)
+            {
+                hand = playerHands[i];
+            }
+        }
+
+        return hand;
+    }
+
     // Devuelve una mano aleatoria.
     public DraggableHand GetRandomHand()
     {

@@ -169,8 +169,8 @@ public class PlayerAttackHandler : MonoBehaviour
         Vector2 force = direction * launchForce;
 
         // Aflojar SpringJoints y apagar gravedad.
-        _player.ChangeSpringJointsDistance(2f);
-        _player.ChangeSpringJointsFrequency(0f);
+        // _player.ChangeSpringJointsDistance(2f);
+        // _player.ChangeSpringJointsFrequency(0f);
         _player.ActivateGravity(false);
         _player.ActivateEnemyInmunity(true);
 
@@ -195,8 +195,8 @@ public class PlayerAttackHandler : MonoBehaviour
         //Debug.Log("Slingshot ended.");
 
         // Resetear SpringJoints y reestablecer gravedad.
-        _player.ChangeSpringJointsDistance();
-        _player.ChangeSpringJointsFrequency();
+        // _player.ChangeSpringJointsDistance();
+        // _player.ChangeSpringJointsFrequency();
         _player.ActivateGravity(true);
 
         yield return new WaitForSeconds(_player.slingshotAttack.extraAttackHitTime);
@@ -227,8 +227,8 @@ public class PlayerAttackHandler : MonoBehaviour
 
         attackPart.GetComponent<SlingshotHandler>().attackMode = false;
 
-        _player.ChangeSpringJointsDistance();
-        _player.ChangeSpringJointsFrequency();
+        // _player.ChangeSpringJointsDistance();
+        // _player.ChangeSpringJointsFrequency();
         _player.ActivateGravity(true);
         _player.ActivateEnemyInmunity(false);
 
