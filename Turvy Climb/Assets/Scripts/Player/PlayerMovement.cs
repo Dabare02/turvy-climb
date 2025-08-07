@@ -25,6 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     public UnityEvent<MoveEnum, float, float> onPartMoveStart;
     public UnityEvent<MoveEnum> onPartMoveStop;
+    public UnityEvent<float> onFirstGrabHold;
     public UnityEvent onSlingshotStopEvent;
 
     void Start()
@@ -38,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
 
             onPartMoveStart.AddListener(stManager.StartContinuousStaminaDrain);
             onPartMoveStop.AddListener(stManager.StopContinuousStaminaChange);
+            onFirstGrabHold.AddListener(stManager.IncreaseCurrentStamina);
         }
     }
 
@@ -120,9 +122,25 @@ public class PlayerMovement : MonoBehaviour
             // Indicar finalización de arrastre.
             _isPartDragging = false;
 
-            // Evento para dejar de drenar aguante.
-            if (draggedPart.GetComponent<DraggableHand>() != null) onPartMoveStop.Invoke(MoveEnum.DragHand);
+            // Evento para dejar de drenar aguante (y para recuperar aguante en caso de que se agarre un
+            // saliente por primera vez).
+            DraggableBodyPart part = draggedPart.GetComponent<DraggableBodyPart>();
+            if (part.GetType() == typeof(DraggableHand))
+            {
+                DraggableHand hand = draggedPart.GetComponent<DraggableHand>();
+                // Parar drenaje continuo.
+                onPartMoveStop.Invoke(MoveEnum.DragHand);
+                if (hand.isGripped && !hand.grippedHold.firstGrip)
+                {   // Si se está agarrando un saliente y es la primera vez que se agarra.
+                    onFirstGrabHold.Invoke(_player.firstGripHoldSTCost.staminaCost);
+                    // Indicar que ya ha sido agarrado, para no volver a regenerar aguante la próxima vez.
+                    hand.grippedHold.FirstGrip();   
+                }
+            }
             else onPartMoveStop.Invoke(MoveEnum.DragTorso);
+
+            // Evento para recuperar aguante (en caso de que se agarre un saliente por primera vez).
+            
 
             _originalPos = new Vector2(float.NaN, float.NaN);
             _rangeCenterPos = new Vector2(float.NaN, float.NaN);

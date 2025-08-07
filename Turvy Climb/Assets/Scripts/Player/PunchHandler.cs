@@ -34,7 +34,7 @@ public class PunchHandler : SpecificAttackHandler
             punchSuccessEvent.Invoke();
             attackMode = false;
 
-            enemy.TakeDamage(attackData.damage, MoveEnum.PUNCH);
+            enemy.TakeDamage(attackData.damage, MoveEnum.Punch);
         }
     }
 }

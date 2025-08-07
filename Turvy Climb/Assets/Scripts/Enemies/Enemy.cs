@@ -77,7 +77,7 @@ public abstract class Enemy : MonoBehaviour
         weapon.Attack();
     }
 
-    public void TakeDamage(int damage, MoveEnum attackType = MoveEnum.NONE)
+    public void TakeDamage(int damage, MoveEnum attackType = MoveEnum.None)
     {
         bool stunned = false;
 
@@ -98,7 +98,7 @@ public abstract class Enemy : MonoBehaviour
         // Determinar si el enemigo se aturde y aturdir si procede.
         switch (attackType)
         {   // La cantidad de tiempo que estará aturdido depende del enemigo y del tipo de ataque.
-            case MoveEnum.PUNCH:
+            case MoveEnum.Punch:
                 if (!enemyData.inmuneToRegularStun)
                 {
                     stunned = true;
@@ -106,7 +106,7 @@ public abstract class Enemy : MonoBehaviour
                 }
 
                 break;
-            case MoveEnum.SLINGSHOT:
+            case MoveEnum.Slingshot:
                 if (!enemyData.inmuneToLargeStun)
                 {
                     stunned = true;
