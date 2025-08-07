@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using Debug = UnityEngine.Debug;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(Animator))]
@@ -124,7 +126,7 @@ public abstract class Enemy : MonoBehaviour
     }
 
     private IEnumerator StunCoroutine(bool isLargeStun)
-    {   
+    {
         // Inciar
         weapon.ResetWeapon();
         state = EnemyState.STUNNED;

@@ -15,7 +15,7 @@ MonoBehaviour:
   damage: 1
   range: 1
   rangeForPerformingAttack: 3.5
-  launchForce: 2.5
+  launchForce: 7.5
   duration: 0.2
   extraAttackHitTime: 0.3
   staminaData: {fileID: 11400000, guid: 64ae816d150abc74bb528f4f2b088b25, type: 2}

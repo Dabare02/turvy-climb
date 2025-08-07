@@ -115,7 +115,7 @@ public class PlayerAttackHandler : MonoBehaviour
         float launchForce = _player.punchAttack.launchForce;
 
         //attackBody.gravityScale = 0;
-        Vector2 direction = _rangeCenterPos - (Vector2)attackPart.transform.position;
+        Vector2 direction = (_rangeCenterPos - (Vector2)attackPart.transform.position).normalized;
         Vector2 force = direction * launchForce;
         attackBody.AddForce(force, ForceMode2D.Impulse);
 
@@ -165,7 +165,7 @@ public class PlayerAttackHandler : MonoBehaviour
         // Calcular fuerza a aplicar.
         Rigidbody2D attackBody = attackPart.GetComponent<Rigidbody2D>();
         float launchForce = _player.slingshotAttack.launchForce;
-        Vector2 direction = _rangeCenterPos - (Vector2)attackPart.transform.position;
+        Vector2 direction = (_rangeCenterPos - (Vector2)attackPart.transform.position).normalized;
         Vector2 force = direction * launchForce;
 
         // Aflojar SpringJoints y apagar gravedad.
@@ -191,14 +191,16 @@ public class PlayerAttackHandler : MonoBehaviour
 
         slingshotHandler.attackMode = true;
         // Esperar la duración del ataque antes de volver brazo a la normalidad.
-        yield return new WaitForSeconds(_player.slingshotAttack.duration + _player.slingshotAttack.extraAttackHitTime);
+        yield return new WaitForSeconds(_player.slingshotAttack.duration);
         //Debug.Log("Slingshot ended.");
-        slingshotHandler.attackMode = false;
 
         // Resetear SpringJoints y reestablecer gravedad.
         _player.ChangeSpringJointsDistance();
         _player.ChangeSpringJointsFrequency();
         _player.ActivateGravity(true);
+
+        yield return new WaitForSeconds(_player.slingshotAttack.extraAttackHitTime);
+        slingshotHandler.attackMode = false;
         _player.ActivateEnemyInmunity(false);
 
         StopAttackDetection();

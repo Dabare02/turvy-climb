@@ -146,8 +146,8 @@ public class DraggableHand : DraggableBodyPart
         Hold holdScr = other.GetComponent<Hold>();
         if (holdScr != null && !holdScr.gripped)
         {
-            Debug.Log("Hold " + holdScr.name + " in range of" + this.name);
             holdsInRange.Add(holdScr);
+            Debug.Log("Hold " + holdScr.name + " in range of " + this.name + " (Current holds in range: " + holdsInRange.ToSeparatedString(", "));
         }
     }
 
@@ -157,7 +157,7 @@ public class DraggableHand : DraggableBodyPart
         if (holdScr != null && holdScr.gameObject == other.gameObject)
         {
             holdsInRange.Remove(holdScr);
-            Debug.Log("Hold " + holdScr.name + " left range of" + this.name);
+            Debug.Log("Hold " + holdScr.name + " left range of " + this.name + " (Current holds in range: " + holdsInRange.ToSeparatedString(", "));
         }
     }
 }

@@ -316,7 +316,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -679,6 +679,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitDetector: {fileID: 5041979150820683555}
+  slingshotStopEvent:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &5622243009555933502
 GameObject:
   m_ObjectHideFlags: 0
@@ -764,6 +767,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onPartMoveStop:
+    m_PersistentCalls:
+      m_Calls: []
+  onSlingshotStopEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &8761398034091062950
