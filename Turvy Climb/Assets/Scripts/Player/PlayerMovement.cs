@@ -155,7 +155,7 @@ public class PlayerMovement : MonoBehaviour
             DraggableHand selectedHand = _player.GetHandWithHoldInRange();
             if (selectedHand != null)
             {
-                selectedHand.GripHold(selectedHand.holdInRange);
+                selectedHand.GripHold(selectedHand.ClosestHold());
             }
 
             // Se reestablece el rango de detección de salientes de todas las extremidades.

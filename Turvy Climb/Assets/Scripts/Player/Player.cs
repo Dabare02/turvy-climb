@@ -209,7 +209,7 @@ public class Player : MonoBehaviour
     {
         for (int i = 0; i < playerHands.Count; i++)
         {
-            if (playerHands[i].holdInRange != null) return playerHands[i];
+            if (playerHands[i].holdsInRange.Count > 0) return playerHands[i];
         }
 
         return null;
@@ -231,7 +231,7 @@ public class Player : MonoBehaviour
 
         for (int i = 0; i < shuffledHands.Count; i++)
         {
-            if (shuffledHands[i].holdInRange != null) return playerHands[i];
+            if (shuffledHands[i].holdsInRange.Count > 0) return shuffledHands[i];
         }
 
         return null;
