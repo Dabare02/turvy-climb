@@ -1,16 +1,12 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 
-// Se encarga específicamente de detectar enemigos cuando se hace un puñetazo y
-// determinar que hacer.
-public class PunchHandler : SpecificAttackHandler
+public class SlingshotHandler : SpecificAttackHandler
 {
     // Events
-    public UnityEvent punchSuccessEvent;
+    public UnityEvent slingshotStopEvent;
     
     public override bool attackMode
     {
@@ -29,11 +25,6 @@ public class PunchHandler : SpecificAttackHandler
         Enemy enemy = other.GetComponent<Enemy>();
         if (!other.isTrigger && enemy != null && attackMode)
         {
-            // Debug.Log("Enemy " + enemy.name + " detected!");
-            // if (_handCollider != null) _handCollider.enabled = true;
-            punchSuccessEvent.Invoke();
-            attackMode = false;
-
             enemy.TakeDamage(attackData.damage, MoveEnum.PUNCH);
         }
     }

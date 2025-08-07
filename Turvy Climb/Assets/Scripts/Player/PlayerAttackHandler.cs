@@ -24,6 +24,7 @@ public class PlayerAttackHandler : MonoBehaviour
     private Coroutine attackCoroutine;
 
     public UnityEvent<float> onPunch;
+    public UnityEvent<float> onSlingshot;
 
     void Awake()
     {
@@ -31,16 +32,21 @@ public class PlayerAttackHandler : MonoBehaviour
         _springJoints = _player.playerTorso.GetComponents<SpringJoint2D>().ToList();
 
         if (onPunch == null) onPunch = new UnityEvent<float>();
+        if (onSlingshot == null) onSlingshot = new UnityEvent<float>();
         GameObject levelManagerObj = GameObject.FindGameObjectWithTag("LevelManager");
         if (levelManagerObj != null)
         {
             onPunch.AddListener(levelManagerObj.GetComponent<StaminaManager>().DecreaseCurrentStamina);
+            onSlingshot.AddListener(levelManagerObj.GetComponent<StaminaManager>().DecreaseCurrentStamina);
         }
     }
 
     void Update()
     {
-        DetectAttackReadiness();
+        if (attackPart != null)
+        {
+            DetectAttackReadiness();
+        }
     }
 
     public void StartAttackDetection(DraggableBodyPart bodyPart)
@@ -57,23 +63,18 @@ public class PlayerAttackHandler : MonoBehaviour
 
                 attackSpringJoint = _springJoints.Find(x => x.connectedBody == attackPart.GetComponent<Rigidbody2D>());
                 break;
-                /*
-                case DraggableTorso:
-                    _rangeCenterPos = bodyPart.transform.position;
-                    _rangeRadius = _player.slingshotAttack.rangeForPerformingAttack;
-                    break;
-                */
-        }
+            case DraggableTorso:
+                _rangeCenterPos = bodyPart.transform.position;
+                _rangeRadius = _player.slingshotAttack.rangeForPerformingAttack;
+                break;
+    }
 
         _attackDetection = true;
     }
 
     private void DetectAttackReadiness()
     {
-        if (attackPart == null) return;
-        
-        if (attackPart.GetType() == typeof(DraggableHand))
-        {
+        if (attackPart.GetType() == typeof(DraggableHand)) {
             _rangeCenterPos = _player.playerTorso.transform.position;
         }
 
@@ -91,7 +92,12 @@ public class PlayerAttackHandler : MonoBehaviour
             if (attackPart.GetType() == typeof(DraggableHand)
                 && !((DraggableHand)attackPart).isGripped)
             {
-                Attack();
+                Punch();
+            }
+            else if (attackPart.GetType() == typeof(DraggableTorso)
+                && _player.grippedHoldsAmount == 4)
+            {   // El jugador debe estar agarrado a la pared con todas sus extremidades.
+                Slingshot();
             }
         }
         else
@@ -100,10 +106,8 @@ public class PlayerAttackHandler : MonoBehaviour
         }
     }
 
-    public void Attack()
+    public void Punch()
     {
-        // TODO: Añadir soporte para movimiento tirachinas.
-
         // Reducir el nivel de aguante (evento).
         onPunch.Invoke(_player.punchAttack.staminaData.staminaCost);
 
@@ -111,17 +115,15 @@ public class PlayerAttackHandler : MonoBehaviour
         float launchForce = _player.punchAttack.launchForce;
 
         //attackBody.gravityScale = 0;
-        Vector2 direction = _rangeCenterPos - (Vector2)attackPart.transform.position;
+        Vector2 direction = (_rangeCenterPos - (Vector2)attackPart.transform.position).normalized;
         Vector2 force = direction * launchForce;
         attackBody.AddForce(force, ForceMode2D.Impulse);
 
-        attackCoroutine = StartCoroutine(AttackCoroutine());
+        attackCoroutine = StartCoroutine(PunchCoroutine());
     }
 
-    private IEnumerator AttackCoroutine()
+    private IEnumerator PunchCoroutine()
     {
-        // TODO: Añadir soporte para movimiento tirachinas.
-
         PunchHandler punchHandler = attackPart.GetComponent<PunchHandler>();
 
         punchHandler.attackMode = true;
@@ -146,8 +148,89 @@ public class PlayerAttackHandler : MonoBehaviour
         {
             StopCoroutine(attackCoroutine);
         }
+
+        attackPart.GetComponent<PunchHandler>().attackMode = false;
+
         attackPartCollider.enabled = true;
         attackSpringJoint.enabled = true;
+
+        StopAttackDetection();
+    }
+
+    public void Slingshot()
+    {
+        // Reducir el nivel de aguante (evento).
+        onSlingshot.Invoke(_player.slingshotAttack.staminaData.staminaCost);
+
+        // Calcular fuerza a aplicar.
+        Rigidbody2D attackBody = attackPart.GetComponent<Rigidbody2D>();
+        float launchForce = _player.slingshotAttack.launchForce;
+        Vector2 direction = (_rangeCenterPos - (Vector2)attackPart.transform.position).normalized;
+        Vector2 force = direction * launchForce;
+
+        // Aflojar SpringJoints y apagar gravedad.
+        _player.ChangeSpringJointsDistance(2f);
+        _player.ChangeSpringJointsFrequency(0f);
+        _player.ActivateGravity(false);
+        _player.ActivateEnemyInmunity(true);
+
+        // Realizar ataque.
+        _player.DropAllHolds();
+        _player.SetLargeHoldDetectRange();
+        attackBody.AddForce(force, ForceMode2D.Impulse);
+
+        attackCoroutine = StartCoroutine(SlingshotCoroutine());
+    }
+
+    private IEnumerator SlingshotCoroutine()
+    {
+        // TODO: Hacer que todas las partes del cuerpo atraviesen a los enemigos,
+        // PERO NO LAS PAREDES.
+
+        SlingshotHandler slingshotHandler = attackPart.GetComponent<SlingshotHandler>();
+
+        slingshotHandler.attackMode = true;
+        // Esperar la duración del ataque antes de volver brazo a la normalidad.
+        yield return new WaitForSeconds(_player.slingshotAttack.duration);
+        //Debug.Log("Slingshot ended.");
+
+        // Resetear SpringJoints y reestablecer gravedad.
+        _player.ChangeSpringJointsDistance();
+        _player.ChangeSpringJointsFrequency();
+        _player.ActivateGravity(true);
+
+        yield return new WaitForSeconds(_player.slingshotAttack.extraAttackHitTime);
+        slingshotHandler.attackMode = false;
+        _player.ActivateEnemyInmunity(false);
+
+        StopAttackDetection();
+    }
+
+    public void SlingshotInterrupt()
+    {
+        // COndiciones para no ejecutar función.
+        if (attackPart != null)
+        {
+            SlingshotHandler attackHandler = attackPart.GetComponent<SlingshotHandler>();
+            if (attackHandler == null) return;
+        }
+        else
+        {
+            return;
+        }
+
+        //Debug.Log("Slingshot interrupted!");
+        if (attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+        }
+
+        attackPart.GetComponent<SlingshotHandler>().attackMode = false;
+
+        _player.ChangeSpringJointsDistance();
+        _player.ChangeSpringJointsFrequency();
+        _player.ActivateGravity(true);
+        _player.ActivateEnemyInmunity(false);
 
         StopAttackDetection();
     }

@@ -68,6 +68,7 @@ public class EnemyWeapon : MonoBehaviour
             atkCooldownCoroutine = null;
         }
 
+        _anim.SetBool("UsingWeapon", false);
         _enemy.state = EnemyState.STANDBY;
     }
 
@@ -160,9 +161,9 @@ public class EnemyWeapon : MonoBehaviour
         if (!other.isTrigger && other.CompareTag("Player"))
         {
             // TEMP: En el futuro, hacer que slingshot handler y punch handler hereden de una clase que tenga este parametro attackMode.
-            PunchHandler punchHandler = other.GetComponent<PunchHandler>();
+            SpecificAttackHandler spAtkHandler = other.GetComponent<SpecificAttackHandler>();
             if ((_enemy.state == EnemyState.ATTACKING || _enemy.state == EnemyState.WEAPON_READY)
-                && !punchHandler.attackMode)
+                && !spAtkHandler.attackMode)
             {
                 DamagePlayer();
             }

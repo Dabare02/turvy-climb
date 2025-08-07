@@ -12,4 +12,5 @@ public class BreakableHold : ScriptableObject
     public float timeBeforeBreak;
     [Tooltip("Cantidad de veces que hace falta agarrarse al saliente frágil para que se desmorone.")]
     public int attemptsBeforeBreak;
+    
 }

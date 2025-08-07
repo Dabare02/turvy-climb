@@ -46,6 +46,8 @@ public class Player : MonoBehaviour
     [Header("Stamina Cost Parameters")]
     public StaminaCostSO dragHandSTCost;
     public StaminaCostSO dragTorsoSTCost;
+    [Tooltip("Aguante regenerado al agarrarse a un saliente al que el jugador no se" +
+        " ha agarrado previamente.")]
     public StaminaCostSO gripHoldSTCost;
     [Tooltip("Coste de aguante drenado al estar colgando de una sola extremidad.")]
     public StaminaCostSO singleHoldSTCost;
@@ -57,11 +59,14 @@ public class Player : MonoBehaviour
         _movementHandler = GetComponent<PlayerMovement>();
         _attackHandler = GetComponent<PlayerAttackHandler>();
 
+        // Asignar datos de ataque a cada elemento que interviene en dicho ataque.
         for (int i = 0; i < playerHands.Count; i++)
         {
-            PunchHandler punchHandler = playerHands[i].GetComponent<PunchHandler>();
-            punchHandler.punchAttack = punchAttack;
+            SpecificAttackHandler punchHandler = playerHands[i].GetComponent<PunchHandler>();
+            punchHandler.attackData = punchAttack;
         }
+        SpecificAttackHandler slingshotHandler = playerTorso.GetComponent<SlingshotHandler>();
+        slingshotHandler.attackData = slingshotAttack;
 
         hasStamina = true;
 
@@ -73,8 +78,10 @@ public class Player : MonoBehaviour
 
             startFewHandsHolding = new UnityEvent<MoveEnum, float, float>();
             stopFewHandsHolding = new UnityEvent<MoveEnum>();
+            _movementHandler.onSlingshotStopEvent = new UnityEvent();
             startFewHandsHolding.AddListener(staminaManager.StartContinuousStaminaDrain);
             stopFewHandsHolding.AddListener(staminaManager.StopContinuousStaminaChange);
+            _movementHandler.onSlingshotStopEvent.AddListener(_attackHandler.SlingshotInterrupt);
         }
     }
 
@@ -202,7 +209,7 @@ public class Player : MonoBehaviour
     {
         for (int i = 0; i < playerHands.Count; i++)
         {
-            if (playerHands[i].holdInRange != null) return playerHands[i];
+            if (playerHands[i].holdsInRange.Count > 0) return playerHands[i];
         }
 
         return null;
@@ -224,10 +231,57 @@ public class Player : MonoBehaviour
 
         for (int i = 0; i < shuffledHands.Count; i++)
         {
-            if (shuffledHands[i].holdInRange != null) return playerHands[i];
+            if (shuffledHands[i].holdsInRange.Count > 0) return shuffledHands[i];
         }
 
         return null;
+    }
+
+    /* FUNCIONES TÉCNICAS */
+    public void EnableBodyColliders(bool cond)
+    {
+        for (int i = 0; i < playerHands.Count; i++)
+        {
+            playerHands[i].GetComponent<CircleCollider2D>().enabled = cond;
+        }
+        playerTorso.GetComponent<CircleCollider2D>().enabled = cond;
+    }
+
+    public void ChangeSpringJointsFrequency(float newFrequency = -1f)
+    {
+        playerTorso.ChangeSpringFrequency(newFrequency);
+    }
+
+    public void ChangeSpringJointsDistance(float newDistance = -1f)
+    {
+        playerTorso.ChangeSpringDistance(newDistance);
+    }
+
+    public void ChangeSpringJointsDampRatio(float newDamp = -1f)
+    {
+        playerTorso.ChangeSpringDampenRatio(newDamp);
+    }
+
+    public void ActivateGravity(bool cond)
+    {
+        float gravScale = cond ? 1f : 0f;
+
+        for (int i = 0; i < playerHands.Count; i++)
+        {
+            playerHands[i].GetComponent<Rigidbody2D>().gravityScale = gravScale;
+        }
+        playerTorso.GetComponent<Rigidbody2D>().gravityScale = gravScale;
+    }
+
+    public void ActivateEnemyInmunity(bool cond)
+    {
+        string layerName = cond ? "PlayerEnemyPassthrough" : "Player";
+
+        for (int i = 0; i < playerHands.Count; i++)
+        {
+            playerHands[i].gameObject.layer = LayerMask.NameToLayer(layerName);
+        }
+        playerTorso.gameObject.layer = LayerMask.NameToLayer(layerName);
     }
 
     public void OutOfStamina()
@@ -236,6 +290,5 @@ public class Player : MonoBehaviour
         DropAllHolds();
         StopAttackDetection();
         StopMovingBodyPart();
-        
     }
 }

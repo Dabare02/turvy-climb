@@ -50,7 +50,6 @@ public class CrowEnemy : Enemy
         if (Vector2.Distance(nextPoint.position, transform.position) < 0.1)
         {   // Si ya está en la posición destino, cambiar destino al otro punto.
             _returnToPointA = !_returnToPointA;
-            return;
         }
         else
         {   // Si no, seguir moviendose a destino

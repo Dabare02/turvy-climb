@@ -20,7 +20,7 @@ TagManager:
   - Character
   - NoCollision
   - Player
-  - 
+  - PlayerEnemyPassthrough
   - 
   - 
   - 

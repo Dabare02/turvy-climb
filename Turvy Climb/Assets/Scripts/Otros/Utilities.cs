@@ -29,6 +29,27 @@ public class Utilities : MonoBehaviour
         return float.IsNaN(v.x) || float.IsNaN(v.y);
     }
 
+    /// <summary>
+    /// Devuelve el punto más cercano al punto objetivo.
+    /// </summary>
+    /// <param name="targetTransform"></param>
+    /// <param name="transforms"></param>
+    /// <returns></returns>
+    public static Transform ClosestTransformToTarget(Transform targetTransform, List<Transform> transforms)
+    {
+        Transform closestTransform = transforms[0];
+        for (int i = 1; i < transforms.Count; i++)
+        {
+            if (Vector2.Distance(targetTransform.position, closestTransform.position)
+                > Vector2.Distance(targetTransform.position, transforms[i].position))
+            {
+                closestTransform = transforms[i];
+            }
+        }
+
+        return closestTransform;
+    }
+
     public static void Shuffle<T>(List<T> list)
     {
         for (int i = 0; i < list.Count; i++)

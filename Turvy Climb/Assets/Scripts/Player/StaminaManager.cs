@@ -38,10 +38,10 @@ public class StaminaManager : MonoBehaviour
 
     void Update()
     {
-        // DEBUG
-        if (Input.GetKeyDown(KeyCode.DownArrow)) DecreaseCurrentStamina(10);
-        if (Input.GetKeyDown(KeyCode.UpArrow)) IncreaseCurrentStamina(10);
-        // DEBUG
+        // // DEBUG
+        // if (Input.GetKeyDown(KeyCode.DownArrow)) DecreaseCurrentStamina(10);
+        // if (Input.GetKeyDown(KeyCode.UpArrow)) IncreaseCurrentStamina(10);
+        // // DEBUG
     }
 
     public void ResetStamina()
@@ -99,7 +99,7 @@ public class StaminaManager : MonoBehaviour
         int index = continuousStChange.FindIndex(x => x.Item1 == move);
         continuousStChange[index] = new Tuple<MoveEnum, Coroutine>(move, StartCoroutine(ContinuousStaminaChange(amount, delay)));
 
-        Debug.Log("Started draining stamina for " + move);
+        // Debug.Log("Started draining stamina for " + move);
     }
 
     public void StartContinuousStaminaRegen(MoveEnum move, float amount, float delay)
@@ -120,7 +120,7 @@ public class StaminaManager : MonoBehaviour
             StopCoroutine(continuousStChange[index].Item2);
             continuousStChange[index] = new Tuple<MoveEnum, Coroutine>(move, null);
 
-            Debug.Log("Stopped draining stamina for " + move);
+            // Debug.Log("Stopped draining stamina for " + move);
         }
     }
 
@@ -156,7 +156,7 @@ public class StaminaManager : MonoBehaviour
 
     private void NotifyStaminaChange()
     {
-        Debug.Log("Stamina changed to " + stamina);
+        // Debug.Log("Stamina changed to " + stamina);
         staminaChangeEvent.Invoke(stamina);
         if (stamina <= 0) staminaDepleteEvent.Invoke();
     }

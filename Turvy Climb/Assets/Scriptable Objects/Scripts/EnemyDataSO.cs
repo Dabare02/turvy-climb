@@ -7,6 +7,7 @@ public class EnemyDataSO : CharacterDataSO
     public float regularStunDuration;
     public float largeStunDuration;
     public bool inmuneToDamage;
-    public bool inmuneToStun;
+    public bool inmuneToRegularStun;
+    public bool inmuneToLargeStun;
     public EnemyAttackTypeSO attackType;
 }
