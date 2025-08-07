@@ -14,6 +14,8 @@ public class LevelManager : MonoBehaviour
 
     private Player _player;
 
+    private bool _gameOver;
+
     void Awake()
     {
         _player = FindObjectOfType<Player>();
@@ -37,6 +39,16 @@ public class LevelManager : MonoBehaviour
         {
             Debug.LogWarning("Array startingHolds must have a size of " + LIMBS_AMOUNT + ".");
             Array.Resize(ref startingHolds, LIMBS_AMOUNT);
+        }
+    }
+
+    public void GameOver()
+    {
+        // TODO: Funcionalidad Game Over (pantalla de game over, volver a main menu con funcion en general manager...)
+        if (!_gameOver)
+        {
+            Debug.Log("GAME OVER");
+            _gameOver = true;
         }
     }
 

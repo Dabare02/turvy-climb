@@ -267,7 +267,7 @@ GameObject:
   - component: {fileID: 5041979150820683555}
   m_Layer: 10
   m_Name: HitDetector
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
