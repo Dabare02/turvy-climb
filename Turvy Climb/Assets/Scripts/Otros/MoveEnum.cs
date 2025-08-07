@@ -4,13 +4,13 @@ using UnityEngine;
 
 public enum MoveEnum
 {
-    NONE,
+    None,
     DragHand,
     DragTorso,
     QuickGrip,
     QuickDrop,
-    PUNCH,
-    SLINGSHOT,
-    GrabHold,
+    Punch,
+    Slingshot,
+    FirstGrabHold,
     FewHandsHolding
 }

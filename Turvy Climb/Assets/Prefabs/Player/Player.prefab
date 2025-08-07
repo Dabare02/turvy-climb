@@ -748,7 +748,7 @@ MonoBehaviour:
   slingshotAttack: {fileID: 11400000, guid: b6fdcf8bc886e083d90f313e9ad811f3, type: 2}
   dragHandSTCost: {fileID: 11400000, guid: 0fe323455d56c1c40980bffcfdaee4bd, type: 2}
   dragTorsoSTCost: {fileID: 11400000, guid: 8b9e336732101244b95d89d3d6e6c841, type: 2}
-  gripHoldSTCost: {fileID: 11400000, guid: c077d79dd0f78524aa897ecb59dd59a1, type: 2}
+  firstGripHoldSTCost: {fileID: 11400000, guid: c077d79dd0f78524aa897ecb59dd59a1, type: 2}
   singleHoldSTCost: {fileID: 11400000, guid: b79f17fe26a840a4da94be9edcb29323, type: 2}
   doubleHoldSTCost: {fileID: 11400000, guid: 8302edac06b81c344aa1acb7a9508cd4, type: 2}
 --- !u!114 &5121961164402566920
@@ -767,6 +767,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   onPartMoveStop:
+    m_PersistentCalls:
+      m_Calls: []
+  onFirstGrabHold:
     m_PersistentCalls:
       m_Calls: []
   onSlingshotStopEvent:

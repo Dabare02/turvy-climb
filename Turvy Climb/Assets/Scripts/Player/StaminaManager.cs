@@ -156,7 +156,7 @@ public class StaminaManager : MonoBehaviour
 
     private void NotifyStaminaChange()
     {
-        // Debug.Log("Stamina changed to " + stamina);
+        Debug.Log("Stamina changed to " + stamina);
         staminaChangeEvent.Invoke(stamina);
         if (stamina <= 0) staminaDepleteEvent.Invoke();
     }
