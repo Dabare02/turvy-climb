@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Numerics;
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 
@@ -19,6 +21,38 @@ public class Utilities : MonoBehaviour
         Vector2 lineDir = linePoint - circleCenter;
         Vector2 normLineDir = lineDir.normalized;
         Vector2 res = circleCenter + normLineDir * circleRadius;
+
+        return res;
+    }
+
+    public static Vector2 Vector2ToUnity(System.Numerics.Vector2 v) => new Vector2(v.X, v.Y);
+    public static System.Numerics.Vector2 Vector2ToNumerics(Vector2 v) => new System.Numerics.Vector2(v.x, v.y);
+
+    /// <summary>
+    /// Convierte un array de System.Numeric.Vector2 a UnityEngine.Vector2.
+    /// </summary>
+    /// <returns></returns>
+    public static Vector2[] Vector2ArrayToUnity(System.Numerics.Vector2[] v)
+    {
+        Vector2[] res = new Vector2[v.Length];
+        for (int i = 0; i < res.Length; i++)
+        {
+            res[i] = Vector2ToUnity(v[i]);
+        }
+
+        return res;
+    }
+    /// <summary>
+    /// Convierte un array de UnityEngine.Vector2 a System.Numeric.Vector2.
+    /// </summary>
+    /// <returns></returns>
+    public static System.Numerics.Vector2[] Vector2ArrayToNumerics(Vector2[] v)
+    {
+        System.Numerics.Vector2[] res = new System.Numerics.Vector2[v.Length];
+        for (int i = 0; i < res.Length; i++)
+        {
+            res[i] = Vector2ToNumerics(v[i]);
+        }
 
         return res;
     }
@@ -54,7 +88,7 @@ public class Utilities : MonoBehaviour
     {
         for (int i = 0; i < list.Count; i++)
         {
-            int r = Random.Range(i, list.Count);
+            int r = UnityEngine.Random.Range(i, list.Count);
             T tmp = list[i];
             list[i] = list[r];
             list[r] = tmp;

@@ -21,7 +21,7 @@ TagManager:
   - NoCollision
   - Player
   - PlayerEnemyPassthrough
-  - 
+  - DeathZone
   - 
   - 
   - 
