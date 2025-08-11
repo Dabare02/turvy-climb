@@ -137,7 +137,7 @@ public class StaminaManager : MonoBehaviour
         }
     }
 
-    public IEnumerator ContinuousStaminaChange(float amount, float delay, bool isRegen = false)
+    private IEnumerator ContinuousStaminaChange(float amount, float delay, bool isRegen = false)
     {
         while (stamina > 0 && stamina <= maxStamina)
         {
@@ -152,6 +152,11 @@ public class StaminaManager : MonoBehaviour
 
             yield return new WaitForSeconds(delay);
         }
+    }
+
+    public void DepleteStamina()
+    {
+        DecreaseCurrentStamina(10000f);
     }
 
     private void NotifyStaminaChange()

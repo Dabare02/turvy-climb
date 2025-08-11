@@ -204,6 +204,8 @@ public class Player : MonoBehaviour
         }
     }
 
+    // Activar/desactivar habilidad de poder agarrar salientes.
+
     // Devuelve la primera mano que tenga un saliente en su rango de detección.
     public DraggableHand GetHandWithHoldInRange()
     {

@@ -116,7 +116,6 @@ public class PlayerMovement : MonoBehaviour
 
     public void StopMovingBodyPart()
     {
-        Debug.Log("Is part moving? " + _isPartDragging + ". Is draggedPart null? " + (draggedPart == null));
         if (_isPartDragging && draggedPart != null)
         {
             // Indicar finalización de arrastre.

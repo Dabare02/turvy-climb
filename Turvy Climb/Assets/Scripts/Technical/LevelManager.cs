@@ -49,6 +49,8 @@ public class LevelManager : MonoBehaviour
         {
             Debug.Log("GAME OVER");
             _gameOver = true;
+            StaminaManager stManager = GetComponent<StaminaManager>();
+            stManager.DepleteStamina();
         }
     }
 

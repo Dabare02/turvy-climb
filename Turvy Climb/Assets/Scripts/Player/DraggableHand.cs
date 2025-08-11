@@ -89,6 +89,11 @@ public class DraggableHand : DraggableBodyPart
         }
     }
 
+    public void DisableGrip(bool cond)
+    {
+        gripEnabled = cond;
+    }
+
     public void TempDisableGrip(float seconds)
     {
         StartCoroutine(DisableGripCoroutine(seconds));
