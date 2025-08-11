@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -5,16 +6,19 @@ using System.Numerics;
 using UnityEngine;
 using UnityEngine.Events;
 using Vector2 = UnityEngine.Vector2;
+using Vector3 = UnityEngine.Vector3;
 
 public class PlayerAttackHandler : MonoBehaviour
 {
     private Player _player;
+    
+    [SerializeField] private LineRenderer _trajectoryLine;
 
     private DraggableBodyPart attackPart;
     private SpringJoint2D attackSpringJoint;
     private CircleCollider2D attackPartCollider;
-    private bool _attackDetection;
     private bool _isAttackReady;
+    private PlayerAttackState attackState;
 
     private Vector2 _rangeCenterPos;
     private float _rangeRadius;
@@ -41,9 +45,14 @@ public class PlayerAttackHandler : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        HideTrajectoryLine();
+    }
+
     void Update()
     {
-        if (attackPart != null)
+        if (attackState == PlayerAttackState.DETECTING_ATTACK)
         {
             DetectAttackReadiness();
         }
@@ -67,14 +76,15 @@ public class PlayerAttackHandler : MonoBehaviour
                 _rangeCenterPos = bodyPart.transform.position;
                 _rangeRadius = _player.slingshotAttack.rangeForPerformingAttack;
                 break;
-    }
+        }
 
-        _attackDetection = true;
+        attackState = PlayerAttackState.DETECTING_ATTACK;
     }
 
     private void DetectAttackReadiness()
     {
-        if (attackPart.GetType() == typeof(DraggableHand)) {
+        if (attackPart.GetType() == typeof(DraggableHand))
+        {
             _rangeCenterPos = _player.playerTorso.transform.position;
         }
 
@@ -83,12 +93,27 @@ public class PlayerAttackHandler : MonoBehaviour
                                                         _rangeRadius,
                                                         attackPart.transform.position);
         if (!prevReadiness && _isAttackReady) Debug.Log("Attack is ready.");   // DEBUG
+
+        if (_isAttackReady)
+        {
+            ShowTrajectoryLine();
+        }
+        else
+        {
+            HideTrajectoryLine();
+        }
     }
 
     public void CheckAttack()
     {
         if (_isAttackReady)
         {
+            // Indicar que se está realizando el ataque.
+            attackState = PlayerAttackState.PERFORMING_ATTACK;
+            _isAttackReady = false;
+            HideTrajectoryLine();
+
+            // Comprobar el tipo de ataque.
             if (attackPart.GetType() == typeof(DraggableHand)
                 && !((DraggableHand)attackPart).isGripped)
             {
@@ -238,18 +263,48 @@ public class PlayerAttackHandler : MonoBehaviour
     public void StopAttackDetection()
     {
         attackCoroutine = null;
-        _attackDetection = false;
 
         _rangeCenterPos = new Vector2(float.NaN, float.NaN);
         _rangeRadius = 0.0f;
 
-        _isAttackReady = false;
         attackPart = null;
+        attackState = PlayerAttackState.STANDY;
     }
+
+    #region Trajectory Line
+    private void ShowTrajectoryLine()
+    {
+        if (attackPart != null)
+        {
+            _trajectoryLine.enabled = true;
+
+            Vector2 lineStartPos = attackPart.transform.position;
+            Vector2 lineEndPos = _rangeCenterPos;
+            Vector2 lineDir = (lineEndPos - lineStartPos).normalized;
+            lineEndPos = lineStartPos + lineDir * _player.trajectoryLineLength;
+
+            DefineTrajectoryLine(new Vector3(lineStartPos.x, lineStartPos.y, -1f), new Vector3(lineEndPos.x, lineEndPos.y, -1f));
+        }
+    }
+
+    private void HideTrajectoryLine()
+    {
+        _trajectoryLine.enabled = false;
+    }
+
+    private void DefineTrajectoryLine(Vector3 startPos, Vector3 endPos)
+    {
+        // Número de puntos que definen la linea.
+        _trajectoryLine.positionCount = 2;
+        // Posición de cada punto.
+        _trajectoryLine.SetPosition(0, startPos);
+        _trajectoryLine.SetPosition(1, endPos);
+    }
+    #endregion
 
     private void OnDrawGizmosSelected()
     {
-        if (_attackDetection)
+        if (attackState == PlayerAttackState.DETECTING_ATTACK)
         {
             Gizmos.color = Color.yellow;
 
