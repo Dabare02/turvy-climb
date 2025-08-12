@@ -74,6 +74,10 @@ public class GeneralManager : Singleton<GeneralManager>
         SceneManager.LoadScene((int)BuildIndexes.MainMenu);
     }
 
+    public void GoToLevelSelect() {
+        SceneManager.LoadScene((int)BuildIndexes.LevelSelectMenu);
+    }
+
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -81,11 +85,11 @@ public class GeneralManager : Singleton<GeneralManager>
 
     public void Quit()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
             Application.Quit();
-#endif
+        #endif
     }
 
     public int GetNumberOfLevels()
