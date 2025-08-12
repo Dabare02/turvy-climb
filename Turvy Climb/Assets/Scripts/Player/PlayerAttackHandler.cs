@@ -47,6 +47,11 @@ public class PlayerAttackHandler : MonoBehaviour
 
     void Start()
     {
+        _trajectoryLine.material.SetColor("_Color", new Color(
+            _trajectoryLine.material.color.r,
+            _trajectoryLine.material.color.g,
+            _trajectoryLine.material.color.r, 0.5f));
+        
         HideTrajectoryLine();
     }
 
