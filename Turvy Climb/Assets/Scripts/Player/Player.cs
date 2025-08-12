@@ -43,6 +43,8 @@ public class Player : MonoBehaviour
     [Header("Attack Parameters")]
     public PlayerAttackTypeSO punchAttack;
     public PlayerAttackTypeSO slingshotAttack;
+    [Tooltip("La longitud de la linea que indica la trayectoria de los ataques")]
+    public float trajectoryLineLength = 10f;
     [Header("Stamina Cost Parameters")]
     public StaminaCostSO dragHandSTCost;
     public StaminaCostSO dragTorsoSTCost;
