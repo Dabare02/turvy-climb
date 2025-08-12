@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -69,6 +70,19 @@ public class GeneralManager : Singleton<GeneralManager>
         SceneManager.LoadScene((int)sceneIndex);
     }
 
+    public void LoadLevel(BuildIndexes sceneIndex)
+    {
+        if (sceneIndex >= BuildIndexes.LevelOne
+            && sceneIndex < BuildIndexes.GameOver)
+        {
+            SceneManager.LoadScene((int)sceneIndex);
+        }
+        else
+        {
+            Debug.LogError("The scene " + sceneIndex.HumanName() + " (index: " + (int)sceneIndex + ") is not a level!");
+        }
+    }
+
     public void GoToMainMenu()
     {
         SceneManager.LoadScene((int)BuildIndexes.MainMenu);
@@ -78,11 +92,6 @@ public class GeneralManager : Singleton<GeneralManager>
         SceneManager.LoadScene((int)BuildIndexes.LevelSelectMenu);
     }
 
-    public void RestartLevel()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
-
     public void Quit()
     {
         #if UNITY_EDITOR
@@ -90,6 +99,11 @@ public class GeneralManager : Singleton<GeneralManager>
         #else
             Application.Quit();
         #endif
+    }
+
+    public void RestartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public int GetNumberOfLevels()
