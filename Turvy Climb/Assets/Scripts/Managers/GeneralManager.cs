@@ -72,8 +72,7 @@ public class GeneralManager : Singleton<GeneralManager>
 
     public void LoadLevel(BuildIndexes sceneIndex)
     {
-        if (sceneIndex >= BuildIndexes.LevelOne
-            && sceneIndex < BuildIndexes.GameOver)
+        if (sceneIndex >= BuildIndexes.LevelOne)
         {
             SceneManager.LoadScene((int)sceneIndex);
         }
@@ -88,7 +87,8 @@ public class GeneralManager : Singleton<GeneralManager>
         SceneManager.LoadScene((int)BuildIndexes.MainMenu);
     }
 
-    public void GoToLevelSelect() {
+    public void GoToLevelSelect()
+    {
         SceneManager.LoadScene((int)BuildIndexes.LevelSelectMenu);
     }
 
@@ -108,6 +108,11 @@ public class GeneralManager : Singleton<GeneralManager>
 
     public int GetNumberOfLevels()
     {
-        return SceneManager.sceneCountInBuildSettings - 3;
+        return SceneManager.sceneCountInBuildSettings - 2;
+    }
+
+    public int GetFirstLevelIndex()
+    {
+        return (int)BuildIndexes.LevelOne;
     }
 }
