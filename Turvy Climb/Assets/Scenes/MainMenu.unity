@@ -559,14 +559,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: QuitBttn
       objectReference: {fileID: 0}
-    - target: {fileID: 4029390652028855464, guid: 074159040d791687b9bf7f82cb8fe27c, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4029390652028855464, guid: 074159040d791687b9bf7f82cb8fe27c, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -414945278, guid: 433b5ba271ae0138a9dd52f9b53e4168, type: 3}
     - target: {fileID: 8976629759887625715, guid: 074159040d791687b9bf7f82cb8fe27c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -713,14 +705,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayBttn
       objectReference: {fileID: 0}
-    - target: {fileID: 4029390652028855464, guid: 074159040d791687b9bf7f82cb8fe27c, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4029390652028855464, guid: 074159040d791687b9bf7f82cb8fe27c, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -414945278, guid: 433b5ba271ae0138a9dd52f9b53e4168, type: 3}
     - target: {fileID: 8976629759887625715, guid: 074159040d791687b9bf7f82cb8fe27c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -893,14 +877,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: CreditsBttn
       objectReference: {fileID: 0}
-    - target: {fileID: 4029390652028855464, guid: 074159040d791687b9bf7f82cb8fe27c, type: 3}
-      propertyPath: m_Type
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4029390652028855464, guid: 074159040d791687b9bf7f82cb8fe27c, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -414945278, guid: 433b5ba271ae0138a9dd52f9b53e4168, type: 3}
     - target: {fileID: 8976629759887625715, guid: 074159040d791687b9bf7f82cb8fe27c, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
