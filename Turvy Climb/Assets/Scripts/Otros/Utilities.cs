@@ -8,6 +8,7 @@ using Vector2 = UnityEngine.Vector2;
 
 public class Utilities : MonoBehaviour
 {
+    #region Geometry
     // Devuelve true si el punto se encuentra en el circulo definido por su centro y radio.
     public static bool IsPointInsideCircle(Vector2 circleCenter, float circleRadius, Vector2 linePoint)
     {
@@ -24,7 +25,9 @@ public class Utilities : MonoBehaviour
 
         return res;
     }
+    #endregion
 
+    #region Vectors
     public static Vector2 Vector2ToUnity(System.Numerics.Vector2 v) => new Vector2(v.X, v.Y);
     public static System.Numerics.Vector2 Vector2ToNumerics(Vector2 v) => new System.Numerics.Vector2(v.x, v.y);
 
@@ -83,7 +86,9 @@ public class Utilities : MonoBehaviour
 
         return closestTransform;
     }
+    #endregion
 
+    #region Other
     public static void Shuffle<T>(List<T> list)
     {
         for (int i = 0; i < list.Count; i++)
@@ -94,4 +99,21 @@ public class Utilities : MonoBehaviour
             list[r] = tmp;
         }
     }
+
+    public static Tuple<int, int> ConvertToMinutes(float seconds)
+    {
+        int m = Mathf.FloorToInt(seconds / 60f);
+        int s = Mathf.FloorToInt(seconds - m * 60);
+
+        return new Tuple<int, int>(m, s);
+    }
+
+    public static string ConvertToMinutesTimerFormat(float seconds)
+    {
+        Tuple<int, int> tuple = ConvertToMinutes(seconds);
+        string timerS = string.Format("{0:00}:{1:00}", tuple.Item1, tuple.Item2);
+
+        return timerS;
+    }
+    #endregion
 }

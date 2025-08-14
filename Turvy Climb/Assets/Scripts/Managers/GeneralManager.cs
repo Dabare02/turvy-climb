@@ -11,7 +11,11 @@ public class GeneralManager : Singleton<GeneralManager>
     public AudioManager audioManager;
     [SerializeField] GameObject optionsPanel;
 
+    [Header("Parámetros generales")]
     public float transitionTime = 3f;
+
+    [Header("Niveles")]
+    public List<LevelDataSO> levels;
 
     private bool paused = false;
     public bool pause
@@ -108,7 +112,7 @@ public class GeneralManager : Singleton<GeneralManager>
 
     public int GetNumberOfLevels()
     {
-        return SceneManager.sceneCountInBuildSettings - 2;
+        return levels.Count;
     }
 
     public int GetFirstLevelIndex()
