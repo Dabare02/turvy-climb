@@ -1,7 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioManager))]
@@ -11,7 +13,17 @@ public class GeneralManager : Singleton<GeneralManager>
     public AudioManager audioManager;
     [SerializeField] GameObject optionsPanel;
 
+    [Header("Parámetros generales")]
     public float transitionTime = 3f;
+    // Player data
+    [Tooltip("Si existen datos guardados, se ignorará este valor.")]
+    public float maxPlayerStamina;
+    [NonSerialized] public float totalTimePlayed;
+
+    [Header("Niveles")]
+    public List<LevelDataSO> levels;
+
+    public UnityEvent onPause;
 
     private bool paused = false;
     public bool pause
@@ -27,11 +39,13 @@ public class GeneralManager : Singleton<GeneralManager>
             {
                 Time.timeScale = 0;
                 optionsPanel.SetActive(true);
+                onPause.Invoke();
             }
             else
             {
                 Time.timeScale = 1;
                 optionsPanel.SetActive(false);
+                onPause.Invoke();
             }
         }
     }
@@ -40,6 +54,25 @@ public class GeneralManager : Singleton<GeneralManager>
     {
         base.Awake();
         audioManager = GetComponent<AudioManager>();
+
+        for (int i = 0; i < levels.Count; i++)
+        {
+            LevelSaveData levelSaveData = SaveLoadManager.LoadLevelData(i);
+            if (levelSaveData != null)
+            {
+                levels[i].totalPlayedTime = 0;
+                levels[i].recordTime = levelSaveData.recordTime;
+                levels[i].radishesCollected = levelSaveData.radishesCollected;
+                levels[i].stars = levelSaveData.stars;
+            }
+            else
+            {
+                levels[i].totalPlayedTime = 0;
+                levels[i].recordTime = 0;
+                levels[i].radishesCollected = new Dictionary<int, bool>();
+                levels[i].stars = new Dictionary<int, bool>();
+            }
+        }
     }
 
     public void GoToNextLevel(float waitTime = -1)
@@ -108,7 +141,7 @@ public class GeneralManager : Singleton<GeneralManager>
 
     public int GetNumberOfLevels()
     {
-        return SceneManager.sceneCountInBuildSettings - 2;
+        return levels.Count;
     }
 
     public int GetFirstLevelIndex()

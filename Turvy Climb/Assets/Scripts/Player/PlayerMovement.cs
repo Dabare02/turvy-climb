@@ -31,25 +31,18 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         _player = GetComponent<Player>();
-
-        GameObject levelManagerObj = GameObject.FindGameObjectWithTag("LevelManager");
-        if (levelManagerObj != null)
-        {
-            StaminaManager stManager = levelManagerObj.GetComponent<StaminaManager>();
-
-            onPartMoveStart.AddListener(stManager.StartContinuousStaminaDrain);
-            onPartMoveStop.AddListener(stManager.StopContinuousStaminaChange);
-            onFirstGrabHold.AddListener(stManager.IncreaseCurrentStamina);
-        }
     }
 
     void Update()
     {
         // MOVIMIENTO: Agarrar y arrastrar mano o torso.
-        if (_isPartDragging && draggedPart != null) MoveBodyPart();
+        if (!GeneralManager.Instance.pause && _isPartDragging && draggedPart != null)
+        {
+            MoveBodyPart();
+        }
 
         // MOVIMIENTO: Quick grip / drop.
-        if (Input.GetKeyDown(KeyCode.Space)) QuickGripDrop();
+            if (Input.GetKeyDown(KeyCode.Space)) QuickGripDrop();
     }
 
     // MOVIMIENTO: Agarrar y arrastrar mano o torso.

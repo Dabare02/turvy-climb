@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     public PlayerAttackTypeSO punchAttack;
     public PlayerAttackTypeSO slingshotAttack;
     [Tooltip("La longitud de la linea que indica la trayectoria de los ataques")]
-    public float trajectoryLineLength = 10f;
+    public float trajectoryLineLength = 20f;
     [Header("Stamina Cost Parameters")]
     public StaminaCostSO dragHandSTCost;
     public StaminaCostSO dragTorsoSTCost;
@@ -70,21 +70,54 @@ public class Player : MonoBehaviour
         SpecificAttackHandler slingshotHandler = playerTorso.GetComponent<SlingshotHandler>();
         slingshotHandler.attackData = slingshotAttack;
 
-        hasStamina = true;
+        // Instanciación de eventos.
+        if (startFewHandsHolding == null) startFewHandsHolding = new UnityEvent<MoveEnum, float, float>();
+        if (stopFewHandsHolding == null) stopFewHandsHolding = new UnityEvent<MoveEnum>();
+        if (_movementHandler.onPartMoveStart == null) stopFewHandsHolding = new UnityEvent<MoveEnum>();
+        if (_movementHandler.onPartMoveStop == null) stopFewHandsHolding = new UnityEvent<MoveEnum>();
+        if (_movementHandler.onFirstGrabHold == null) stopFewHandsHolding = new UnityEvent<MoveEnum>();
+        if (_movementHandler.onSlingshotStopEvent == null) stopFewHandsHolding = new UnityEvent<MoveEnum>();
+        if (_attackHandler.onPunch == null) stopFewHandsHolding = new UnityEvent<MoveEnum>();
+        if (_attackHandler.onSlingshot == null) stopFewHandsHolding = new UnityEvent<MoveEnum>();
 
-        // Suscripción de eventos.
+        hasStamina = true;
+    }
+
+    void OnEnable()
+    {
+        // Eventos.
         GameObject levelmngObj = GameObject.FindGameObjectWithTag("LevelManager");
         if (levelmngObj != null)
         {
-            StaminaManager staminaManager = levelmngObj.GetComponent<StaminaManager>();
+            StaminaManager stManager = levelmngObj.GetComponent<StaminaManager>();
 
-            startFewHandsHolding = new UnityEvent<MoveEnum, float, float>();
-            stopFewHandsHolding = new UnityEvent<MoveEnum>();
-            _movementHandler.onSlingshotStopEvent = new UnityEvent();
-            startFewHandsHolding.AddListener(staminaManager.StartContinuousStaminaDrain);
-            stopFewHandsHolding.AddListener(staminaManager.StopContinuousStaminaChange);
+            // Subscripción a eventos.
+            startFewHandsHolding.AddListener(stManager.StartContinuousStaminaDrain);
+            stopFewHandsHolding.AddListener(stManager.StopContinuousStaminaChange);
+            _movementHandler.onPartMoveStart.AddListener(stManager.StartContinuousStaminaDrain);
+            _movementHandler.onPartMoveStop.AddListener(stManager.StopContinuousStaminaChange);
+            _movementHandler.onFirstGrabHold.AddListener(stManager.IncreaseCurrentStamina);
             _movementHandler.onSlingshotStopEvent.AddListener(_attackHandler.SlingshotInterrupt);
+            _attackHandler.onPunch.AddListener(levelmngObj.GetComponent<StaminaManager>().DecreaseCurrentStamina);
+            _attackHandler.onSlingshot.AddListener(levelmngObj.GetComponent<StaminaManager>().DecreaseCurrentStamina);
         }
+        GeneralManager.Instance.onPause.AddListener(StopAttackDetection);
+    }
+
+    void OnDisable()
+    {
+        startFewHandsHolding.RemoveAllListeners();
+        stopFewHandsHolding.RemoveAllListeners();
+        _movementHandler.onPartMoveStart.RemoveAllListeners();
+        _movementHandler.onPartMoveStop.RemoveAllListeners();
+        _movementHandler.onFirstGrabHold.RemoveAllListeners();
+        _movementHandler.onSlingshotStopEvent.RemoveAllListeners();
+        _attackHandler.onPunch.RemoveAllListeners();
+        _attackHandler.onSlingshot.RemoveAllListeners();
+
+        // ATTENTION: Could cause problems. If it does, check here and possibly change it
+        // to `RemoveListener(_attackHandler.StopAttackDetection)`
+        GeneralManager.Instance.onPause.RemoveAllListeners();
     }
 
     // Indica si la parte de cuerpo especificada puede ser agarrada con el ratón.
@@ -113,7 +146,7 @@ public class Player : MonoBehaviour
 
     public void StartMovingBodyPart(Rigidbody2D movingPart)
     {
-        if (hasStamina)
+        if (hasStamina && !GeneralManager.Instance.pause)
         {
             _movementHandler.StartMovingBodyPart(movingPart);
         }
