@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 // Se encarga de funciones específicas del nivel, incluyendo la gestión del nivel de aguante
@@ -11,6 +12,7 @@ public class LevelManager : MonoBehaviour
 
     private Player _player;
     public LevelDataSO level;
+    [SerializeField] private AudioClip levelMusic;
     [Tooltip("Los salientes a los que estará agarrado Player al empezar el nivel.")]
     [SerializeField] private Hold[] startingHolds;
 
@@ -47,11 +49,19 @@ public class LevelManager : MonoBehaviour
         GrabStartingHolds();
         GetComponent<StaminaManager>().LockStaminaChange(false);
 
-        Debug.Log(level.totalPlayedTime);
+        if (levelMusic != null)
+        {
+            GeneralManager.Instance.audioManager.PlayMusic(levelMusic);
+        }
     }
 
     void Update()
     {
+        if (!_completed && !_gameOver && Input.GetKeyDown(KeyCode.Escape))
+        {
+            GeneralManager.Instance.pause = !GeneralManager.Instance.pause;
+        }
+
         timePlayed += Time.deltaTime;
 
         // DEBUG v
@@ -98,7 +108,23 @@ public class LevelManager : MonoBehaviour
     {
         // TODO: Cambiar para que no guarde tiempo record si no lo completas.
         level.totalPlayedTime += timePlayed;
-        if (_completed && timePlayed >= level.recordTime) level.recordTime = timePlayed;
+        if (_completed && timePlayed >= level.recordTime)
+        {
+            level.recordTime = timePlayed;
+            Debug.Log("New record!");
+        }
+
+        Debug.Log("Level data logued!"
+            + "\nTime played: " + timePlayed
+            + "\nTotal time played: " + level.totalPlayedTime
+            + "\nRecord time: " + level.recordTime);
+    }
+
+    public void RestartLevel()
+    {
+        LogTime();
+        SaveLoadManager.SaveLevelData(level);
+        GeneralManager.Instance.RestartLevel();
     }
 
     public void GoBackToLevelSelect()

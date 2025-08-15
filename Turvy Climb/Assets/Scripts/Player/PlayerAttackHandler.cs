@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Numerics;
 using UnityEngine;
 using UnityEngine.Events;
 using Vector2 = UnityEngine.Vector2;
@@ -34,15 +33,6 @@ public class PlayerAttackHandler : MonoBehaviour
     {
         _player = GetComponent<Player>();
         _springJoints = _player.playerTorso.GetComponents<SpringJoint2D>().ToList();
-
-        if (onPunch == null) onPunch = new UnityEvent<float>();
-        if (onSlingshot == null) onSlingshot = new UnityEvent<float>();
-        GameObject levelManagerObj = GameObject.FindGameObjectWithTag("LevelManager");
-        if (levelManagerObj != null)
-        {
-            onPunch.AddListener(levelManagerObj.GetComponent<StaminaManager>().DecreaseCurrentStamina);
-            onSlingshot.AddListener(levelManagerObj.GetComponent<StaminaManager>().DecreaseCurrentStamina);
-        }
     }
 
     void Start()

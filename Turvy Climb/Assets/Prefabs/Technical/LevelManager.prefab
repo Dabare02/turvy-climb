@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 0}
+  levelMusic: {fileID: 8300000, guid: a309f6e6a3759a64d854ed27aa73eb1e, type: 3}
   startingHolds:
   - {fileID: 0}
   - {fileID: 0}

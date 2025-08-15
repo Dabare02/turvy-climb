@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioManager))]
@@ -22,6 +23,8 @@ public class GeneralManager : Singleton<GeneralManager>
     [Header("Niveles")]
     public List<LevelDataSO> levels;
 
+    public UnityEvent onPause;
+
     private bool paused = false;
     public bool pause
     {
@@ -36,11 +39,13 @@ public class GeneralManager : Singleton<GeneralManager>
             {
                 Time.timeScale = 0;
                 optionsPanel.SetActive(true);
+                onPause.Invoke();
             }
             else
             {
                 Time.timeScale = 1;
                 optionsPanel.SetActive(false);
+                onPause.Invoke();
             }
         }
     }

@@ -1,12 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Numerics;
-using Unity.Burst.Intrinsics;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 
-public class Utilities : MonoBehaviour
+public class Utilities
 {
     #region Geometry
     // Devuelve true si el punto se encuentra en el circulo definido por su centro y radio.

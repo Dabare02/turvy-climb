@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class StaminaManager : MonoBehaviour
 {
     private float stamina;
+    [Tooltip("Si el valor es <0, su valor se cambiará para igualar el aguante máximo.")]
     [SerializeField] private float initialStamina = -1;
     // Corutina para ir cambiando la cantidad de aguante gradualmente.
     private List<Tuple<MoveEnum, Coroutine>> continuousStChange;
@@ -19,17 +20,20 @@ public class StaminaManager : MonoBehaviour
 
     void Awake()
     {
-        Player player = FindObjectOfType<Player>();
-        if (player != null)
-        {
-            staminaDepleteEvent.AddListener(player.OutOfStamina);
-        }
-
         // Inicializar lista de corutinas.
         continuousStChange = new List<Tuple<MoveEnum, Coroutine>>();
         foreach (MoveEnum m in Enum.GetValues(typeof(MoveEnum)))
         {
             continuousStChange.Add(new Tuple<MoveEnum, Coroutine>(m, null));
+        }
+    }
+
+    void OnEnable()
+    {
+        Player player = FindObjectOfType<Player>();
+        if (player != null)
+        {
+            staminaDepleteEvent.AddListener(player.OutOfStamina);
         }
     }
 
@@ -45,6 +49,11 @@ public class StaminaManager : MonoBehaviour
         // if (Input.GetKeyDown(KeyCode.DownArrow)) DecreaseCurrentStamina(10);
         // if (Input.GetKeyDown(KeyCode.UpArrow)) IncreaseCurrentStamina(10);
         // // DEBUG
+    }
+
+    void OnDisable()
+    {
+        staminaDepleteEvent.RemoveAllListeners();
     }
 
     public void ResetStamina()
