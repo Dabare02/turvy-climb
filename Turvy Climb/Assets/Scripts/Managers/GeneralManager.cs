@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -13,6 +14,10 @@ public class GeneralManager : Singleton<GeneralManager>
 
     [Header("Parámetros generales")]
     public float transitionTime = 3f;
+    // Player data
+    [Tooltip("Si existen datos guardados, se ignorará este valor.")]
+    public float maxPlayerStamina;
+    [NonSerialized] public float totalTimePlayed;
 
     [Header("Niveles")]
     public List<LevelDataSO> levels;
@@ -44,6 +49,25 @@ public class GeneralManager : Singleton<GeneralManager>
     {
         base.Awake();
         audioManager = GetComponent<AudioManager>();
+
+        for (int i = 0; i < levels.Count; i++)
+        {
+            LevelSaveData levelSaveData = SaveLoadManager.LoadLevelData(i);
+            if (levelSaveData != null)
+            {
+                levels[i].recordTime = levelSaveData.recordTime;
+                levels[i].collectedRadishes = levelSaveData.collectedRadishes;
+                levels[i].stars = levelSaveData.stars;
+            }
+            else
+            {
+                levels[i].recordTime = 0;
+                levels[i].collectedRadishes = 0;
+                levels[i].stars = 0;
+            }
+        }
+
+        
     }
 
     public void GoToNextLevel(float waitTime = -1)
