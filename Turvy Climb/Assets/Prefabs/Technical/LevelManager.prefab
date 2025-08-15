@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af1f531753b448749a7255b307e347a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  level: {fileID: 0}
   startingHolds:
   - {fileID: 0}
   - {fileID: 0}
@@ -62,8 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53435c28260f9b94db3e83758eda05a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxStamina: 50
-  initialStamina: 50
+  initialStamina: -1
   staminaChangeEvent:
     m_PersistentCalls:
       m_Calls: []

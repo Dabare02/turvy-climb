@@ -9,13 +9,18 @@ public class LevelManager : MonoBehaviour
 {
     private const int LIMBS_AMOUNT = 4;
 
+    private Player _player;
     public LevelDataSO level;
     [Tooltip("Los salientes a los que estará agarrado Player al empezar el nivel.")]
     [SerializeField] private Hold[] startingHolds;
 
-    private Player _player;
+    public float timePlayed
+    {
+        get; private set;
+    }
 
     private bool _gameOver;
+    private bool _completed;
 
     void Awake()
     {
@@ -37,8 +42,21 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
+        timePlayed = 0;
+
         GrabStartingHolds();
         GetComponent<StaminaManager>().LockStaminaChange(false);
+
+        Debug.Log(level.totalPlayedTime);
+    }
+
+    void Update()
+    {
+        timePlayed += Time.deltaTime;
+
+        // DEBUG v
+        if (Input.GetKeyDown(KeyCode.G)) GoBackToLevelSelect();
+        // DEBUG ^
     }
 
     void OnValidate()
@@ -76,8 +94,16 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private void LogTime()
+    {
+        // TODO: Cambiar para que no guarde tiempo record si no lo completas.
+        level.totalPlayedTime += timePlayed;
+        if (_completed && timePlayed >= level.recordTime) level.recordTime = timePlayed;
+    }
+
     public void GoBackToLevelSelect()
     {
+        LogTime();
         SaveLoadManager.SaveLevelData(level);
         GeneralManager.Instance.GoToLevelSelect();
     }

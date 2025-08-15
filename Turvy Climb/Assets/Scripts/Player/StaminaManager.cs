@@ -7,8 +7,7 @@ using UnityEngine.Events;
 public class StaminaManager : MonoBehaviour
 {
     private float stamina;
-    [SerializeField] private float maxStamina;
-    [SerializeField] private float initialStamina;
+    [SerializeField] private float initialStamina = -1;
     // Corutina para ir cambiando la cantidad de aguante gradualmente.
     private List<Tuple<MoveEnum, Coroutine>> continuousStChange;
     private bool _staminaChangeLocked = true;
@@ -26,14 +25,18 @@ public class StaminaManager : MonoBehaviour
             staminaDepleteEvent.AddListener(player.OutOfStamina);
         }
 
-        ResetStamina();
-
         // Inicializar lista de corutinas.
         continuousStChange = new List<Tuple<MoveEnum, Coroutine>>();
         foreach (MoveEnum m in Enum.GetValues(typeof(MoveEnum)))
         {
             continuousStChange.Add(new Tuple<MoveEnum, Coroutine>(m, null));
         }
+    }
+
+    void Start()
+    {
+        if (initialStamina <= 0) initialStamina = GeneralManager.Instance.maxPlayerStamina;
+        ResetStamina();
     }
 
     void Update()
@@ -73,9 +76,9 @@ public class StaminaManager : MonoBehaviour
         if (_staminaChangeLocked) return;
 
         stamina += amount;
-        if (stamina >= maxStamina)
+        if (stamina >= GeneralManager.Instance.maxPlayerStamina)
         {
-            stamina = maxStamina;
+            stamina = GeneralManager.Instance.maxPlayerStamina;
         }
 
         NotifyStaminaChange();
@@ -85,8 +88,8 @@ public class StaminaManager : MonoBehaviour
     {
         if (_staminaChangeLocked) return;
 
-        maxStamina += amount;
-        stamina = maxStamina;
+        GeneralManager.Instance.maxPlayerStamina += amount;
+        stamina = GeneralManager.Instance.maxPlayerStamina;
         NotifyStaminaChange();
     }
 
@@ -139,7 +142,7 @@ public class StaminaManager : MonoBehaviour
 
     private IEnumerator ContinuousStaminaChange(float amount, float delay, bool isRegen = false)
     {
-        while (stamina > 0 && stamina <= maxStamina)
+        while (stamina > 0 && stamina <= GeneralManager.Instance.maxPlayerStamina)
         {
             if (isRegen)
             {

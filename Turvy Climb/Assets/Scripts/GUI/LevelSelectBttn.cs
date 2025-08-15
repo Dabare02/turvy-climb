@@ -1,10 +1,12 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelSelectBttn : MonoBehaviour
 {
+    private const int STAR_AMOUNT = 2;
+
     private LevelDataSO levelData;
     public BuildIndexes levelIndex
     {
@@ -13,6 +15,7 @@ public class LevelSelectBttn : MonoBehaviour
 
     [SerializeField] private TMP_Text titleTMP;
     [SerializeField] private TMP_Text recordTimeTMP;
+    [SerializeField] private Image[] stars;
 
     public void SetLevelIndex(BuildIndexes index)
     {

@@ -1,14 +1,18 @@
+using System.Collections.Generic;
+
 [System.Serializable]
 public class LevelSaveData
 {
+    public float totalPlayedTime;
     public float recordTime;
-    public int collectedRadishes;
-    public int stars;
+    public Dictionary<int, bool> radishesCollected;
+    public Dictionary<int, bool> stars;
 
     public LevelSaveData(LevelDataSO level)
     {
+        totalPlayedTime = level.totalPlayedTime;
         recordTime = level.recordTime;
-        collectedRadishes = level.collectedRadishes;
+        radishesCollected = level.radishesCollected;
         stars = level.stars;
     }
 }

@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b6dd53a9653725787550d29a4ec100, type: 3}
   m_Name: Level3SO
   m_EditorClassIdentifier: 
-  number: 3
+  number: 2
   title: Mont Blanc
-  maxRadishes: 0

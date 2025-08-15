@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31b6dd53a9653725787550d29a4ec100, type: 3}
   m_Name: Level2SO
   m_EditorClassIdentifier: 
-  number: 2
+  number: 1
   title: "Pico Basil\xE9"
-  maxRadishes: 0
