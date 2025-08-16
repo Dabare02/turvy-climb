@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -25,6 +26,10 @@ public class LevelManager : MonoBehaviour
         get; private set;
     }
     public float levelProgress
+    {
+        get; private set;
+    }
+    public float recordLevelProgress
     {
         get; private set;
     }
@@ -57,6 +62,7 @@ public class LevelManager : MonoBehaviour
     void Start()
     {
         timePlayed = 0;
+        recordLevelProgress = level.progress;
 
         GrabStartingHolds();
         GetComponent<StaminaManager>().LockStaminaChange(false);
@@ -131,21 +137,32 @@ public class LevelManager : MonoBehaviour
             gameOverMenu.SetActive(true);
         }
     }
-
-    #region TimePlayed
     private void UpdateTime()
     {
         float newTime = timePlayed + Time.deltaTime;
-        if (newTime != timePlayed)
+        if (Mathf.FloorToInt(newTime) > Mathf.FloorToInt(timePlayed))
         {
-            timePlayed = newTime;
             onSecondPassed.Invoke(timePlayed);
+        }
+        timePlayed = newTime;
+    }
+
+    public void UpdateProgress(float progress)
+    {
+        levelProgress = progress;
+        if (progress >= recordLevelProgress)
+        {
+            recordLevelProgress = progress;
+        }
+        if (progress >= 1f)
+        {
+            LevelComplete();
         }
     }
 
-    private void LogTime()
+    private void LogStats()
     {
-        // TODO: Cambiar para que no guarde tiempo record si no lo completas.
+        // Tiempos
         level.totalPlayedTime += timePlayed;
         if (_completed && timePlayed >= level.recordTime)
         {
@@ -153,34 +170,39 @@ public class LevelManager : MonoBehaviour
             Debug.Log("New record!");
         }
 
+        // Progreso.
+        level.progress = recordLevelProgress;
+
+        // Estrellas
+        if (_completed)
+        {
+            level.stars[0] = true;
+        }
+        bool allTrue = level.radishesCollected != null
+            //&& level.radishesCollected.Length > 0
+            && level.radishesCollected.All(v => v);
+        if (allTrue)
+        {
+            level.stars[1] = true;
+        }
+
         Debug.Log("Level data logued!"
             + "\nTime played: " + timePlayed
             + "\nTotal time played: " + level.totalPlayedTime
+            + "\nRecord progress: " + level.progress
             + "\nRecord time: " + level.recordTime);
     }
-    #endregion
-
-    #region LevelProgress
-    public void UpdateProgress(float progress)
-    {
-        levelProgress = progress;
-        if (levelProgress >= 1f)
-        {
-            LevelComplete();
-        }
-    }
-    #endregion
 
     public void RestartLevel()
     {
-        LogTime();
+        LogStats();
         SaveLoadManager.SaveLevelData(level);
         GeneralManager.Instance.RestartLevel();
     }
 
     public void GoBackToLevelSelect()
     {
-        LogTime();
+        LogStats();
         SaveLoadManager.SaveLevelData(level);
         GeneralManager.Instance.GoToLevelSelect();
     }

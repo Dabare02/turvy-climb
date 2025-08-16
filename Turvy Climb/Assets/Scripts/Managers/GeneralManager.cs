@@ -59,17 +59,19 @@ public class GeneralManager : Singleton<GeneralManager>
             LevelSaveData levelSaveData = SaveLoadManager.LoadLevelData(i);
             if (levelSaveData != null)
             {
-                levels[i].totalPlayedTime = 0;
+                levels[i].totalPlayedTime = levelSaveData.totalPlayedTime;
                 levels[i].recordTime = levelSaveData.recordTime;
-                levels[i].radishesCollected = levelSaveData.radishesCollected;
+                levels[i].progress = levelSaveData.levelProgress;
                 levels[i].stars = levelSaveData.stars;
+                levels[i].radishesCollected = levelSaveData.radishesCollected;
             }
             else
             {
-                levels[i].totalPlayedTime = 0;
-                levels[i].recordTime = 0;
-                levels[i].radishesCollected = new Dictionary<int, bool>();
-                levels[i].stars = new Dictionary<int, bool>();
+                levels[i].totalPlayedTime = 0f;
+                levels[i].recordTime = 0f;
+                levels[i].progress = 0f;
+                levels[i].stars = new bool[] { false, false };
+                levels[i].radishesCollected = null;
             }
         }
 

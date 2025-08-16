@@ -5,14 +5,16 @@ public class LevelSaveData
 {
     public float totalPlayedTime;
     public float recordTime;
-    public Dictionary<int, bool> radishesCollected;
-    public Dictionary<int, bool> stars;
+    public float levelProgress;
+    public bool[] stars;
+    public bool[] radishesCollected;
 
     public LevelSaveData(LevelDataSO level)
     {
         totalPlayedTime = level.totalPlayedTime;
         recordTime = level.recordTime;
-        radishesCollected = level.radishesCollected;
+        levelProgress = level.progress;
         stars = level.stars;
+        radishesCollected = level.radishesCollected;
     }
 }

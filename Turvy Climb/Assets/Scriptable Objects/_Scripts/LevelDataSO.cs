@@ -7,10 +7,12 @@ public class LevelDataSO : ScriptableObject
 {
     public int number;
     public string title;
+    public Sprite preview;
 
     // User data
     [NonSerialized] public float totalPlayedTime;
     [NonSerialized] public float recordTime;
-    [NonSerialized] public Dictionary<int, bool> radishesCollected;
-    [NonSerialized] public Dictionary<int, bool> stars;
+    [NonSerialized] public float progress;
+    [NonSerialized] public bool[] stars;
+    [NonSerialized] public bool[] radishesCollected;
 }
