@@ -110,7 +110,7 @@ public class DraggableHand : DraggableBodyPart
     {
         // Comprobar si hay al menos 1 mano agarrada a la pared (aparte de si misma).
         // Si no es el caso, no se permitirá cogerlo.
-        if (!_player.IsBodyPartGrabbable(this)) return;
+        if (GeneralManager.Instance.pause || !_player.IsBodyPartGrabbable(this)) return;
         
         DropHold();
         base.OnMouseDown();

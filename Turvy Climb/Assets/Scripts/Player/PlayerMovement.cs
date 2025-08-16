@@ -15,7 +15,10 @@ public class PlayerMovement : MonoBehaviour
 
     // Parámetros para el arrastre del objeto.
     private Rigidbody2D draggedPart;
-    private bool _isPartDragging;
+    public bool isPartDragging
+    {
+        get; private set;
+    }
 
     // Parámetros para el rango de movimiento para el objeto.
     private Vector2 _originalPos;
@@ -36,7 +39,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         // MOVIMIENTO: Agarrar y arrastrar mano o torso.
-        if (!GeneralManager.Instance.pause && _isPartDragging && draggedPart != null)
+        if (!GeneralManager.Instance.pause && isPartDragging && draggedPart != null)
         {
             MoveBodyPart();
         }
@@ -102,17 +105,17 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        _isPartDragging = true;
+        isPartDragging = true;
 
         Debug.Log("Moving " + draggedPart.name);
     }
 
     public void StopMovingBodyPart()
     {
-        if (_isPartDragging && draggedPart != null)
+        if (isPartDragging && draggedPart != null)
         {
             // Indicar finalización de arrastre.
-            _isPartDragging = false;
+            isPartDragging = false;
 
             // Evento para dejar de drenar aguante (y para recuperar aguante en caso de que se agarre un
             // saliente por primera vez).
@@ -191,7 +194,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnDrawGizmosSelected()
     {
-        if (_isPartDragging)
+        if (isPartDragging)
         {
             Gizmos.color = Color.red;
 

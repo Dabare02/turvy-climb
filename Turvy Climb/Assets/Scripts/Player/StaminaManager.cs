@@ -14,7 +14,9 @@ public class StaminaManager : MonoBehaviour
     private bool _staminaChangeLocked = true;
 
     // Evento disparado por la clase para indicar el cambio de aguante.
-    public UnityEvent<float> staminaChangeEvent;
+    public UnityEvent<float> onSTChange;
+    // Evento disparado para indicar que la cantidad de aguante máxima ha aumentado.
+    public UnityEvent<float> onMaxSTChange;
     // Evento disparado por la clase para indicar que la cantidad de aguante es 0.
     public UnityEvent staminaDepleteEvent;
 
@@ -35,12 +37,20 @@ public class StaminaManager : MonoBehaviour
         {
             staminaDepleteEvent.AddListener(player.OutOfStamina);
         }
+
+        StaminaGauge stGauge = FindObjectOfType<StaminaGauge>();
+        if (stGauge != null)
+        {
+            onSTChange.AddListener(stGauge.SetStamina);
+            onMaxSTChange.AddListener(stGauge.SetMaxStamina);
+        }
     }
 
     void Start()
     {
         if (initialStamina <= 0) initialStamina = GeneralManager.Instance.maxPlayerStamina;
         ResetStamina();
+        NotifyMaxStaminaChange();
     }
 
     void Update()
@@ -53,6 +63,8 @@ public class StaminaManager : MonoBehaviour
 
     void OnDisable()
     {
+        onSTChange.RemoveAllListeners();
+        onMaxSTChange.RemoveAllListeners();
         staminaDepleteEvent.RemoveAllListeners();
     }
 
@@ -99,7 +111,7 @@ public class StaminaManager : MonoBehaviour
 
         GeneralManager.Instance.maxPlayerStamina += amount;
         stamina = GeneralManager.Instance.maxPlayerStamina;
-        NotifyStaminaChange();
+        NotifyMaxStaminaChange();
     }
 
     public void StartContinuousStaminaDrain(MoveEnum move, float amount, float delay)
@@ -171,10 +183,17 @@ public class StaminaManager : MonoBehaviour
         DecreaseCurrentStamina(10000f);
     }
 
+    private void NotifyMaxStaminaChange()
+    {
+        Debug.Log("Max stamina increased to " + GeneralManager.Instance.maxPlayerStamina);
+        onMaxSTChange.Invoke(GeneralManager.Instance.maxPlayerStamina);
+        NotifyStaminaChange();
+    }
+
     private void NotifyStaminaChange()
     {
         Debug.Log("Stamina changed to " + stamina);
-        staminaChangeEvent.Invoke(stamina);
+        onSTChange.Invoke(stamina);
         if (stamina <= 0) staminaDepleteEvent.Invoke();
     }
 }
