@@ -150,6 +150,10 @@ public class LevelManager : MonoBehaviour
     public void UpdateProgress(float progress)
     {
         levelProgress = progress;
+        if (levelProgress >= 1f)
+        {
+            LevelComplete();
+        }
     }
     #endregion
 

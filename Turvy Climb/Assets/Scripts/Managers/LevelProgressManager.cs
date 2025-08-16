@@ -8,6 +8,8 @@ public class LevelProgressManager : MonoBehaviour
     [SerializeField] private Transform startPoint;
     [SerializeField] private Transform endPoint;
 
+    private Player _player;
+
     private float levelProgress;
 
     public UnityEvent<float> onProgressChanged;
@@ -15,7 +17,12 @@ public class LevelProgressManager : MonoBehaviour
     void Awake()
     {
         if (startPoint == null || endPoint == null) Debug.LogError("Please set a start and endpoint for the level in LevelProgressManager.");
-        levelProgress = 0f;
+        _player = FindObjectOfType<Player>();
+        if (_player == null)
+        {
+            Debug.LogError("No player detected in the scene. Can't calculate progress.");
+            gameObject.SetActive(false);
+        }
 
         // Eventos
         if (onProgressChanged == null) onProgressChanged = new UnityEvent<float>();
@@ -24,8 +31,15 @@ public class LevelProgressManager : MonoBehaviour
     void OnEnable()
     {
         LevelManager lvlManager = GetComponent<LevelManager>();
-        if (lvlManager != null) {
+        if (lvlManager != null)
+        {
             onProgressChanged.AddListener(lvlManager.UpdateProgress);
+        }
+
+        ProgressBar progressBar = FindObjectOfType<ProgressBar>();
+        if (progressBar != null)
+        {
+            onProgressChanged.AddListener(progressBar.SetValue);
         }
     }
 
@@ -34,19 +48,19 @@ public class LevelProgressManager : MonoBehaviour
         UpdateLevelProgress();
     }
 
+    void OnDisable()
+    {
+        onProgressChanged.RemoveAllListeners();
+    }
+
     private void UpdateLevelProgress()
     {
-        Player player = FindObjectOfType<Player>();
-        if (player == null)
-        {
-            Debug.LogWarning("No player detected in the scene. Can't calculate progress.");
-            gameObject.SetActive(false);
-        }
-
-        Vector2 playerPos = player.playerTorso.transform.position - startPoint.position;
+        Vector2 playerPos = _player.playerTorso.transform.position - startPoint.position;
         Vector2 endPos = endPoint.position - startPoint.position;
 
         levelProgress = playerPos.y / endPos.y;
+        if (levelProgress < 0f) levelProgress = 0f;
+        else if (levelProgress > 1f) levelProgress = 1f;
         onProgressChanged.Invoke(levelProgress);
     }
 }
