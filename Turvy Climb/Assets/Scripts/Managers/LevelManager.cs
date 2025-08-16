@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 // Se encarga de funciones específicas del nivel, incluyendo la gestión del nivel de aguante
 [RequireComponent(typeof(StaminaManager))]
@@ -24,6 +25,8 @@ public class LevelManager : MonoBehaviour
     private bool _gameOver;
     private bool _completed;
 
+    public UnityEvent<float> onSecondPassed;
+
     void Awake()
     {
         if (level == null)
@@ -40,6 +43,8 @@ public class LevelManager : MonoBehaviour
             gameObject.SetActive(false);
             GeneralManager.Instance.GoToLevelSelect();
         }
+
+        if (onSecondPassed == null) onSecondPassed = new UnityEvent<float>();
     }
 
     void Start()
@@ -62,11 +67,7 @@ public class LevelManager : MonoBehaviour
             GeneralManager.Instance.pause = !GeneralManager.Instance.pause;
         }
 
-        timePlayed += Time.deltaTime;
-
-        // DEBUG v
-        if (Input.GetKeyDown(KeyCode.G)) GoBackToLevelSelect();
-        // DEBUG ^
+        UpdateTime();
     }
 
     void OnValidate()
@@ -76,6 +77,11 @@ public class LevelManager : MonoBehaviour
             Debug.LogWarning("Array startingHolds must have a size of " + LIMBS_AMOUNT + ".");
             Array.Resize(ref startingHolds, LIMBS_AMOUNT);
         }
+    }
+
+    void OnDisable()
+    {
+        onSecondPassed.RemoveAllListeners();
     }
 
     public void GrabStartingHolds()
@@ -101,6 +107,16 @@ public class LevelManager : MonoBehaviour
             stManager.DepleteStamina();
 
             GoBackToLevelSelect();
+        }
+    }
+
+    private void UpdateTime()
+    {
+        float newTime = timePlayed + Time.deltaTime;
+        if (newTime != timePlayed)
+        {
+            timePlayed = newTime;
+            onSecondPassed.Invoke(timePlayed);
         }
     }
 
