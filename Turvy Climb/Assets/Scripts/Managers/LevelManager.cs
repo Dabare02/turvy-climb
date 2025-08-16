@@ -7,6 +7,7 @@ using UnityEngine.Events;
 
 // Se encarga de funciones específicas del nivel, incluyendo la gestión del nivel de aguante
 [RequireComponent(typeof(StaminaManager))]
+[RequireComponent(typeof(LevelProgressManager))]
 public class LevelManager : MonoBehaviour
 {
     private const int LIMBS_AMOUNT = 4;
@@ -14,6 +15,8 @@ public class LevelManager : MonoBehaviour
     private Player _player;
     public LevelDataSO level;
     [SerializeField] private AudioClip levelMusic;
+    [SerializeField] private GameObject gameOverMenu;
+    [SerializeField] private GameObject completionMenu;
     [Tooltip("Los salientes a los que estará agarrado Player al empezar el nivel.")]
     [SerializeField] private Hold[] startingHolds;
 
@@ -68,7 +71,7 @@ public class LevelManager : MonoBehaviour
     {
         if (!_completed && !_gameOver && Input.GetKeyDown(KeyCode.Escape))
         {
-            GeneralManager.Instance.pause = !GeneralManager.Instance.pause;
+            GeneralManager.Instance.OpenOptions(!GeneralManager.Instance.pause);
         }
 
         UpdateTime();
@@ -101,7 +104,16 @@ public class LevelManager : MonoBehaviour
 
     public void LevelComplete()
     {
-        
+        if (!_completed)
+        {
+            Debug.Log("LEVEL COMPLETE");
+            _completed = true;
+
+            // TODO
+
+            GeneralManager.Instance.pause = true;
+            completionMenu.SetActive(true);
+        }
     }
 
     public void GameOver()
@@ -111,10 +123,12 @@ public class LevelManager : MonoBehaviour
         {
             Debug.Log("GAME OVER");
             _gameOver = true;
+
             StaminaManager stManager = GetComponent<StaminaManager>();
             stManager.DepleteStamina();
 
-            GoBackToLevelSelect();
+            GeneralManager.Instance.pause = true;
+            gameOverMenu.SetActive(true);
         }
     }
 

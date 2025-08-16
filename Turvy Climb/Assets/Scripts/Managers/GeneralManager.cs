@@ -24,6 +24,7 @@ public class GeneralManager : Singleton<GeneralManager>
     public List<LevelDataSO> levels;
 
     public UnityEvent onPause;
+    public UnityEvent onUnPause;
 
     private bool paused = false;
     public bool pause
@@ -38,8 +39,6 @@ public class GeneralManager : Singleton<GeneralManager>
             if (paused)
             {
                 Time.timeScale = 0;
-                optionsPanel.SetActive(true);
-                onPause.Invoke();
             }
             else
             {
@@ -73,6 +72,8 @@ public class GeneralManager : Singleton<GeneralManager>
                 levels[i].stars = new Dictionary<int, bool>();
             }
         }
+
+
     }
 
     public void GoToNextLevel(float waitTime = -1)
@@ -113,6 +114,14 @@ public class GeneralManager : Singleton<GeneralManager>
         {
             Debug.LogError("The scene " + sceneIndex.HumanName() + " (index: " + (int)sceneIndex + ") is not a level!");
         }
+    }
+
+    public void OpenOptions(bool cond)
+    {
+        pause = cond;
+        optionsPanel.SetActive(pause);
+        if (pause) onPause.Invoke();
+        else onUnPause.Invoke();
     }
 
     public void GoToMainMenu()
