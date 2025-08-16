@@ -144,6 +144,11 @@ public class Player : MonoBehaviour
         return true;
     }
 
+    public bool IsABodyPartMoving()
+    {
+        return _movementHandler.isPartDragging;
+    }
+
     public void StartMovingBodyPart(Rigidbody2D movingPart)
     {
         if (hasStamina && !GeneralManager.Instance.pause)
