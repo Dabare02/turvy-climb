@@ -21,6 +21,10 @@ public class LevelManager : MonoBehaviour
     {
         get; private set;
     }
+    public float levelProgress
+    {
+        get; private set;
+    }
 
     private bool _gameOver;
     private bool _completed;
@@ -95,12 +99,16 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    public void LevelComplete()
+    {
+        
+    }
+
     public void GameOver()
     {
         // TODO: Funcionalidad Game Over (pantalla de game over, volver a main menu con funcion en general manager...)
         if (!_gameOver)
         {
-            // 
             Debug.Log("GAME OVER");
             _gameOver = true;
             StaminaManager stManager = GetComponent<StaminaManager>();
@@ -110,6 +118,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    #region TimePlayed
     private void UpdateTime()
     {
         float newTime = timePlayed + Time.deltaTime;
@@ -135,6 +144,14 @@ public class LevelManager : MonoBehaviour
             + "\nTotal time played: " + level.totalPlayedTime
             + "\nRecord time: " + level.recordTime);
     }
+    #endregion
+
+    #region LevelProgress
+    public void UpdateProgress(float progress)
+    {
+        levelProgress = progress;
+    }
+    #endregion
 
     public void RestartLevel()
     {
