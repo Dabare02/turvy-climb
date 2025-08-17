@@ -21,7 +21,7 @@ public static class SaveLoadManager
         binFormat.Serialize(fileStream, levelData);
         fileStream.Close();
 
-        Debug.Log("Level " + level.number + " data saved!");
+        Debug.Log("Level " + level.number + " data saved! (" + dataPath + ")");
     }
 
     public static LevelSaveData LoadLevelData(int number)
@@ -41,7 +41,7 @@ public static class SaveLoadManager
 
             // Cerramos stream y devolvemos datos de guardado.
             fileStream.Close();
-            Debug.Log("Level " + number + " data loaded!");
+            Debug.Log("Level " + number + " data loaded! (" + dataPath + ")");
             return levelSaveData;
         }
         else

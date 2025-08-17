@@ -294,7 +294,7 @@ TextureImporter:
         width: 32
         height: 8
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 4, y: 3, z: 4, w: 2}
       outline: []
       physicsShape: []
@@ -302,6 +302,69 @@ TextureImporter:
       bones: []
       spriteID: 01b9a843a63a14347b3b80f9583b2bd3
       internalID: -1042108668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_1x_10
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 49
+        width: 14
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 1, y: 1, z: 1, w: 1}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bfef212c2713dbd083e71f03ed3a0b4
+      internalID: 1780761104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_1x_11
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 3, y: 3, z: 3, w: 3}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64116051dbe0f265b9ee696ef42396cf
+      internalID: -437960877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GUI_1x_12
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 2, y: 2, z: 2, w: 2}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b043574c5fa02345ba03ff25f32a0b9d
+      internalID: 1089623802
       vertices: []
       indices: 
       edges: []
@@ -319,6 +382,9 @@ TextureImporter:
     nameFileIdTable:
       GUI_1x_0: -1369267410
       GUI_1x_1: 531284323
+      GUI_1x_10: 1780761104
+      GUI_1x_11: -437960877
+      GUI_1x_12: 1089623802
       GUI_1x_2: -1896071026
       GUI_1x_3: -610252260
       GUI_1x_4: 1012705560

@@ -15,7 +15,11 @@ public class LevelMenu : MonoBehaviour
 
         LevelManager lvlManager = FindObjectOfType<LevelManager>();
         if (lvlManager != null) lvlManager.GoBackToLevelSelect();
-        else GeneralManager.Instance.GoToLevelSelect();
+        else
+        {
+            GeneralManager.Instance.GoToLevelSelect();
+            Debug.LogError("LevelManager not found.");
+        }
         
     }
 
@@ -24,10 +28,11 @@ public class LevelMenu : MonoBehaviour
         GeneralManager.Instance.pause = false;
         
         LevelManager lvlManager = FindObjectOfType<LevelManager>();
-        if (lvlManager != null)
+        if (lvlManager != null) lvlManager.RestartLevel();
+        else
         {
-            lvlManager.RestartLevel();
+            GeneralManager.Instance.RestartLevel();
             Debug.LogError("LevelManager not found.");
-        } else GeneralManager.Instance.RestartLevel();
+        }
     }
 }

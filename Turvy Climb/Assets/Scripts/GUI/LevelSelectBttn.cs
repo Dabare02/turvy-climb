@@ -20,6 +20,11 @@ public class LevelSelectBttn : MonoBehaviour
     [SerializeField] private TMP_Text recordTimeTMP;
     [SerializeField] private Image[] stars;
 
+    [Header("Colores")]
+    [SerializeField] private Color notPlayedTextColor;
+    [SerializeField] private Color playedTextColor;
+    [SerializeField] private Color completedColor;
+
     public void SetLevelIndex(BuildIndexes index)
     {
         levelIndex = index;
@@ -36,6 +41,25 @@ public class LevelSelectBttn : MonoBehaviour
 
         titleTMP.text = "Nivel " + (levelData.number + 1) + " - " + levelData.title;
         progressTMP.text = Mathf.FloorToInt(levelData.progress * 100) + "%";
+        Debug.Log("progress: " + levelData.progress);
+        switch (levelData.progress)
+        {
+            case >= 1f:
+                Debug.Log("Completed");
+                progressTMP.color = completedColor;
+                recordTimeTMP.color = playedTextColor;
+                break;
+            case <= 0f:
+                Debug.Log("Not played");
+                progressTMP.color = notPlayedTextColor;
+                recordTimeTMP.color = notPlayedTextColor;
+                break;
+            default:
+                Debug.Log("Played");
+                progressTMP.color = playedTextColor;
+                recordTimeTMP.color = playedTextColor;
+                break;
+        }
         recordTimeTMP.text = Utilities.ConvertToMinutesTimerFormat(levelData.recordTime);
 
         // Estrellas obtenidas.
