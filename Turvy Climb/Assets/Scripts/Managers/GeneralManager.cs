@@ -71,7 +71,7 @@ public class GeneralManager : Singleton<GeneralManager>
                 levels[i].recordTime = 0f;
                 levels[i].progress = 0f;
                 levels[i].stars = new bool[] { false, false };
-                levels[i].radishesCollected = null;
+                levels[i].radishesCollected = new bool[] { false }; // TODO: Cambiar para que el array se inicialice con la cantidad de rabanos en el nivel (probablemente en LevelManager).
             }
         }
 

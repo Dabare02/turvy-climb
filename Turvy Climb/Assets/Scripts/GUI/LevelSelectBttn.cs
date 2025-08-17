@@ -41,21 +41,17 @@ public class LevelSelectBttn : MonoBehaviour
 
         titleTMP.text = "Nivel " + (levelData.number + 1) + " - " + levelData.title;
         progressTMP.text = Mathf.FloorToInt(levelData.progress * 100) + "%";
-        Debug.Log("progress: " + levelData.progress);
         switch (levelData.progress)
         {
             case >= 1f:
-                Debug.Log("Completed");
                 progressTMP.color = completedColor;
                 recordTimeTMP.color = playedTextColor;
                 break;
             case <= 0f:
-                Debug.Log("Not played");
                 progressTMP.color = notPlayedTextColor;
                 recordTimeTMP.color = notPlayedTextColor;
                 break;
             default:
-                Debug.Log("Played");
                 progressTMP.color = playedTextColor;
                 recordTimeTMP.color = playedTextColor;
                 break;
