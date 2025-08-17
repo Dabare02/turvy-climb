@@ -1025,6 +1025,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 290121358189600913, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2944413788318455568, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3676201046500479735, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4435148614022301315, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5740273090237675245, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6822925007654238304, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7616236665278239891, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1068,6 +1092,10 @@ PrefabInstance:
     - target: {fileID: 8392436896809259545, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
       propertyPath: m_Name
       value: GeneralManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8716560260485227156, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1537,9 +1565,33 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 296192350823447485, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 296192350823447485, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 296192350823447485, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 509142433735451946, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
       propertyPath: m_Name
       value: LevelManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 756177356493438681, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
+      propertyPath: m_Color.b
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 756177356493438681, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
+      propertyPath: m_Color.g
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 756177356493438681, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4121482860030172564, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
       propertyPath: m_TagString
@@ -1588,6 +1640,18 @@ PrefabInstance:
     - target: {fileID: 6307299216940646173, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751237396449445369, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751237396449445369, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6751237396449445369, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
+      propertyPath: m_Color.r
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7276418317633758760, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
       propertyPath: level

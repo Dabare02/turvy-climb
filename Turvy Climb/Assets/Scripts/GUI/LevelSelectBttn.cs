@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +14,9 @@ public class LevelSelectBttn : MonoBehaviour
         get; private set;
     }
 
+    [SerializeField] private Image previewIMG;
     [SerializeField] private TMP_Text titleTMP;
+    [SerializeField] private TMP_Text progressTMP;
     [SerializeField] private TMP_Text recordTimeTMP;
     [SerializeField] private Image[] stars;
 
@@ -26,8 +29,24 @@ public class LevelSelectBttn : MonoBehaviour
     {
         levelData = dataSO;
 
-        titleTMP.text = "Nivel " + levelData.number + " - " + levelData.title;
+        if (levelData.preview != null)
+        {
+            previewIMG.sprite = levelData.preview;
+        }
+
+        titleTMP.text = "Nivel " + (levelData.number + 1) + " - " + levelData.title;
+        progressTMP.text = Mathf.FloorToInt(levelData.progress * 100) + "%";
         recordTimeTMP.text = Utilities.ConvertToMinutesTimerFormat(levelData.recordTime);
+
+        // Estrellas obtenidas.
+        for (int i = 0; i < stars.Count() && i < levelData.stars.Length; i++)
+        {
+            if (levelData.stars[i])
+            {
+                Color color = stars[i].color;
+                stars[i].color = new Color(color.r, color.g, color.b, 1f);
+            }
+        }
     }
 
     public void OnClick()

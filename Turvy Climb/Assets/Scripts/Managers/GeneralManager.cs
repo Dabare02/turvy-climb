@@ -24,6 +24,7 @@ public class GeneralManager : Singleton<GeneralManager>
     public List<LevelDataSO> levels;
 
     public UnityEvent onPause;
+    public UnityEvent onUnPause;
 
     private bool paused = false;
     public bool pause
@@ -38,8 +39,6 @@ public class GeneralManager : Singleton<GeneralManager>
             if (paused)
             {
                 Time.timeScale = 0;
-                optionsPanel.SetActive(true);
-                onPause.Invoke();
             }
             else
             {
@@ -60,19 +59,23 @@ public class GeneralManager : Singleton<GeneralManager>
             LevelSaveData levelSaveData = SaveLoadManager.LoadLevelData(i);
             if (levelSaveData != null)
             {
-                levels[i].totalPlayedTime = 0;
+                levels[i].totalPlayedTime = levelSaveData.totalPlayedTime;
                 levels[i].recordTime = levelSaveData.recordTime;
-                levels[i].radishesCollected = levelSaveData.radishesCollected;
+                levels[i].progress = levelSaveData.levelProgress;
                 levels[i].stars = levelSaveData.stars;
+                levels[i].radishesCollected = levelSaveData.radishesCollected;
             }
             else
             {
-                levels[i].totalPlayedTime = 0;
-                levels[i].recordTime = 0;
-                levels[i].radishesCollected = new Dictionary<int, bool>();
-                levels[i].stars = new Dictionary<int, bool>();
+                levels[i].totalPlayedTime = 0f;
+                levels[i].recordTime = 0f;
+                levels[i].progress = 0f;
+                levels[i].stars = new bool[] { false, false };
+                levels[i].radishesCollected = null;
             }
         }
+
+
     }
 
     public void GoToNextLevel(float waitTime = -1)
@@ -113,6 +116,14 @@ public class GeneralManager : Singleton<GeneralManager>
         {
             Debug.LogError("The scene " + sceneIndex.HumanName() + " (index: " + (int)sceneIndex + ") is not a level!");
         }
+    }
+
+    public void OpenOptions(bool cond)
+    {
+        pause = cond;
+        optionsPanel.SetActive(pause);
+        if (pause) onPause.Invoke();
+        else onUnPause.Invoke();
     }
 
     public void GoToMainMenu()
