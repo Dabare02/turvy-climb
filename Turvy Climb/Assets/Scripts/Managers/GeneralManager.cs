@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,6 +19,7 @@ public class GeneralManager : Singleton<GeneralManager>
     // Player data
     [Tooltip("Si existen datos guardados, se ignorará este valor.")]
     public float maxPlayerStamina;
+    public  StaminaCostSO radishSTCost;
     [NonSerialized] public float totalTimePlayed;
 
     [Header("Niveles")]
@@ -56,14 +58,24 @@ public class GeneralManager : Singleton<GeneralManager>
 
         for (int i = 0; i < levels.Count; i++)
         {
-            LevelSaveData levelSaveData = SaveLoadManager.LoadLevelData(i);
-            if (levelSaveData != null)
+            LevelSaveData lvlSaveData = SaveLoadManager.LoadLevelData(i);
+            if (lvlSaveData != null)
             {
-                levels[i].totalPlayedTime = levelSaveData.totalPlayedTime;
-                levels[i].recordTime = levelSaveData.recordTime;
-                levels[i].progress = levelSaveData.levelProgress;
-                levels[i].stars = levelSaveData.stars;
-                levels[i].radishesCollected = levelSaveData.radishesCollected;
+                levels[i].totalPlayedTime = lvlSaveData.totalPlayedTime;
+                levels[i].recordTime = lvlSaveData.recordTime;
+                levels[i].progress = lvlSaveData.levelProgress;
+                levels[i].stars = lvlSaveData.stars;
+                levels[i].radishesCollected = lvlSaveData.radishesCollected;
+
+                // Calcular y asignar max stamina.
+                if (radishSTCost != null)
+                {
+                    maxPlayerStamina += radishSTCost.maxStaminaIncreaseAmount * levels[i].radishesCollected.Count(v => v);
+                }
+                else
+                {
+                    Debug.LogError("Give a reference to STCostRaddish to General Manager, or else the amount of max stamina won't be able to be calculated.");
+                }
             }
             else
             {
@@ -71,11 +83,9 @@ public class GeneralManager : Singleton<GeneralManager>
                 levels[i].recordTime = 0f;
                 levels[i].progress = 0f;
                 levels[i].stars = new bool[] { false, false };
-                levels[i].radishesCollected = new bool[] { false }; // TODO: Cambiar para que el array se inicialice con la cantidad de rabanos en el nivel (probablemente en LevelManager).
+                levels[i].radishesCollected = new bool[] { };   // Depende del nivel, por lo que su contenido real no se decidirá hasta que se cargue el nivel.
             }
         }
-
-
     }
 
     public void GoToNextLevel(float waitTime = -1)

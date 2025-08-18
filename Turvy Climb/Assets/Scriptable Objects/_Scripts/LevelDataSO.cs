@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "LevelData", menuName = "ScriptableObjects/LevelData")]
@@ -13,6 +14,6 @@ public class LevelDataSO : ScriptableObject
     [NonSerialized] public float totalPlayedTime;
     [NonSerialized] public float recordTime;
     [NonSerialized] public float progress;
-    [NonSerialized] public bool[] stars;
     [NonSerialized] public bool[] radishesCollected;
+    [NonSerialized] public bool[] stars;
 }

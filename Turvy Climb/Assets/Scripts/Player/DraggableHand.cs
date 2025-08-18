@@ -4,6 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.XR;
 
 // Representa una mano que se puede mover. Tambien se encarga de la detección de colisiones.
@@ -30,12 +31,23 @@ public class DraggableHand : DraggableBodyPart
 
     [SerializeField] private CircleCollider2D holdDetector;
 
+    public UnityEvent<float> onFirstGrabHold;
+
     new void Awake()
     {
         base.Awake();
 
         holdsInRange = new List<Hold>();
         gripEnabled = true;
+        onFirstGrabHold = new UnityEvent<float>();
+    }
+
+    void OnEnable()
+    {
+        StaminaManager stManager = FindObjectOfType<StaminaManager>();
+        if (stManager != null) {
+            onFirstGrabHold.AddListener(stManager.IncreaseCurrentStamina);
+        }
     }
 
     public void SetRegularHoldDetectRange()
@@ -91,7 +103,7 @@ public class DraggableHand : DraggableBodyPart
 
     public void DisableGrip(bool cond)
     {
-        gripEnabled = cond;
+        gripEnabled = !cond;
     }
 
     public void TempDisableGrip(float seconds)

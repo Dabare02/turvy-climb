@@ -133,6 +133,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  radishes: []
   onSecondPassed:
     m_PersistentCalls:
       m_Calls: []
@@ -594,7 +595,7 @@ GameObject:
   - component: {fileID: 2183702306830044851}
   m_Layer: 0
   m_Name: StartPoint
-  m_TagString: LevelStartPoint
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

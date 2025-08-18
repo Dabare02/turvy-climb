@@ -8,8 +8,7 @@ TagManager:
   - Hand
   - GeneralManager
   - LevelManager
-  - LevelStartPoint
-  - LevelEndPoint
+  - Radish
   layers:
   - Default
   - TransparentFX

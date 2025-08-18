@@ -1938,11 +1938,15 @@ MonoBehaviour:
   optionsPanel: {fileID: 5740273090237675245}
   transitionTime: 3
   maxPlayerStamina: 50
+  radishSTCost: {fileID: 11400000, guid: 0f9f75540de4fee40a58a3b2d459a42e, type: 2}
   levels:
   - {fileID: 11400000, guid: 6f2adb64f1e2a0449abceef597f9b7de, type: 2}
   - {fileID: 11400000, guid: c532e27756b76ad27a60919b6e36a8f7, type: 2}
   - {fileID: 11400000, guid: 52550e16ac3663daea8c47466226a235, type: 2}
   onPause:
+    m_PersistentCalls:
+      m_Calls: []
+  onUnPause:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &6478012732551631457
