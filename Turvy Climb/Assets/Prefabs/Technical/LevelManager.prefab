@@ -128,6 +128,7 @@ MonoBehaviour:
   levelMusic: {fileID: 8300000, guid: a309f6e6a3759a64d854ed27aa73eb1e, type: 3}
   gameOverMenu: {fileID: 6056873305421745080}
   completionMenu: {fileID: 1421903590244601013}
+  tutorialMenu: {fileID: 0}
   startingHolds:
   - {fileID: 0}
   - {fileID: 0}
@@ -272,7 +273,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 150
+  m_fontSizeMax: 80
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -594,7 +595,7 @@ GameObject:
   - component: {fileID: 2183702306830044851}
   m_Layer: 0
   m_Name: StartPoint
-  m_TagString: LevelStartPoint
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1066,7 +1067,7 @@ MonoBehaviour:
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 150
+  m_fontSizeMax: 80
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

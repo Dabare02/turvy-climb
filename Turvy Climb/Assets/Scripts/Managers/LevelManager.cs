@@ -18,6 +18,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private AudioClip levelMusic;
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject completionMenu;
+    [SerializeField] private GameObject tutorialMenu;
     [Tooltip("Los salientes a los que estará agarrado Player al empezar el nivel.")]
     [SerializeField] private Hold[] startingHolds;
 
@@ -70,6 +71,11 @@ public class LevelManager : MonoBehaviour
         if (levelMusic != null)
         {
             GeneralManager.Instance.audioManager.PlayMusic(levelMusic);
+        }
+
+        if (tutorialMenu != null)
+        {
+            
         }
     }
 
