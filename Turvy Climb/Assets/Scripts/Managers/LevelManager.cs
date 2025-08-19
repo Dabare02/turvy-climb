@@ -73,15 +73,16 @@ public class LevelManager : MonoBehaviour
             GeneralManager.Instance.audioManager.PlayMusic(levelMusic);
         }
 
-        if (tutorialMenu != null)
+        if (tutorialMenu != null && !level.dontShowTutorialAgain)
         {
-            
+            GeneralManager.Instance.pause = true;
+            tutorialMenu.SetActive(true);
         }
     }
 
     void Update()
     {
-        if (!_completed && !_gameOver && Input.GetKeyDown(KeyCode.Escape))
+        if (!_completed && !_gameOver && !tutorialMenu.activeInHierarchy && Input.GetKeyDown(KeyCode.Escape))
         {
             GeneralManager.Instance.OpenOptions(!GeneralManager.Instance.pause);
         }
@@ -98,9 +99,20 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        EventManager.OnDSAVaueChanged += SetDSATutorial;
+    }
+
     void OnDisable()
     {
         onSecondPassed.RemoveAllListeners();
+        EventManager.OnDSAVaueChanged -= SetDSATutorial;
+    }
+
+    public void SetDSATutorial(bool cond) {
+        // El único dato de guardado cambiado durante el nivel por simplicidad.
+        level.dontShowTutorialAgain = cond;
     }
 
     public void GrabStartingHolds()
@@ -130,7 +142,6 @@ public class LevelManager : MonoBehaviour
 
     public void GameOver()
     {
-        // TODO: Funcionalidad Game Over (pantalla de game over, volver a main menu con funcion en general manager...)
         if (!_gameOver)
         {
             Debug.Log("GAME OVER");
@@ -143,6 +154,7 @@ public class LevelManager : MonoBehaviour
             gameOverMenu.SetActive(true);
         }
     }
+
     private void UpdateTime()
     {
         float newTime = timePlayed + Time.deltaTime;
@@ -162,6 +174,7 @@ public class LevelManager : MonoBehaviour
         }
         if (progress >= 1f)
         {
+            // NIVEL COMPLETADO
             LevelComplete();
         }
     }

@@ -62,6 +62,7 @@ public class GeneralManager : Singleton<GeneralManager>
                 levels[i].totalPlayedTime = levelSaveData.totalPlayedTime;
                 levels[i].recordTime = levelSaveData.recordTime;
                 levels[i].progress = levelSaveData.levelProgress;
+                levels[i].dontShowTutorialAgain = levelSaveData.dontShowTutorialAgain;
                 levels[i].stars = levelSaveData.stars;
                 levels[i].radishesCollected = levelSaveData.radishesCollected;
             }
@@ -70,11 +71,11 @@ public class GeneralManager : Singleton<GeneralManager>
                 levels[i].totalPlayedTime = 0f;
                 levels[i].recordTime = 0f;
                 levels[i].progress = 0f;
+                levels[i].dontShowTutorialAgain = false;
                 levels[i].stars = new bool[] { false, false };
-                levels[i].radishesCollected = new bool[] { false }; // TODO: Cambiar para que el array se inicialice con la cantidad de rabanos en el nivel (probablemente en LevelManager).
+                levels[i].radishesCollected = new bool[] { false };
             }
         }
-
 
     }
 

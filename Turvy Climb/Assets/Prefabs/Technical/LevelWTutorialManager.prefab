@@ -92,6 +92,10 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7276418317633758760, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
+      propertyPath: tutorialMenu
+      value: 
+      objectReference: {fileID: 1059688620684293326}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -115,23 +119,23 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 686819174595051969, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 686819174595051969, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 686819174595051969, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 686819174595051969, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 686819174595051969, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -321.96313
       objectReference: {fileID: 0}
     - target: {fileID: 1612894973274499725, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_Pivot.x
@@ -215,33 +219,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3814871132785718754, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3814871132785718754, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3814871132785718754, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 3814871132785718754, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 3814871132785718754, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -100
       objectReference: {fileID: 0}
     - target: {fileID: 8558687176444733552, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_Name
       value: TutorialPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8558687176444733552, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
+--- !u!1 &1059688620684293326 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8558687176444733552, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
+  m_PrefabInstance: {fileID: 8679093490602532030}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &7930965273716127283 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1612894973274499725, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}

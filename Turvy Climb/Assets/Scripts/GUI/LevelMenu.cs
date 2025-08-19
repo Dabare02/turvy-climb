@@ -7,6 +7,7 @@ public class LevelMenu : MonoBehaviour
     public void OnResume()
     {
         GeneralManager.Instance.pause = false;
+        gameObject.SetActive(false);
     }
 
     public void OnGoToLevelSelect()
