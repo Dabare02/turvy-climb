@@ -18,6 +18,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private AudioClip levelMusic;
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject completionMenu;
+    [SerializeField] private GameObject tutorialMenu;
     [Tooltip("Los salientes a los que estará agarrado Player al empezar el nivel.")]
     [SerializeField] private Hold[] startingHolds;
 
@@ -71,11 +72,16 @@ public class LevelManager : MonoBehaviour
         {
             GeneralManager.Instance.audioManager.PlayMusic(levelMusic);
         }
+
+        if (tutorialMenu != null && !level.dontShowTutorialAgain)
+        {
+            OpenTutorial(true);
+        }
     }
 
     void Update()
     {
-        if (!_completed && !_gameOver && Input.GetKeyDown(KeyCode.Escape))
+        if (!_completed && !_gameOver && !tutorialMenu.activeInHierarchy && Input.GetKeyDown(KeyCode.Escape))
         {
             GeneralManager.Instance.OpenOptions(!GeneralManager.Instance.pause);
         }
@@ -92,9 +98,39 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    void OnEnable()
+    {
+        EventManager.OnDSAVaueChanged += SetDSATutorial;
+    }
+
     void OnDisable()
     {
         onSecondPassed.RemoveAllListeners();
+        EventManager.OnDSAVaueChanged -= SetDSATutorial;
+    }
+
+    public void OpenGameOver(bool cond)
+    {
+        GeneralManager.Instance.pause = cond;
+        gameOverMenu.SetActive(cond);
+    }
+
+    public void OpenLevelComplete(bool cond)
+    {
+        GeneralManager.Instance.pause = cond;
+        completionMenu.SetActive(cond);
+    }
+
+    public void OpenTutorial(bool cond)
+    {
+        GeneralManager.Instance.pause = cond;
+        tutorialMenu.SetActive(cond);
+    }
+
+    public void SetDSATutorial(bool cond)
+    {
+        // El único dato de guardado cambiado durante el nivel por simplicidad.
+        level.dontShowTutorialAgain = cond;
     }
 
     public void GrabStartingHolds()
@@ -117,14 +153,12 @@ public class LevelManager : MonoBehaviour
 
             // TODO
 
-            GeneralManager.Instance.pause = true;
-            completionMenu.SetActive(true);
+            OpenLevelComplete(true);
         }
     }
 
     public void GameOver()
     {
-        // TODO: Funcionalidad Game Over (pantalla de game over, volver a main menu con funcion en general manager...)
         if (!_gameOver)
         {
             Debug.Log("GAME OVER");
@@ -133,10 +167,10 @@ public class LevelManager : MonoBehaviour
             StaminaManager stManager = GetComponent<StaminaManager>();
             stManager.DepleteStamina();
 
-            GeneralManager.Instance.pause = true;
-            gameOverMenu.SetActive(true);
+            OpenGameOver(true);
         }
     }
+
     private void UpdateTime()
     {
         float newTime = timePlayed + Time.deltaTime;
@@ -156,6 +190,7 @@ public class LevelManager : MonoBehaviour
         }
         if (progress >= 1f)
         {
+            // NIVEL COMPLETADO
             LevelComplete();
         }
     }

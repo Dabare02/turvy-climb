@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1118088367633936518}
   - component: {fileID: 7135619999862259702}
   - component: {fileID: 2841676732505339349}
-  - component: {fileID: 3104409648779405596}
   m_Layer: 0
   m_Name: MenuBttnWImg
   m_TagString: Untagged
@@ -122,27 +121,6 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!95 &3104409648779405596
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 534487124899778250}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8fcca1f6a6a94974184d10305f526f2c, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &5967589539029500031
 GameObject:
   m_ObjectHideFlags: 0

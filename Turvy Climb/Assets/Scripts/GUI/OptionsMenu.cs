@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class OptionsMenu : LevelMenu
+public class OptionsMenu : PopupMenu
 {
     [SerializeField] private Slider masterVolume;
     [SerializeField] private Slider musicVolume;

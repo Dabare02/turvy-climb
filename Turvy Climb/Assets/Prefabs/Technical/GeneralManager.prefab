@@ -1874,10 +1874,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 533349955459234221}
-        m_TargetAssemblyTypeName: OptionsMenu, Assembly-CSharp
-        m_MethodName: OnResume
-        m_Mode: 1
+      - m_Target: {fileID: 3777630984621013395}
+        m_TargetAssemblyTypeName: GeneralManager, Assembly-CSharp
+        m_MethodName: OpenOptions
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1943,6 +1943,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: c532e27756b76ad27a60919b6e36a8f7, type: 2}
   - {fileID: 11400000, guid: 52550e16ac3663daea8c47466226a235, type: 2}
   onPause:
+    m_PersistentCalls:
+      m_Calls: []
+  onUnPause:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &6478012732551631457

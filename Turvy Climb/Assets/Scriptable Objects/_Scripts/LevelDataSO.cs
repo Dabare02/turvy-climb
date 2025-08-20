@@ -13,6 +13,7 @@ public class LevelDataSO : ScriptableObject
     [NonSerialized] public float totalPlayedTime;
     [NonSerialized] public float recordTime;
     [NonSerialized] public float progress;
+    [NonSerialized] public bool dontShowTutorialAgain;
     [NonSerialized] public bool[] stars;
     [NonSerialized] public bool[] radishesCollected;
 }

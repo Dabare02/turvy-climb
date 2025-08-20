@@ -8,8 +8,6 @@ TagManager:
   - Hand
   - GeneralManager
   - LevelManager
-  - LevelStartPoint
-  - LevelEndPoint
   layers:
   - Default
   - TransparentFX
