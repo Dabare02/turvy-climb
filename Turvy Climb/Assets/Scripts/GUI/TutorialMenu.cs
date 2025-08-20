@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TutorialMenu : LevelMenu
+public class TutorialMenu : PopupMenu
 {
     [Header("Datos")]
     public TutorialMenuDataSO tutorialMenuData;
@@ -21,13 +21,17 @@ public class TutorialMenu : LevelMenu
 
     void Awake()
     {
-        if (titleTMP == null || previewImg == null || descriptionTMP == null)
+        if (titleTMP == null || previewImg == null || descriptionTMP == null
+            || prevPageButton == null || nextPageButton == null)
         {
-            Debug.LogWarning("Tutorial menu needs to have a reference to a title, description text and peview image.");
+            Debug.LogWarning("Tutorial menu needs to have a reference to a" 
+                + "title, description text, peview image and previous and next"
+                + "page buttons.");
             GeneralManager.Instance.Quit();
         }
 
-        if (tutorialMenuData == null || tutorialMenuData.pages == null || tutorialMenuData.pages.Length == 0)
+        if (tutorialMenuData == null || tutorialMenuData.pages == null
+            || tutorialMenuData.pages.Length == 0)
         {
             Debug.LogWarning("Tutorial menu needs a TutorialMenuDataSO to display data.");
             GeneralManager.Instance.Quit();
@@ -36,14 +40,14 @@ public class TutorialMenu : LevelMenu
 
     void OnEnable()
     {
-        dontShowAgain.onValueChanged.AddListener(DontShowAgainToggle);
+        if (dontShowAgain != null) dontShowAgain.onValueChanged.AddListener(DontShowAgainToggle);
 
         SetPage(0);
     }
 
     void OnDisable()
     {
-        dontShowAgain.onValueChanged.RemoveListener(DontShowAgainToggle);
+        if (dontShowAgain != null) dontShowAgain.onValueChanged.RemoveListener(DontShowAgainToggle);
     }
 
     // Cambia la página del menú tutorial por la siguiente página. Si es la última, vuelve a la primera página.

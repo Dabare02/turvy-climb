@@ -75,8 +75,7 @@ public class LevelManager : MonoBehaviour
 
         if (tutorialMenu != null && !level.dontShowTutorialAgain)
         {
-            GeneralManager.Instance.pause = true;
-            tutorialMenu.SetActive(true);
+            OpenTutorial(true);
         }
     }
 
@@ -110,7 +109,26 @@ public class LevelManager : MonoBehaviour
         EventManager.OnDSAVaueChanged -= SetDSATutorial;
     }
 
-    public void SetDSATutorial(bool cond) {
+    public void OpenGameOver(bool cond)
+    {
+        GeneralManager.Instance.pause = cond;
+        gameOverMenu.SetActive(cond);
+    }
+
+    public void OpenLevelComplete(bool cond)
+    {
+        GeneralManager.Instance.pause = cond;
+        completionMenu.SetActive(cond);
+    }
+
+    public void OpenTutorial(bool cond)
+    {
+        GeneralManager.Instance.pause = cond;
+        tutorialMenu.SetActive(cond);
+    }
+
+    public void SetDSATutorial(bool cond)
+    {
         // El único dato de guardado cambiado durante el nivel por simplicidad.
         level.dontShowTutorialAgain = cond;
     }
@@ -135,8 +153,7 @@ public class LevelManager : MonoBehaviour
 
             // TODO
 
-            GeneralManager.Instance.pause = true;
-            completionMenu.SetActive(true);
+            OpenLevelComplete(true);
         }
     }
 
@@ -150,8 +167,7 @@ public class LevelManager : MonoBehaviour
             StaminaManager stManager = GetComponent<StaminaManager>();
             stManager.DepleteStamina();
 
-            GeneralManager.Instance.pause = true;
-            gameOverMenu.SetActive(true);
+            OpenGameOver(true);
         }
     }
 

@@ -1362,6 +1362,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: GeneralManager
       objectReference: {fileID: 0}
+    - target: {fileID: 8554101872962930572, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8554101872962930572, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 8716560260485227156, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
