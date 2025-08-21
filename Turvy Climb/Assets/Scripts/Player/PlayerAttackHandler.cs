@@ -26,9 +26,6 @@ public class PlayerAttackHandler : MonoBehaviour
 
     private Coroutine attackCoroutine;
 
-    public UnityEvent<float> onPunch;
-    public UnityEvent<float> onSlingshot;
-
     void Awake()
     {
         _player = GetComponent<Player>();
@@ -51,6 +48,18 @@ public class PlayerAttackHandler : MonoBehaviour
         {
             DetectAttackReadiness();
         }
+    }
+
+    void OnEnable()
+    {
+        EventManager.PunchSucceeded += PunchInterrupt;
+        EventManager.SlingshotStopped += SlingshotInterrupt;
+    }
+
+    void OnDisable()
+    {
+        EventManager.PunchSucceeded -= PunchInterrupt;
+        EventManager.SlingshotStopped -= SlingshotInterrupt;
     }
 
     public void StartAttackDetection(DraggableBodyPart bodyPart)
@@ -129,7 +138,7 @@ public class PlayerAttackHandler : MonoBehaviour
     public void Punch()
     {
         // Reducir el nivel de aguante (evento).
-        onPunch.Invoke(_player.punchAttack.staminaData.staminaCost);
+        EventManager.OnPunchStarted(_player.punchAttack.staminaData.staminaCost);
 
         Rigidbody2D attackBody = attackPart.GetComponent<Rigidbody2D>();
         float launchForce = _player.punchAttack.launchForce;
@@ -180,7 +189,7 @@ public class PlayerAttackHandler : MonoBehaviour
     public void Slingshot()
     {
         // Reducir el nivel de aguante (evento).
-        onSlingshot.Invoke(_player.slingshotAttack.staminaData.staminaCost);
+        EventManager.OnSlingshotStarted(_player.slingshotAttack.staminaData.staminaCost);
 
         // Calcular fuerza a aplicar.
         Rigidbody2D attackBody = attackPart.GetComponent<Rigidbody2D>();
@@ -234,10 +243,7 @@ public class PlayerAttackHandler : MonoBehaviour
             SlingshotHandler attackHandler = attackPart.GetComponent<SlingshotHandler>();
             if (attackHandler == null) return;
         }
-        else
-        {
-            return;
-        }
+        else return;
 
         //Debug.Log("Slingshot interrupted!");
         if (attackCoroutine != null)

@@ -21,9 +21,6 @@ public class Player : MonoBehaviour
     private PlayerMovement _movementHandler;
     private PlayerAttackHandler _attackHandler;
 
-    private UnityEvent<MoveEnum, float, float> startFewHandsHolding;
-    private UnityEvent<MoveEnum> stopFewHandsHolding;
-
     [Header("Player parts")]
     public List<DraggableHand> playerHands;
     public DraggableTorso playerTorso;
@@ -70,54 +67,19 @@ public class Player : MonoBehaviour
         SpecificAttackHandler slingshotHandler = playerTorso.GetComponent<SlingshotHandler>();
         slingshotHandler.attackData = slingshotAttack;
 
-        // Instanciación de eventos.
-        if (startFewHandsHolding == null) startFewHandsHolding = new UnityEvent<MoveEnum, float, float>();
-        if (stopFewHandsHolding == null) stopFewHandsHolding = new UnityEvent<MoveEnum>();
-        if (_movementHandler.onPartMoveStart == null) stopFewHandsHolding = new UnityEvent<MoveEnum>();
-        if (_movementHandler.onPartMoveStop == null) stopFewHandsHolding = new UnityEvent<MoveEnum>();
-        if (_movementHandler.onFirstGrabHold == null) stopFewHandsHolding = new UnityEvent<MoveEnum>();
-        if (_movementHandler.onSlingshotStopEvent == null) stopFewHandsHolding = new UnityEvent<MoveEnum>();
-        if (_attackHandler.onPunch == null) stopFewHandsHolding = new UnityEvent<MoveEnum>();
-        if (_attackHandler.onSlingshot == null) stopFewHandsHolding = new UnityEvent<MoveEnum>();
-
         hasStamina = true;
     }
 
     void OnEnable()
     {
-        // Eventos.
-        GameObject levelmngObj = GameObject.FindGameObjectWithTag("LevelManager");
-        if (levelmngObj != null)
-        {
-            StaminaManager stManager = levelmngObj.GetComponent<StaminaManager>();
-
-            // Subscripción a eventos.
-            startFewHandsHolding.AddListener(stManager.StartContinuousStaminaDrain);
-            stopFewHandsHolding.AddListener(stManager.StopContinuousStaminaChange);
-            _movementHandler.onPartMoveStart.AddListener(stManager.StartContinuousStaminaDrain);
-            _movementHandler.onPartMoveStop.AddListener(stManager.StopContinuousStaminaChange);
-            _movementHandler.onFirstGrabHold.AddListener(stManager.IncreaseCurrentStamina);
-            _movementHandler.onSlingshotStopEvent.AddListener(_attackHandler.SlingshotInterrupt);
-            _attackHandler.onPunch.AddListener(levelmngObj.GetComponent<StaminaManager>().DecreaseCurrentStamina);
-            _attackHandler.onSlingshot.AddListener(levelmngObj.GetComponent<StaminaManager>().DecreaseCurrentStamina);
-        }
-        GeneralManager.Instance.onPause.AddListener(StopAttackDetection);
+        EventManager.PausedManually += StopMovingBodyPart;
+        EventManager.StaminaDepleted += OutOfStamina;
     }
 
     void OnDisable()
     {
-        startFewHandsHolding.RemoveAllListeners();
-        stopFewHandsHolding.RemoveAllListeners();
-        _movementHandler.onPartMoveStart.RemoveAllListeners();
-        _movementHandler.onPartMoveStop.RemoveAllListeners();
-        _movementHandler.onFirstGrabHold.RemoveAllListeners();
-        _movementHandler.onSlingshotStopEvent.RemoveAllListeners();
-        _attackHandler.onPunch.RemoveAllListeners();
-        _attackHandler.onSlingshot.RemoveAllListeners();
-
-        // ATTENTION: Could cause problems. If it does, check here and possibly change it
-        // to `RemoveListener(_attackHandler.StopAttackDetection)`
-        GeneralManager.Instance.onPause.RemoveAllListeners();
+        EventManager.PausedManually -= StopMovingBodyPart;
+        EventManager.StaminaDepleted -= OutOfStamina;
     }
 
     // Indica si la parte de cuerpo especificada puede ser agarrada con el ratón.
@@ -187,13 +149,13 @@ public class Player : MonoBehaviour
         switch (grippedHoldsAmount)
         {
             case 1:
-                startFewHandsHolding.Invoke(MoveEnum.FewHandsHolding, singleHoldSTCost.staminaCost, singleHoldSTCost.staminaChangeSpeed);
+                EventManager.OnStartFewHandsHolding(MoveEnum.FewHandsHolding, singleHoldSTCost.staminaCost, singleHoldSTCost.staminaChangeSpeed);
                 break;
             case 2:
-                startFewHandsHolding.Invoke(MoveEnum.FewHandsHolding, doubleHoldSTCost.staminaCost, doubleHoldSTCost.staminaChangeSpeed);
+                EventManager.OnStartFewHandsHolding(MoveEnum.FewHandsHolding, doubleHoldSTCost.staminaCost, doubleHoldSTCost.staminaChangeSpeed);
                 break;
             default:
-                stopFewHandsHolding.Invoke(MoveEnum.FewHandsHolding);
+                EventManager.OnStopFewHandsHolding(MoveEnum.FewHandsHolding);
                 break;
         }
         Debug.Log("Gripped holds: " + grippedHoldsAmount);
@@ -206,13 +168,13 @@ public class Player : MonoBehaviour
         switch (grippedHoldsAmount)
         {
             case 1:
-                startFewHandsHolding.Invoke(MoveEnum.FewHandsHolding, singleHoldSTCost.staminaCost, singleHoldSTCost.staminaChangeSpeed);
+                EventManager.OnStartFewHandsHolding(MoveEnum.FewHandsHolding, singleHoldSTCost.staminaCost, singleHoldSTCost.staminaChangeSpeed);
                 break;
             case 2:
-                startFewHandsHolding.Invoke(MoveEnum.FewHandsHolding, doubleHoldSTCost.staminaCost, doubleHoldSTCost.staminaChangeSpeed);
+                EventManager.OnStartFewHandsHolding(MoveEnum.FewHandsHolding, doubleHoldSTCost.staminaCost, doubleHoldSTCost.staminaChangeSpeed);
                 break;
             default:
-                stopFewHandsHolding.Invoke(MoveEnum.FewHandsHolding);
+                EventManager.OnStopFewHandsHolding(MoveEnum.FewHandsHolding);
                 break;
         }
         Debug.Log("Gripped holds: " + grippedHoldsAmount);

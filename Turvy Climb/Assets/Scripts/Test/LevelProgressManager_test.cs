@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class LevelProgressManager : MonoBehaviour
+public class LevelProgressManager_test : MonoBehaviour
 {
     [SerializeField] private Transform startPoint;
     [SerializeField] private Transform endPoint;
@@ -11,6 +11,8 @@ public class LevelProgressManager : MonoBehaviour
     private Player _player;
 
     private float levelProgress;
+
+    public UnityEvent<float> onProgressChanged;
 
     void Awake()
     {
@@ -21,11 +23,34 @@ public class LevelProgressManager : MonoBehaviour
             Debug.LogError("No player detected in the scene. Can't calculate progress.");
             gameObject.SetActive(false);
         }
+
+        // Eventos
+        if (onProgressChanged == null) onProgressChanged = new UnityEvent<float>();
+    }
+
+    void OnEnable()
+    {
+        LevelManager_test lvlManager = GetComponent<LevelManager_test>();
+        if (lvlManager != null)
+        {
+            onProgressChanged.AddListener(lvlManager.UpdateProgress);
+        }
+
+        ProgressBar progressBar = FindObjectOfType<ProgressBar>();
+        if (progressBar != null)
+        {
+            onProgressChanged.AddListener(progressBar.SetValue);
+        }
     }
 
     void Update()
     {
         UpdateLevelProgress();
+    }
+
+    void OnDisable()
+    {
+        onProgressChanged.RemoveAllListeners();
     }
 
     private void UpdateLevelProgress()
@@ -36,6 +61,6 @@ public class LevelProgressManager : MonoBehaviour
         levelProgress = playerPos.y / endPos.y;
         if (levelProgress < 0f) levelProgress = 0f;
         else if (levelProgress > 1f) levelProgress = 1f;
-        EventManager.OnLevelProgressChanged(levelProgress);
+        onProgressChanged.Invoke(levelProgress);
     }
 }

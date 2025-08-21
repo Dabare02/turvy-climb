@@ -38,8 +38,6 @@ public class LevelManager : MonoBehaviour
     private bool _gameOver;
     private bool _completed;
 
-    public UnityEvent<float> onSecondPassed;
-
     void Awake()
     {
         if (level == null)
@@ -56,8 +54,6 @@ public class LevelManager : MonoBehaviour
             gameObject.SetActive(false);
             GeneralManager.Instance.GoToLevelSelect();
         }
-
-        if (onSecondPassed == null) onSecondPassed = new UnityEvent<float>();
     }
 
     void Start()
@@ -100,13 +96,14 @@ public class LevelManager : MonoBehaviour
 
     void OnEnable()
     {
-        EventManager.OnDSAVaueChanged += SetDSATutorial;
+        EventManager.LevelProgressChanged += UpdateProgress;
+        EventManager.DSAValueChanged += SetDSATutorial;
     }
 
     void OnDisable()
     {
-        onSecondPassed.RemoveAllListeners();
-        EventManager.OnDSAVaueChanged -= SetDSATutorial;
+        EventManager.LevelProgressChanged -= UpdateProgress;
+        EventManager.DSAValueChanged -= SetDSATutorial;
     }
 
     public void OpenGameOver(bool cond)
@@ -139,6 +136,7 @@ public class LevelManager : MonoBehaviour
         {
             if (startingHolds[i] != null)
             {
+                startingHolds[i].FirstGrip();
                 _player.playerHands[i].GripHold(startingHolds[i]);
             }
         }
@@ -176,7 +174,7 @@ public class LevelManager : MonoBehaviour
         float newTime = timePlayed + Time.deltaTime;
         if (Mathf.FloorToInt(newTime) > Mathf.FloorToInt(timePlayed))
         {
-            onSecondPassed.Invoke(timePlayed);
+            EventManager.OnLevelTimePassed(timePlayed);
         }
         timePlayed = newTime;
     }

@@ -26,11 +26,6 @@ public class PlayerMovement : MonoBehaviour
     private float _rangeRadius;
     private bool _isMouseInRange = true;
 
-    public UnityEvent<MoveEnum, float, float> onPartMoveStart;
-    public UnityEvent<MoveEnum> onPartMoveStop;
-    public UnityEvent<float> onFirstGrabHold;
-    public UnityEvent onSlingshotStopEvent;
-
     void Start()
     {
         _player = GetComponent<Player>();
@@ -46,6 +41,16 @@ public class PlayerMovement : MonoBehaviour
 
         // MOVIMIENTO: Quick grip / drop.
             if (Input.GetKeyDown(KeyCode.Space)) QuickGripDrop();
+    }
+
+    void OnEnable()
+    {
+        EventManager.EnemyForcesDropBodyPart += DropBodyPart;
+    }
+
+    void OnDisable()
+    {
+        EventManager.EnemyForcesDropBodyPart -= DropBodyPart;
     }
 
     // MOVIMIENTO: Agarrar y arrastrar mano o torso.
@@ -87,7 +92,7 @@ public class PlayerMovement : MonoBehaviour
             _player.StartAttackDetection(draggedPart.GetComponent<DraggableHand>());
 
             // Evento para empezar a drenar aguante.
-            onPartMoveStart.Invoke(MoveEnum.DragHand, _player.dragHandSTCost.staminaCost, _player.dragHandSTCost.staminaChangeSpeed);
+            EventManager.OnPartStartedMoving(MoveEnum.DragHand, _player.dragHandSTCost.staminaCost, _player.dragHandSTCost.staminaChangeSpeed);
         }
         else
         {
@@ -101,7 +106,7 @@ public class PlayerMovement : MonoBehaviour
             // Evento para empezar a drenar aguante.
             if (_player.grippedHoldsAmount < 4)
             {
-                onPartMoveStart.Invoke(MoveEnum.DragTorso, _player.dragTorsoSTCost.staminaCost, _player.dragTorsoSTCost.staminaChangeSpeed);
+                EventManager.OnPartStartedMoving(MoveEnum.DragTorso, _player.dragTorsoSTCost.staminaCost, _player.dragTorsoSTCost.staminaChangeSpeed);
             }
         }
 
@@ -124,18 +129,18 @@ public class PlayerMovement : MonoBehaviour
             {
                 DraggableHand hand = draggedPart.GetComponent<DraggableHand>();
                 // Parar drenaje continuo.
-                onPartMoveStop.Invoke(MoveEnum.DragHand);
+                EventManager.OnPartStoppedMoving(MoveEnum.DragHand);
                 if (hand.isGripped && !hand.grippedHold.firstGrip)
                 {   // Si se está agarrando un saliente y es la primera vez que se agarra.
-                    onFirstGrabHold.Invoke(_player.firstGripHoldSTCost.staminaCost);
+                    EventManager.OnFirstTimeGrabbedHold(_player.firstGripHoldSTCost.staminaCost);
                     // Indicar que ya ha sido agarrado, para no volver a regenerar aguante la próxima vez.
-                    hand.grippedHold.FirstGrip();   
+                    hand.grippedHold.FirstGrip();
                 }
             }
-            else onPartMoveStop.Invoke(MoveEnum.DragTorso);
+            else EventManager.OnPartStoppedMoving(MoveEnum.DragTorso);
 
             // Evento para recuperar aguante (en caso de que se agarre un saliente por primera vez).
-            
+
 
             _originalPos = new Vector2(float.NaN, float.NaN);
             _rangeCenterPos = new Vector2(float.NaN, float.NaN);

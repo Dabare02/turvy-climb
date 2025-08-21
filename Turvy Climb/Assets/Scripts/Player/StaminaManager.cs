@@ -13,13 +13,6 @@ public class StaminaManager : MonoBehaviour
     private List<Tuple<MoveEnum, Coroutine>> continuousStChange;
     private bool _staminaChangeLocked = true;
 
-    // Evento disparado por la clase para indicar el cambio de aguante.
-    public UnityEvent<float> onSTChange;
-    // Evento disparado para indicar que la cantidad de aguante máxima ha aumentado.
-    public UnityEvent<float> onMaxSTChange;
-    // Evento disparado por la clase para indicar que la cantidad de aguante es 0.
-    public UnityEvent staminaDepleteEvent;
-
     void Awake()
     {
         // Inicializar lista de corutinas.
@@ -27,22 +20,6 @@ public class StaminaManager : MonoBehaviour
         foreach (MoveEnum m in Enum.GetValues(typeof(MoveEnum)))
         {
             continuousStChange.Add(new Tuple<MoveEnum, Coroutine>(m, null));
-        }
-    }
-
-    void OnEnable()
-    {
-        Player player = FindObjectOfType<Player>();
-        if (player != null)
-        {
-            staminaDepleteEvent.AddListener(player.OutOfStamina);
-        }
-
-        StaminaGauge stGauge = FindObjectOfType<StaminaGauge>();
-        if (stGauge != null)
-        {
-            onSTChange.AddListener(stGauge.SetStamina);
-            onMaxSTChange.AddListener(stGauge.SetMaxStamina);
         }
     }
 
@@ -61,11 +38,28 @@ public class StaminaManager : MonoBehaviour
         // // DEBUG
     }
 
+    void OnEnable()
+    {
+        EventManager.StartFewHandsHolding += StartContinuousStaminaDrain;
+        EventManager.StopFewHandsholding += StopContinuousStaminaChange;
+        EventManager.PunchStarted += DecreaseCurrentStamina;
+        EventManager.SlingshotStarted += DecreaseCurrentStamina;
+        EventManager.PartStartedMoving += StartContinuousStaminaDrain;
+        EventManager.PartStoppedMoving += StopContinuousStaminaChange;
+        EventManager.FirstTimeGrabbedHold += IncreaseCurrentStamina;
+        EventManager.PlayerDamaged += DecreaseCurrentStamina;
+    }
+
     void OnDisable()
     {
-        onSTChange.RemoveAllListeners();
-        onMaxSTChange.RemoveAllListeners();
-        staminaDepleteEvent.RemoveAllListeners();
+        EventManager.StartFewHandsHolding -= StartContinuousStaminaDrain;
+        EventManager.StopFewHandsholding -= StopContinuousStaminaChange;
+        EventManager.PunchStarted -= DecreaseCurrentStamina;
+        EventManager.SlingshotStarted -= DecreaseCurrentStamina;
+        EventManager.PartStartedMoving -= StartContinuousStaminaDrain;
+        EventManager.PartStoppedMoving -= StopContinuousStaminaChange;
+        EventManager.FirstTimeGrabbedHold -= IncreaseCurrentStamina;
+        EventManager.PlayerDamaged -= DecreaseCurrentStamina;
     }
 
     public void ResetStamina()
@@ -186,14 +180,14 @@ public class StaminaManager : MonoBehaviour
     private void NotifyMaxStaminaChange()
     {
         Debug.Log("Max stamina increased to " + GeneralManager.Instance.maxPlayerStamina);
-        onMaxSTChange.Invoke(GeneralManager.Instance.maxPlayerStamina);
+        EventManager.OnMaxStaminaAmountChanged(GeneralManager.Instance.maxPlayerStamina);
         NotifyStaminaChange();
     }
 
     private void NotifyStaminaChange()
     {
         Debug.Log("Stamina changed to " + stamina);
-        onSTChange.Invoke(stamina);
-        if (stamina <= 0) staminaDepleteEvent.Invoke();
+        EventManager.OnStaminaAmountChanged(stamina);
+        if (stamina <= 0) EventManager.OnStaminaDepleted();
     }
 }

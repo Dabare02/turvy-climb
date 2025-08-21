@@ -9,21 +9,6 @@ using UnityEngine.Events;
 // determinar que hacer.
 public class PunchHandler : SpecificAttackHandler
 {
-    // Events
-    public UnityEvent punchSuccessEvent;
-    
-    public override bool attackMode
-    {
-        get
-        {
-            return hitDetector.enabled;
-        }
-        set
-        {
-            hitDetector.enabled = value;
-        }
-    }
-
     void OnTriggerEnter2D(Collider2D other)
     {
         Enemy enemy = other.GetComponent<Enemy>();
@@ -31,8 +16,7 @@ public class PunchHandler : SpecificAttackHandler
         {
             // Debug.Log("Enemy " + enemy.name + " detected!");
             // if (_handCollider != null) _handCollider.enabled = true;
-            punchSuccessEvent.Invoke();
-            attackMode = false;
+            EventManager.OnPunchSucceeded();
 
             enemy.TakeDamage(attackData.damage, MoveEnum.Punch);
         }
