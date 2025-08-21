@@ -10,7 +10,7 @@ public class PopupMenu : MonoBehaviour
     //    gameObject.SetActive(false);
     //}
 
-    public void OnGoToLevelSelect()
+    public virtual void OnGoToLevelSelect()
     {
         GeneralManager.Instance.pause = false;
 
@@ -23,7 +23,7 @@ public class PopupMenu : MonoBehaviour
         }
     }
 
-    public void OnRestartLevel()
+    public virtual void OnRestartLevel()
     {
         GeneralManager.Instance.pause = false;
         

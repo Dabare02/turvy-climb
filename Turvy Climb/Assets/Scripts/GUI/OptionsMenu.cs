@@ -16,6 +16,18 @@ public class OptionsMenu : PopupMenu
         sfxVolume.value = GeneralManager.Instance.audioManager.GetSFXVolume();
     }
 
+    public override void OnGoToLevelSelect()
+    {
+        base.OnGoToLevelSelect();
+        gameObject.SetActive(false);
+    }
+
+    public override void OnRestartLevel()
+    {
+        base.OnRestartLevel();
+        gameObject.SetActive(false);
+    }
+
     public void OnMasterVolumeChanged()
     {
         GeneralManager.Instance.audioManager.SetMasterVolume(masterVolume.value);
