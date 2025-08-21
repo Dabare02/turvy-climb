@@ -75,7 +75,7 @@ public class DraggableHand : DraggableBodyPart
         {
             Debug.Log(this.name + " is dropping hold " + grippedHold.name);
             // Descongelar RigidBody.
-            _body.constraints = RigidbodyConstraints2D.FreezeRotation;
+            _body.constraints = RigidbodyConstraints2D.None;
             _body.AddForce(Vector2.zero);   // Para forzar update. No recomendado, quizás usar corutina con "yield return new WaitForFixedUpdate()".
 
             // Indicar al saliente que ya no hay extremiades sujetas a este.

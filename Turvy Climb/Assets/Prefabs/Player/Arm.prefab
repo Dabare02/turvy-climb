@@ -1941,11 +1941,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 508253556234666548, guid: 8e291cb65bb5bdb4e98e894721818601, type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: -1.8409902
+      value: -1.2092477
       objectReference: {fileID: 0}
     - target: {fileID: 508253556234666548, guid: 8e291cb65bb5bdb4e98e894721818601, type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 1.8409905
+      value: 1.8391812
       objectReference: {fileID: 0}
     - target: {fileID: 901807678683312239, guid: 8e291cb65bb5bdb4e98e894721818601, type: 3}
       propertyPath: m_Name
