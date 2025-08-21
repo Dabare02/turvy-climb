@@ -77,7 +77,7 @@ public class LevelManager : MonoBehaviour
 
     void Update()
     {
-        if (!_completed && !_gameOver && !tutorialMenu.activeInHierarchy && Input.GetKeyDown(KeyCode.Escape))
+        if (!_completed && !_gameOver && (tutorialMenu == null || !tutorialMenu.activeInHierarchy) && Input.GetKeyDown(KeyCode.Escape))
         {
             GeneralManager.Instance.OpenOptions(!GeneralManager.Instance.pause);
         }
