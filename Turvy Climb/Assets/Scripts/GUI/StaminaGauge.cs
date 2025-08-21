@@ -12,6 +12,18 @@ public class StaminaGauge : MonoBehaviour
     [SerializeField] private TMP_Text staminaNumber;
     [SerializeField] private Gradient staminaFillGradient;
 
+    void OnEnable()
+    {
+        EventManager.StaminaAmountChanged += SetStamina;
+        EventManager.MaxStaminaAmountChanged += SetMaxStamina;
+    }
+
+    void OnDisable()
+    {
+        EventManager.StaminaAmountChanged -= SetStamina;
+        EventManager.MaxStaminaAmountChanged -= SetMaxStamina;
+    }
+
     public void SetStamina(float amount)
     {
         if (amount < 0 || amount > staminaBar.maxValue)

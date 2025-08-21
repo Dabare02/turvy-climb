@@ -65,7 +65,7 @@ public class TutorialMenu : PopupMenu
     }
 
     public void DontShowAgainToggle(bool cond) {
-        EventManager.TriggerDontShowAgainValueChanged(cond);
+        EventManager.OnDSAValueChanged(cond);
     }
 
     private void SetPage(int pageNumber)

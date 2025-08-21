@@ -11,10 +11,17 @@ public class SpecificAttackHandler : MonoBehaviour
 
     [NonSerialized] public PlayerAttackTypeSO attackData;
 
-    public virtual bool attackMode
+    public bool attackMode
     {
-        get { return false; }
-        set { }
+        get
+        {
+            return hitDetector.enabled;
+        }
+        set
+        {
+            hitDetector.enabled = value;
+            Debug.Log("AttackMode active? " + value);
+        }
     }
 
     void Start()

@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class EnemyWeapon : MonoBehaviour
 {
@@ -13,8 +12,6 @@ public class EnemyWeapon : MonoBehaviour
     protected EnemyAttackTypeSO attackData;
     protected Animator _anim;
     protected Enemy _enemy;
-
-    public UnityEvent<float> playerDamaged;
 
     private Coroutine useWeaponCoroutine;
     private Coroutine atkCooldownCoroutine;
@@ -29,22 +26,11 @@ public class EnemyWeapon : MonoBehaviour
                 Debug.LogWarning("Hit detector needs to be trigger. If you assigned one, make sure to turn on that option. If not, make sure you add a trigger collider to the weapon GameObject.");
             }
         }
-
-        GameObject staminaMngObj = GameObject.FindGameObjectWithTag("LevelManager");
-        if (staminaMngObj != null)
-        {
-            playerDamaged.AddListener(staminaMngObj.GetComponent<StaminaManager>().DecreaseCurrentStamina);
-        }
     }
 
     protected void Start()
     {
         ResetWeapon();
-    }
-
-    protected void OnDisable()
-    {
-        playerDamaged.RemoveAllListeners();
     }
 
     public void SetupWeapon(Enemy enemy, Animator enemyAnimator, EnemyAttackTypeSO atkData)
@@ -129,7 +115,7 @@ public class EnemyWeapon : MonoBehaviour
     {
         _enemy.state = EnemyState.PLAYER_DAMAGED;
 
-        playerDamaged.Invoke(attackData.damage);
+        EventManager.OnPlayerDamaged(attackData.damage);
         Debug.Log("Enemy " + _enemy.name + " attacked Player for " + attackData.damage + " stamina!");
 
         if (useWeaponCoroutine != null)

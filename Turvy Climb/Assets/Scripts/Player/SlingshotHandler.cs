@@ -5,21 +5,6 @@ using UnityEngine.Events;
 
 public class SlingshotHandler : SpecificAttackHandler
 {
-    // Events
-    public UnityEvent slingshotStopEvent;
-    
-    public override bool attackMode
-    {
-        get
-        {
-            return hitDetector.enabled;
-        }
-        set
-        {
-            hitDetector.enabled = value;
-        }
-    }
-
     void OnTriggerEnter2D(Collider2D other)
     {
         Enemy enemy = other.GetComponent<Enemy>();

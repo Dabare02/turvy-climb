@@ -23,9 +23,6 @@ public class GeneralManager : Singleton<GeneralManager>
     [Header("Niveles")]
     public List<LevelDataSO> levels;
 
-    public UnityEvent onPause;
-    public UnityEvent onUnPause;
-
     private bool paused = false;
     public bool pause
     {
@@ -36,16 +33,7 @@ public class GeneralManager : Singleton<GeneralManager>
         set
         {
             paused = value;
-            if (paused)
-            {
-                Time.timeScale = 0;
-            }
-            else
-            {
-                Time.timeScale = 1;
-                optionsPanel.SetActive(false);
-                onPause.Invoke();
-            }
+            Time.timeScale = paused ? 0f : 1f;
         }
     }
 
@@ -123,8 +111,8 @@ public class GeneralManager : Singleton<GeneralManager>
     {
         pause = cond;
         optionsPanel.SetActive(pause);
-        if (pause) onPause.Invoke();
-        else onUnPause.Invoke();
+        if (pause) EventManager.OnPausedManually();
+        else EventManager.OnUnpausedManually();
     }
 
     public void GoToMainMenu()

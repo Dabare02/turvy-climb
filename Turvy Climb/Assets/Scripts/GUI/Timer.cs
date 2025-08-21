@@ -7,17 +7,16 @@ public class Timer : MonoBehaviour
 {
     [SerializeField] private TMP_Text timerText;
 
-    private LevelManager _lvlManager;
     private float currentTime;
-
-    void Awake()
-    {
-        _lvlManager = FindObjectOfType<LevelManager>();
-    }
 
     void OnEnable()
     {
-        _lvlManager.onSecondPassed.AddListener(UpdateTimer);
+        EventManager.LevelTimePassed += UpdateTimer;
+    }
+
+    void OnDisable()
+    {
+        EventManager.LevelTimePassed += UpdateTimer;
     }
 
     public void UpdateTimer(float seconds)
