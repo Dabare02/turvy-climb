@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ using UnityEngine.XR;
 // Representa una mano que se puede mover. Tambien se encarga de la detección de colisiones.
 public class DraggableHand : DraggableBodyPart
 {
-    public List<Hold> holdsInRange;
+    [SerializeField] private CircleCollider2D holdDetector;
 
     public Hold grippedHold
     {
@@ -27,8 +28,9 @@ public class DraggableHand : DraggableBodyPart
     {
         get; private set;
     }
+    [NonSerialized] public List<Hold> holdsInRange;
 
-    [SerializeField] private CircleCollider2D holdDetector;
+    private Animator _anim;
 
     new void Awake()
     {
@@ -36,6 +38,7 @@ public class DraggableHand : DraggableBodyPart
 
         holdsInRange = new List<Hold>();
         gripEnabled = true;
+        _anim = GetComponent<Animator>();
     }
 
     public void SetRegularHoldDetectRange()
@@ -64,6 +67,9 @@ public class DraggableHand : DraggableBodyPart
 
             // Indicar a Player que hay un saliente más al que está agarrado.
             _player.IncreaseGrippedHolds(1);
+
+            // Animación agarre saliente
+            _anim.SetTrigger("CloseHand");
             
             Debug.Log(this.name + " is gripping hold " + grippedHold.name);
         }
@@ -86,6 +92,9 @@ public class DraggableHand : DraggableBodyPart
 
             // Indicar a Player que hay un saliente menos al que está agarrado.
             _player.DecreaseGrippedHolds(1);
+
+            // Animación soltar saliente
+            _anim.SetTrigger("OpenHand");
         }
     }
 
