@@ -29,6 +29,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         _player = GetComponent<Player>();
+        _player.SetRegularHoldDetectRange();
     }
 
     void Update()
