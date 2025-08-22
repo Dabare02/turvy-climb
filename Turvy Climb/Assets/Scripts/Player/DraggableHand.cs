@@ -63,7 +63,7 @@ public class DraggableHand : DraggableBodyPart
 
             // Mover mano y congelar su RigidBody.
             transform.position = new Vector3(hold.transform.position.x, hold.transform.position.y, transform.position.z);
-            _body.constraints = RigidbodyConstraints2D.FreezeAll;
+            _body.constraints = RigidbodyConstraints2D.FreezePosition;
 
             // Indicar a Player que hay un saliente más al que está agarrado.
             _player.IncreaseGrippedHolds(1);

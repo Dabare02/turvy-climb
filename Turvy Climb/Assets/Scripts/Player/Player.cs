@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -70,6 +72,11 @@ public class Player : MonoBehaviour
         hasStamina = true;
     }
 
+    void Update()
+    {
+        RotateHands();
+    }
+
     void OnEnable()
     {
         EventManager.PausedManually += StopMovingBodyPart;
@@ -81,6 +88,22 @@ public class Player : MonoBehaviour
         EventManager.PausedManually -= StopMovingBodyPart;
         EventManager.StaminaDepleted -= OutOfStamina;
     }
+
+    // FUNCIONES PRIVADAS
+    private void RotateHands()
+    {
+        foreach (DraggableHand h in playerHands)
+        {
+            Rigidbody2D handRb = h.GetComponent<Rigidbody2D>();
+            Vector3 dir = (h.transform.position - playerTorso.transform.position).normalized;
+
+            //h.transform.rotation = Quaternion.FromToRotation(h.transform.up, dir);
+            float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+            handRb.rotation = angle;
+        }
+    }
+
+    // FUNCIONES PUBLICAS
 
     // Indica si la parte de cuerpo especificada puede ser agarrada con el ratón.
     public bool IsBodyPartGrabbable(DraggableBodyPart bodyPart)

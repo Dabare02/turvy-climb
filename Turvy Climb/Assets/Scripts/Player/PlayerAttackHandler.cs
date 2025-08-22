@@ -16,8 +16,8 @@ public class PlayerAttackHandler : MonoBehaviour
     private DraggableBodyPart attackPart;
     private SpringJoint2D attackSpringJoint;
     private CircleCollider2D attackPartCollider;
-    private bool _isAttackReady;
     private PlayerAttackState attackState;
+    private bool _isAttackReady;
 
     private Vector2 _rangeCenterPos;
     private float _rangeRadius;
@@ -93,9 +93,13 @@ public class PlayerAttackHandler : MonoBehaviour
         }
 
         bool prevReadiness = _isAttackReady;  // DEBUG
+
         _isAttackReady = !Utilities.IsPointInsideCircle(_rangeCenterPos,
                                                         _rangeRadius,
                                                         attackPart.transform.position);
+        _isAttackReady &= (attackPart.GetType() == typeof(DraggableHand) && !((DraggableHand)attackPart).isGripped)
+            || (attackPart.GetType() == typeof(DraggableTorso) && _player.grippedHoldsAmount == 4);
+            
         if (!prevReadiness && _isAttackReady) Debug.Log("Attack is ready.");   // DEBUG
 
         if (_isAttackReady)
@@ -118,13 +122,11 @@ public class PlayerAttackHandler : MonoBehaviour
             HideTrajectoryLine();
 
             // Comprobar el tipo de ataque.
-            if (attackPart.GetType() == typeof(DraggableHand)
-                && !((DraggableHand)attackPart).isGripped)
+            if (attackPart.GetType() == typeof(DraggableHand))
             {
                 Punch();
             }
-            else if (attackPart.GetType() == typeof(DraggableTorso)
-                && _player.grippedHoldsAmount == 4)
+            else if (attackPart.GetType() == typeof(DraggableTorso))
             {   // El jugador debe estar agarrado a la pared con todas sus extremidades.
                 Slingshot();
             }
