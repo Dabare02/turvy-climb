@@ -6,6 +6,7 @@ using UnityEngine;
 public class BackgroundLoop : MonoBehaviour
 {
     public GameObject[] levels;
+    public float parallaxSpeed;
     private Camera mainCamera;
     private Vector2 screenBounds;
 
@@ -13,6 +14,10 @@ public class BackgroundLoop : MonoBehaviour
     {
         mainCamera = gameObject.GetComponent<Camera>();
         screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
+    }
+
+    void Start()
+    {
         foreach (GameObject obj in levels)
         {
             LoadChildObjects(obj);
@@ -56,12 +61,12 @@ public class BackgroundLoop : MonoBehaviour
             if (transform.position.y + screenBounds.y > lastChild.transform.position.y + halfObjH)
             {
                 firstChild.transform.SetAsLastSibling();
-                firstChild.transform.position = new Vector3(lastChild.transform.position.x, lastChild.transform.position.y + halfObjH, lastChild.transform.position.z);
+                firstChild.transform.position = new Vector3(lastChild.transform.position.x, lastChild.transform.position.y + halfObjH * 2, lastChild.transform.position.z);
             }
-            else if (transform.position.y - screenBounds.y < lastChild.transform.position.y - halfObjH)
+            else if (transform.position.y - screenBounds.y < firstChild.transform.position.y - halfObjH)
             {
                 lastChild.transform.SetAsFirstSibling();
-                lastChild.transform.position = new Vector3(firstChild.transform.position.x, firstChild.transform.position.y - halfObjH, firstChild.transform.position.z);
+                lastChild.transform.position = new Vector3(firstChild.transform.position.x, firstChild.transform.position.y - halfObjH * 2, firstChild.transform.position.z);
             }
         }
     }
