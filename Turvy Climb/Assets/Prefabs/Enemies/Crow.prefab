@@ -142,8 +142,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 0.3018868, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 3ba1136dd21b68249a3e99708a206711, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -187,7 +187,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.7
 --- !u!50 &9205227033852300261
 Rigidbody2D:
   serializedVersion: 4
@@ -397,6 +397,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitDetector: {fileID: 6652043351706666497}
-  playerDamaged:
-    m_PersistentCalls:
-      m_Calls: []
