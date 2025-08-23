@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Vector2 = UnityEngine.Vector2;
 
@@ -83,6 +84,24 @@ public class Utilities
         }
 
         return closestTransform;
+    }
+    #endregion
+
+    #region GameObject
+    public static T[] GetComponetsInDirectChildren<T>(GameObject parent) where T : Component
+    {
+        List<T> res = new List<T>();
+
+        foreach (Transform tr in parent.transform)
+        {
+            T component = tr.GetComponent<T>();
+            if (component != null)
+            {
+                res.Add(component);
+            }
+        }
+
+        return res.ToArray();
     }
     #endregion
 
