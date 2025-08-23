@@ -114,7 +114,7 @@ public class PlayerAttackHandler : MonoBehaviour
 
     public void CheckAttack()
     {
-        if (_isAttackReady)
+        if (_isAttackReady && attackPart != null)
         {
             // Indicar que se está realizando el ataque.
             attackState = PlayerAttackState.PERFORMING_ATTACK;
