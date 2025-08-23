@@ -6,14 +6,13 @@ using UnityEngine;
 public class BackgroundLoop : MonoBehaviour
 {
     public GameObject[] levels;
-    public float parallaxSpeed;
-    private Camera mainCamera;
     private Vector2 screenBounds;
+    private Vector3 lastScreenPos;
 
     void Awake()
     {
-        mainCamera = gameObject.GetComponent<Camera>();
-        screenBounds = mainCamera.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, mainCamera.transform.position.z));
+        screenBounds = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, Camera.main.transform.position.z));
+        lastScreenPos = Camera.main.transform.position;
     }
 
     void Start()
@@ -29,7 +28,13 @@ public class BackgroundLoop : MonoBehaviour
         foreach (GameObject obj in levels)
         {
             RepositionChildObjects(obj);
+
+            float parallaxSpeed = 1 - Mathf.Clamp(Mathf.Abs(Camera.main.transform.position.z / obj.transform.position.z), 0f, 1f);
+            float diff = Camera.main.transform.position.y - lastScreenPos.y;
+            obj.transform.Translate(Vector3.up * diff * parallaxSpeed);
         }
+
+        lastScreenPos = Camera.main.transform.position;
     }
 
     void LoadChildObjects(GameObject obj)
@@ -58,12 +63,12 @@ public class BackgroundLoop : MonoBehaviour
             float halfObjH = lastChild.GetComponent<SpriteRenderer>().bounds.extents.y;
 
             // Comprobar si la cámara se encuentra mirando fuera del fondo.
-            if (transform.position.y + screenBounds.y > lastChild.transform.position.y + halfObjH)
+            if (Camera.main.transform.position.y + screenBounds.y > lastChild.transform.position.y + halfObjH)
             {
                 firstChild.transform.SetAsLastSibling();
                 firstChild.transform.position = new Vector3(lastChild.transform.position.x, lastChild.transform.position.y + halfObjH * 2, lastChild.transform.position.z);
             }
-            else if (transform.position.y - screenBounds.y < firstChild.transform.position.y - halfObjH)
+            else if (Camera.main.transform.position.y - screenBounds.y < firstChild.transform.position.y - halfObjH)
             {
                 lastChild.transform.SetAsFirstSibling();
                 lastChild.transform.position = new Vector3(firstChild.transform.position.x, firstChild.transform.position.y - halfObjH * 2, firstChild.transform.position.z);
