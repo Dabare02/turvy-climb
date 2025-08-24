@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 72a6ebbd8d2c18546b1483c899139fa4, type: 3}
-  m_Name: Level1TutorialPage2SO
+  m_Name: Level1TutorialPage5SO
   m_EditorClassIdentifier: 
-  title: Quick Grip & Drop
+  title: Coleccionables
   previewImage: {fileID: 0}
-  description: Pulsa Espacio para soltarte de todos los salientes. Pulsalo de nuevo
-    en el aire para volver a agarrarte con una mano.
+  description: "Recoge barritas energ\xE9ticas para recuperar parte de tu aguante.
+    Cada nivel tiene una cierta cantidad de r\xE1banos que, al recogerlos, aumentar\xE1s
+    tu aguante m\xE1ximo permanentemente!"

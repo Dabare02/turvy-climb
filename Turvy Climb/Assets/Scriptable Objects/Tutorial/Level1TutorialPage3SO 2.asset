@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a6ebbd8d2c18546b1483c899139fa4, type: 3}
   m_Name: Level1TutorialPage3SO 2
   m_EditorClassIdentifier: 
-  title: Title 3
+  title: Ataques
   previewImage: {fileID: 0}
-  description: A description 3
+  description: "Arrastra una mano lejos hasta que veas unas flechas, luego sueltala
+    para realizar un pu\xF1etazo. Si haces lo mismo con el torso, realizar\xE1s un
+    ataque tirachinas, lanz\xE1ndote lejos. Esto permite llegar a sitios poco accesibles.
+    Recuerda pulsar Espacio despu\xE9s para no caer al vac\xEDo!"

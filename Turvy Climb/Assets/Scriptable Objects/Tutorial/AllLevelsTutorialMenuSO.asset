@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0da5ccdc363572f469532290b389ef1e, type: 3}
-  m_Name: Level1TutorialMenuSO
+  m_Name: AllLevelsTutorialMenuSO
   m_EditorClassIdentifier: 
   pages:
   - {fileID: 11400000, guid: 7a9e868af0defec4785599c8b680b9f6, type: 2}

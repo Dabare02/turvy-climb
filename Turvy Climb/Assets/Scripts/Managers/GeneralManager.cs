@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UIElements;
 
 [RequireComponent(typeof(AudioManager))]
 public class GeneralManager : Singleton<GeneralManager>
@@ -75,6 +76,15 @@ public class GeneralManager : Singleton<GeneralManager>
                 levels[i].stars = new bool[] { false, false };
                 levels[i].radishesCollected = new bool[] { };   // Depende del nivel, por lo que su contenido real no se decidirá hasta que se cargue el nivel.
             }
+        }
+    }
+
+    void Update()
+    {
+        // DELETE BEFORE BUILD
+        if (Input.GetKeyDown(KeyCode.Insert))
+        {
+            ScreenCapture.CaptureScreenshot(Application.persistentDataPath + "/picture.png");
         }
     }
 
