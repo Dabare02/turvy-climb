@@ -104,7 +104,7 @@ public class StaminaManager : MonoBehaviour
         if (_staminaChangeLocked) return;
 
         GeneralManager.Instance.maxPlayerStamina += amount;
-        stamina = GeneralManager.Instance.maxPlayerStamina;
+        //stamina = GeneralManager.Instance.maxPlayerStamina;
         NotifyMaxStaminaChange();
     }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -18,6 +19,7 @@ public class GeneralManager : Singleton<GeneralManager>
     // Player data
     [Tooltip("Si existen datos guardados, se ignorará este valor.")]
     public float maxPlayerStamina;
+    public StaminaCostSO radishSTCost;
     [NonSerialized] public float totalTimePlayed;
 
     [Header("Niveles")]
@@ -44,15 +46,25 @@ public class GeneralManager : Singleton<GeneralManager>
 
         for (int i = 0; i < levels.Count; i++)
         {
-            LevelSaveData levelSaveData = SaveLoadManager.LoadLevelData(i);
-            if (levelSaveData != null)
+            LevelSaveData lvlSaveData = SaveLoadManager.LoadLevelData(i);
+            if (lvlSaveData != null)
             {
-                levels[i].totalPlayedTime = levelSaveData.totalPlayedTime;
-                levels[i].recordTime = levelSaveData.recordTime;
-                levels[i].progress = levelSaveData.levelProgress;
-                levels[i].dontShowTutorialAgain = levelSaveData.dontShowTutorialAgain;
-                levels[i].stars = levelSaveData.stars;
-                levels[i].radishesCollected = levelSaveData.radishesCollected;
+                levels[i].totalPlayedTime = lvlSaveData.totalPlayedTime;
+                levels[i].recordTime = lvlSaveData.recordTime;
+                levels[i].progress = lvlSaveData.levelProgress;
+                levels[i].dontShowTutorialAgain = lvlSaveData.dontShowTutorialAgain;
+                levels[i].stars = lvlSaveData.stars;
+                levels[i].radishesCollected = lvlSaveData.radishesCollected;
+
+                // Calcular y asignar aguante máximo.
+                if (radishSTCost != null)
+                {
+                    maxPlayerStamina += radishSTCost.maxStaminaIncreaseAmount * levels[i].radishesCollected.Count(v => v);
+                }
+                else
+                {
+                    Debug.LogError("Give a reference to STCostRadish to GeneralManager, or else the max amount of stamina won't be calculated and will be given a default value.");
+                }
             }
             else
             {
@@ -61,10 +73,9 @@ public class GeneralManager : Singleton<GeneralManager>
                 levels[i].progress = 0f;
                 levels[i].dontShowTutorialAgain = false;
                 levels[i].stars = new bool[] { false, false };
-                levels[i].radishesCollected = new bool[] { false };
+                levels[i].radishesCollected = new bool[] { };   // Depende del nivel, por lo que su contenido real no se decidirá hasta que se cargue el nivel.
             }
         }
-
     }
 
     public void GoToNextLevel(float waitTime = -1)
