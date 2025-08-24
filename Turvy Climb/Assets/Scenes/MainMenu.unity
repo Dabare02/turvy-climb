@@ -688,19 +688,35 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4118489425192478031, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4118489425192478031, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4118489425192478031, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4118489425192478031, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 269349041}
     - target: {fileID: 4118489425192478031, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4118489425192478031, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: OpenTutorial
       objectReference: {fileID: 0}
     - target: {fileID: 4118489425192478031, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MainMenuManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 4118489425192478031, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
       value: MainMenuManager, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 6825970535794825819, guid: 11062c112d1f23dd58fbfda8f5870317, type: 3}

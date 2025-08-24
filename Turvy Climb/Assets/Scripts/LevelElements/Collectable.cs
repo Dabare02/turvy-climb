@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 // IMPORTANTE
 // Si se trata de un rábano, no cambiarlo de su posición en la jerarquía ni entre sus hermanos.
@@ -10,6 +11,7 @@ using UnityEngine;
 public class Collectable : MonoBehaviour
 {
     public StaminaCostSO stCost;
+    public AudioClip collectedSound;
 
     void OnTriggerEnter2D(Collider2D other)
     {
@@ -44,6 +46,7 @@ public class Collectable : MonoBehaviour
                     stManager.DecreaseCurrentStamina(stCost.staminaCost);
                 }
 
+                GeneralManager.Instance.audioManager.PlaySound(collectedSound);
                 Destroy(gameObject);
             }
         }

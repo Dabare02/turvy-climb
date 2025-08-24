@@ -20,4 +20,5 @@ MonoBehaviour:
   inmuneToDamage: 0
   inmuneToRegularStun: 0
   inmuneToLargeStun: 0
+  enemyHurtSound: {fileID: 0}
   attackType: {fileID: 11400000, guid: d45f5105994166144840c606360f074d, type: 2}

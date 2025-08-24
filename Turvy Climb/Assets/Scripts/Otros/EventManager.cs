@@ -19,8 +19,9 @@ public static class EventManager
     public static event Action<float> FirstTimeGrabbedHold;
     public static event Action SlingshotStopped;
 
-    // PunchHandler
+    // SpecificAttackHandler
     public static event Action PunchSucceeded;
+    public static event Action SlingshotSucceeded;
 
     // GeneralManager
     public static event Action PausedManually;
@@ -89,6 +90,11 @@ public static class EventManager
     public static void OnPunchSucceeded()
     {
         PunchSucceeded?.Invoke();
+    }
+
+    public static void OnSlingshotSucceeded()
+    {
+        SlingshotSucceeded?.Invoke();
     }
 
     public static void OnPausedManually()

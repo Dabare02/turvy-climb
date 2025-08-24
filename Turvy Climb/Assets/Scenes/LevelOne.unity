@@ -6739,10 +6739,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3777630984621013395, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
-      propertyPath: maxPlayerStamina
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 4435148614022301315, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

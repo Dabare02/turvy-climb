@@ -98,6 +98,10 @@ public class EnemyWeapon : MonoBehaviour
         // Ataque
         _enemy.state = EnemyState.ATTACKING;
         _anim.SetBool("UsingWeapon", true);
+        if (_enemy.enemyData.attackType.weaponUseSound != null)
+        {
+            GeneralManager.Instance.audioManager.PlaySound(_enemy.enemyData.attackType.weaponUseSound);
+        }
         //Debug.Log("Enemy " + _enemy.name + " is attacking!");
 
         // Esperar a que termine la animacion de ataque.
@@ -116,6 +120,10 @@ public class EnemyWeapon : MonoBehaviour
         _enemy.state = EnemyState.PLAYER_DAMAGED;
 
         EventManager.OnPlayerDamaged(attackData.damage);
+        if (_enemy.enemyData.attackType.weaponSuccessSound != null)
+        {
+            GeneralManager.Instance.audioManager.PlaySound(_enemy.enemyData.attackType.weaponSuccessSound);
+        }
         Debug.Log("Enemy " + _enemy.name + " attacked Player for " + attackData.damage + " stamina!");
 
         if (useWeaponCoroutine != null)
@@ -129,7 +137,7 @@ public class EnemyWeapon : MonoBehaviour
         atkCooldownCoroutine = StartCoroutine(AttackCooldownCoroutine());
     }
 
-    // Coruitna para cooldown
+    // Corutina para cooldown
     protected IEnumerator AttackCooldownCoroutine()
     {
         _enemy.state = EnemyState.COOLDOWN;

@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
 
     private PlayerMovement _movementHandler;
     private PlayerAttackHandler _attackHandler;
+    private SpriteRenderer[] sprites;
 
     [Header("Player parts")]
     public List<DraggableHand> playerHands;
@@ -60,10 +61,14 @@ public class Player : MonoBehaviour
     public AudioClip gripHoldSFX;
     public AudioClip hurtSFX;
 
+    //[Header("Other")]
+    //public Color hurtHue;
+
     void Awake()
     {
         _movementHandler = GetComponent<PlayerMovement>();
         _attackHandler = GetComponent<PlayerAttackHandler>();
+        sprites = GetComponentsInChildren<SpriteRenderer>();
 
         // Asignar datos a manos.
         for (int i = 0; i < playerHands.Count; i++)
@@ -91,12 +96,18 @@ public class Player : MonoBehaviour
     {
         EventManager.PausedManually += StopMovingBodyPart;
         EventManager.StaminaDepleted += OutOfStamina;
+        EventManager.PunchSucceeded += PlayPunchSuccessSFX;
+        EventManager.SlingshotSucceeded += PlaySlingshotSuccessSFX;
+        EventManager.PlayerDamaged += PlayHurtSFX;
     }
 
     void OnDisable()
     {
         EventManager.PausedManually -= StopMovingBodyPart;
         EventManager.StaminaDepleted -= OutOfStamina;
+        EventManager.PunchSucceeded -= PlayPunchSuccessSFX;
+        EventManager.SlingshotSucceeded -= PlaySlingshotSuccessSFX;
+        EventManager.PlayerDamaged -= PlayHurtSFX;
     }
 
     // FUNCIONES PRIVADAS
@@ -136,7 +147,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        Debug.Log("SI HAY STAMINA; SI SE PUEDE AGARRAR!");
         return true;
     }
 
@@ -339,15 +349,40 @@ public class Player : MonoBehaviour
         playerTorso.gameObject.layer = LayerMask.NameToLayer(layerName);
     }
 
+    public void PlayPunchSuccessSFX()
+    {
+        if (punchAttack.attackSuccessSound != null)
+        {
+            GeneralManager.Instance.audioManager.PlaySound(punchAttack.attackSuccessSound);
+        }
+    }
+
+    public void PlaySlingshotSuccessSFX()
+    {
+        if (slingshotAttack.attackSuccessSound != null)
+        {
+            GeneralManager.Instance.audioManager.PlaySound(slingshotAttack.attackSuccessSound);
+        }
+    }
+
+    public void PlayHurtSFX(float damage)
+    {
+        if (hurtSFX != null)
+        {
+            GeneralManager.Instance.audioManager.PlaySound(hurtSFX);
+        }
+    }
+
     public void OutOfStamina()
     {
         hasStamina = false;
 
-        foreach (DraggableHand h in playerHands) {
+        foreach (DraggableHand h in playerHands)
+        {
             h.lockedDrag = true;
         }
         playerTorso.lockedDrag = true;
-        
+
         DropAllHolds();
         StopAttackDetection();
         StopMovingBodyPart();

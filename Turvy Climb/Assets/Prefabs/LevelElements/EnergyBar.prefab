@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stCost: {fileID: 11400000, guid: 2191bc301d83dbe4e950c42232568633, type: 2}
+  collectedSound: {fileID: 8300000, guid: 24eccbb3f861d4fbc853c6d96902130e, type: 3}
 --- !u!58 &7439023948972066962
 CircleCollider2D:
   m_ObjectHideFlags: 0

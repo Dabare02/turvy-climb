@@ -142,18 +142,21 @@ public class LevelManager : MonoBehaviour
 
     public void OpenGameOver(bool cond)
     {
+        GeneralManager.Instance.ButtonPressedSFX();
         GeneralManager.Instance.pause = cond;
         gameOverMenu.SetActive(cond);
     }
 
     public void OpenLevelComplete(bool cond)
     {
+        GeneralManager.Instance.ButtonPressedSFX();
         GeneralManager.Instance.pause = cond;
         completionMenu.SetActive(cond);
     }
 
     public void OpenTutorial(bool cond)
     {
+        if (!cond) GeneralManager.Instance.ButtonPressedSFX();
         GeneralManager.Instance.pause = cond;
         tutorialMenu.SetActive(cond);
     }

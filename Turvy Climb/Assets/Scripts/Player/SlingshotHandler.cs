@@ -10,6 +10,8 @@ public class SlingshotHandler : SpecificAttackHandler
         Enemy enemy = other.GetComponent<Enemy>();
         if (!other.isTrigger && enemy != null && attackMode)
         {
+            EventManager.OnSlingshotSucceeded();
+
             enemy.TakeDamage(attackData.damage, MoveEnum.Slingshot);
         }
     }

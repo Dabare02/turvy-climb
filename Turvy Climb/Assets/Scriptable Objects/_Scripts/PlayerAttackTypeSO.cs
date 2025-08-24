@@ -16,5 +16,6 @@ public class PlayerAttackTypeSO : ScriptableObject
         "hace daño después de que se termine el período de ataque.")]
     public float extraAttackHitTime;
     public StaminaCostSO staminaData;
-    public AudioClip sound;
+    public AudioClip attackPerformedSound;
+    public AudioClip attackSuccessSound;
 }

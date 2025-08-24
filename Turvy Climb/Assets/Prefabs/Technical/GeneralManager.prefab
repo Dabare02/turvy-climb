@@ -1936,6 +1936,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   audioManager: {fileID: 6478012732551631457}
   optionsPanel: {fileID: 5740273090237675245}
+  menuSFX: {fileID: 8300000, guid: 1145d88bf68e66284a116ea9f548e755, type: 3}
   transitionTime: 3
   maxPlayerStamina: 50
   radishSTCost: {fileID: 11400000, guid: eb952ddc4f9e94f45b98e2f3c21e2ae5, type: 2}
