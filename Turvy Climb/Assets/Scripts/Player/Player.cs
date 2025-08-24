@@ -6,6 +6,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.Audio;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(PlayerMovement))]
@@ -55,17 +56,26 @@ public class Player : MonoBehaviour
     [Tooltip("Coste de aguante drenado al estar colgando de dos extremidades.")]
     public StaminaCostSO doubleHoldSTCost;
 
+    [Header("Sounds")]
+    public AudioClip gripHoldSFX;
+    public AudioClip hurtSFX;
+
     void Awake()
     {
         _movementHandler = GetComponent<PlayerMovement>();
         _attackHandler = GetComponent<PlayerAttackHandler>();
 
-        // Asignar datos de ataque a cada elemento que interviene en dicho ataque.
+        // Asignar datos a manos.
         for (int i = 0; i < playerHands.Count; i++)
         {
             SpecificAttackHandler punchHandler = playerHands[i].GetComponent<PunchHandler>();
             punchHandler.attackData = punchAttack;
+
+            DraggableHand hand = playerHands[i].GetComponent<DraggableHand>();
+            hand.Setup(gripHoldSFX);
         }
+
+        // Asignar datos a torso.
         SpecificAttackHandler slingshotHandler = playerTorso.GetComponent<SlingshotHandler>();
         slingshotHandler.attackData = slingshotAttack;
 
@@ -126,6 +136,7 @@ public class Player : MonoBehaviour
             }
         }
 
+        Debug.Log("SI HAY STAMINA; SI SE PUEDE AGARRAR!");
         return true;
     }
 
@@ -331,6 +342,12 @@ public class Player : MonoBehaviour
     public void OutOfStamina()
     {
         hasStamina = false;
+
+        foreach (DraggableHand h in playerHands) {
+            h.lockedDrag = true;
+        }
+        playerTorso.lockedDrag = true;
+        
         DropAllHolds();
         StopAttackDetection();
         StopMovingBodyPart();
