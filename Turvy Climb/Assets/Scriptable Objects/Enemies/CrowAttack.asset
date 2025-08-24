@@ -17,4 +17,5 @@ MonoBehaviour:
   finishDuration: 0
   cooldown: 1
   isWeaponAlwaysReady: 1
-  sound: {fileID: 0}
+  weaponUseSound: {fileID: 0}
+  weaponSuccessSound: {fileID: 8300000, guid: a59515520adbb45b0b0d190e8af0aa52, type: 3}

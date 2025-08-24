@@ -9,5 +9,6 @@ public class EnemyAttackTypeSO : ScriptableObject
     public float cooldown;
     [Tooltip("Indica si el arma esta siempre activa o si se deberá activar")]
     public bool isWeaponAlwaysReady;
-    public AudioClip sound;
+    public AudioClip weaponUseSound;
+    public AudioClip weaponSuccessSound;
 }

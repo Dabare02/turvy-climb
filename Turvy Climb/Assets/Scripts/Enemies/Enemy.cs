@@ -6,6 +6,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Audio;
 using Debug = UnityEngine.Debug;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -15,6 +16,8 @@ public abstract class Enemy : MonoBehaviour
     public EnemyDataSO enemyData;
     [SerializeField] protected EnemyWeapon weapon;
     [NonSerialized] public EnemyState state;
+    public AudioClip punchedSound;
+    public AudioClip slingshotedSound;
     protected int hitPoints;
     public bool isDead
     {
@@ -74,6 +77,10 @@ public abstract class Enemy : MonoBehaviour
     // Usado si el enemigo tiene una arma que usar (y no un área de daño).
     protected void Attack()
     {
+        if (enemyData.attackType.weaponUseSound != null)
+        {
+            GeneralManager.Instance.audioManager.PlaySound(enemyData.attackType.weaponUseSound);
+        }
         weapon.Attack();
     }
 

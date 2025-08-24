@@ -14,6 +14,7 @@ public class GeneralManager : Singleton<GeneralManager>
     [Header("Componentes básicos.")]
     public AudioManager audioManager;
     [SerializeField] GameObject optionsPanel;
+    public AudioClip menuSFX;
 
     [Header("Parámetros generales")]
     public float transitionTime = 3f;
@@ -57,7 +58,8 @@ public class GeneralManager : Singleton<GeneralManager>
                 levels[i].stars = lvlSaveData.stars;
                 levels[i].radishesCollected = lvlSaveData.radishesCollected;
 
-                if (maxPlayerStamina < 0) {
+                if (maxPlayerStamina < 0)
+                {
                     maxPlayerStamina = 50;
                     break;
                 }
@@ -134,6 +136,8 @@ public class GeneralManager : Singleton<GeneralManager>
 
     public void OpenOptions(bool cond)
     {
+        ButtonPressedSFX();
+        
         pause = cond;
         optionsPanel.SetActive(pause);
         if (pause) EventManager.OnPausedManually();
@@ -142,16 +146,19 @@ public class GeneralManager : Singleton<GeneralManager>
 
     public void GoToMainMenu()
     {
+        ButtonPressedSFX();
         SceneManager.LoadScene((int)BuildIndexes.MainMenu);
     }
 
     public void GoToLevelSelect()
     {
+        ButtonPressedSFX();
         SceneManager.LoadScene((int)BuildIndexes.LevelSelectMenu);
     }
 
     public void Quit()
     {
+        ButtonPressedSFX();
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
         #else
@@ -161,6 +168,7 @@ public class GeneralManager : Singleton<GeneralManager>
 
     public void RestartLevel()
     {
+        ButtonPressedSFX();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -172,5 +180,11 @@ public class GeneralManager : Singleton<GeneralManager>
     public int GetFirstLevelIndex()
     {
         return (int)BuildIndexes.LevelOne;
+    }
+
+    public void ButtonPressedSFX()
+    {
+        Debug.Log("POP!");
+        audioManager.PlaySound(menuSFX);
     }
 }

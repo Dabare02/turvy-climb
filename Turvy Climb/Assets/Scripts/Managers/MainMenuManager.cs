@@ -34,6 +34,7 @@ public class MainMenuManager : MonoBehaviour
 
     public void OpenTutorial(bool cond)
     {
+        GeneralManager.Instance.ButtonPressedSFX();
         tutorialMenu.SetActive(cond);
     }
 }

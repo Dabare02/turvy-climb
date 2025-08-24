@@ -137,18 +137,21 @@ public class PlayerAttackHandler : MonoBehaviour
 
     public void Punch()
     {
-        // Reducir el nivel de aguante (evento).
-        EventManager.OnPunchStarted(_player.punchAttack.staminaData.staminaCost);
+        if (attackPart != null)
+        {
+            // Reducir el nivel de aguante (evento).
+            EventManager.OnPunchStarted(_player.punchAttack.staminaData.staminaCost);
+            
+            Rigidbody2D attackBody = attackPart.GetComponent<Rigidbody2D>();
+            float launchForce = _player.punchAttack.launchForce;
 
-        Rigidbody2D attackBody = attackPart.GetComponent<Rigidbody2D>();
-        float launchForce = _player.punchAttack.launchForce;
+            //attackBody.gravityScale = 0;
+            Vector2 direction = (_rangeCenterPos - (Vector2)attackPart.transform.position).normalized;
+            Vector2 force = direction * launchForce;
+            attackBody.AddForce(force, ForceMode2D.Impulse);
 
-        //attackBody.gravityScale = 0;
-        Vector2 direction = (_rangeCenterPos - (Vector2)attackPart.transform.position).normalized;
-        Vector2 force = direction * launchForce;
-        attackBody.AddForce(force, ForceMode2D.Impulse);
-
-        attackCoroutine = StartCoroutine(PunchCoroutine());
+            attackCoroutine = StartCoroutine(PunchCoroutine());
+        }
     }
 
     private IEnumerator PunchCoroutine()

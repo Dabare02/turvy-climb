@@ -19,4 +19,5 @@ MonoBehaviour:
   duration: 0.25
   extraAttackHitTime: 0.5
   staminaData: {fileID: 11400000, guid: f10eef5c0f711d13eba475bbe5f4849b, type: 2}
-  sound: {fileID: 0}
+  attackPerformedSound: {fileID: 0}
+  attackSuccessSound: {fileID: 8300000, guid: 685583100aec8e9d196dbf580a664c33, type: 3}

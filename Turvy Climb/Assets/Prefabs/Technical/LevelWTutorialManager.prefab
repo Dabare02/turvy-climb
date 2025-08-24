@@ -36,6 +36,14 @@ PrefabInstance:
       propertyPath: m_Color.r
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 4057057440086697211, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4057057440086697211, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6215984239841639190, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
       propertyPath: m_LocalPosition.y
       value: 11.1
@@ -96,6 +104,14 @@ PrefabInstance:
       propertyPath: tutorialMenu
       value: 
       objectReference: {fileID: 1059688620684293326}
+    - target: {fileID: 8683666629434176464, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8683666629434176464, guid: 3b38c9bd9bc7d134b956dc7d7949ed3a, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

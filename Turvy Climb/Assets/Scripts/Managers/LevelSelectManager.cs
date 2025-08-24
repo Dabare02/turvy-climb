@@ -46,7 +46,6 @@ public class LevelSelectManager : MonoBehaviour
 
     public void GoBackToMainMenu()
     {
-        Debug.Log("Button pressed");
         GeneralManager.Instance.GoToMainMenu();
     }
 }

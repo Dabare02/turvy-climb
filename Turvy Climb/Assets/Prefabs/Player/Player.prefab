@@ -663,6 +663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dragSpeed: 10
+  lockedDrag: 0
   springFrequency: 1
   springDistance: 2
   springDampRatio: 0.5
@@ -752,7 +753,7 @@ MonoBehaviour:
   singleHoldSTCost: {fileID: 11400000, guid: b79f17fe26a840a4da94be9edcb29323, type: 2}
   doubleHoldSTCost: {fileID: 11400000, guid: 8302edac06b81c344aa1acb7a9508cd4, type: 2}
   gripHoldSFX: {fileID: 8300000, guid: 8a07e8e93a224969b9366afb87332ba6, type: 3}
-  hurtSFX: {fileID: 0}
+  hurtSFX: {fileID: 8300000, guid: 81509293ccb6818cba2582b1e7ebc2a5, type: 3}
 --- !u!114 &5121961164402566920
 MonoBehaviour:
   m_ObjectHideFlags: 0

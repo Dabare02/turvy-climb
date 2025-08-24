@@ -53,6 +53,7 @@ public class TutorialMenu : PopupMenu
     // Cambia la página del menú tutorial por la siguiente página. Si es la última, vuelve a la primera página.
     public void GoToNextPage()
     {
+        GeneralManager.Instance.ButtonPressedSFX();
         Debug.Log("next page: " + (currentPage + 1) % tutorialMenuData.pages.Length);
         // Simple wrap-around counter.
         SetPage((currentPage + 1) % tutorialMenuData.pages.Length);
@@ -61,11 +62,13 @@ public class TutorialMenu : PopupMenu
     // Cambia la página del menú tutorial por al anterior página. Si es la primera, va a la última.
     public void GoToPrevPage()
     {
+        GeneralManager.Instance.ButtonPressedSFX();
         // Simple inverse wrap-around counter.
         SetPage((currentPage - 1 + tutorialMenuData.pages.Length) % tutorialMenuData.pages.Length);
     }
 
     public void DontShowAgainToggle(bool cond) {
+        GeneralManager.Instance.ButtonPressedSFX();
         EventManager.OnDSAValueChanged(cond);
     }
 

@@ -23,7 +23,7 @@ public class CrowEnemy : Enemy
     protected new void Start()
     {
         base.Start();
-        
+
         ((CircleCollider2D)weapon.hitDetector).radius = enemyData.attackType.range;
 
         transform.position = pointA.position;
@@ -46,7 +46,7 @@ public class CrowEnemy : Enemy
 
         // Posición a la que moverse.
         Vector2 newPos = Vector2.MoveTowards(transform.position, nextPoint.position, Time.deltaTime * enemyData.speed);
-        
+
         if (Vector2.Distance(nextPoint.position, transform.position) < 0.1)
         {   // Si ya está en la posición destino, cambiar destino al otro punto.
             GetComponent<SpriteRenderer>().flipX = !GetComponent<SpriteRenderer>().flipX;

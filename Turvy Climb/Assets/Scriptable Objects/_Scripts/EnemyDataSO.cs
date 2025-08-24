@@ -9,5 +9,6 @@ public class EnemyDataSO : CharacterDataSO
     public bool inmuneToDamage;
     public bool inmuneToRegularStun;
     public bool inmuneToLargeStun;
+    public AudioClip enemyHurtSound;
     public EnemyAttackTypeSO attackType;
 }

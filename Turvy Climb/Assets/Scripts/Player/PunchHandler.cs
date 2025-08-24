@@ -14,8 +14,6 @@ public class PunchHandler : SpecificAttackHandler
         Enemy enemy = other.GetComponent<Enemy>();
         if (!other.isTrigger && enemy != null && attackMode)
         {
-            // Debug.Log("Enemy " + enemy.name + " detected!");
-            // if (_handCollider != null) _handCollider.enabled = true;
             EventManager.OnPunchSucceeded();
 
             enemy.TakeDamage(attackData.damage, MoveEnum.Punch);
