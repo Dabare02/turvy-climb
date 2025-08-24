@@ -19,6 +19,8 @@ public class LevelSelectBttn : MonoBehaviour
     [SerializeField] private TMP_Text progressTMP;
     [SerializeField] private TMP_Text recordTimeTMP;
     [SerializeField] private Image[] stars;
+    [SerializeField] private Sprite emptyStar;
+    [SerializeField] private Sprite fullStar;
 
     [Header("Colores")]
     [SerializeField] private Color notPlayedTextColor;
@@ -63,8 +65,11 @@ public class LevelSelectBttn : MonoBehaviour
         {
             if (levelData.stars[i])
             {
-                Color color = stars[i].color;
-                stars[i].color = new Color(color.r, color.g, color.b, 1f);
+                stars[i].sprite = fullStar;
+            }
+            else
+            {
+                stars[i].sprite = emptyStar;
             }
         }
     }

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72a6ebbd8d2c18546b1483c899139fa4, type: 3}
   m_Name: Level1TutorialPage1SO
   m_EditorClassIdentifier: 
-  title: Title 1
+  title: Movimiento
   previewImage: {fileID: 0}
-  description: A description 1
+  description: "Haz clic y arrastra cualquier parte del cuerpo para moverla. Suelta
+    una mano sobre un saliente para agarrarte a esta. Mueve el torso para mover la
+    c\xE1mara."

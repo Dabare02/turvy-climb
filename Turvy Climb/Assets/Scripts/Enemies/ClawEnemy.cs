@@ -7,8 +7,8 @@ public class ClawEnemy : Enemy
 {
     [Header("Claw parameters")]
     [SerializeField] private Transform weaponParent;
-    public CircleCollider2D playerCloseDetector;
-    public CircleCollider2D playerImminentDetector;
+    public Collider2D playerCloseDetector;
+    public Collider2D playerImminentDetector;
 
     private bool _attacking;
     private bool _readying;

@@ -14,9 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHitPoints: 1
   initialHitPoints: 1
-  speed: 10
+  speed: 3
   regularStunDuration: 0
   largeStunDuration: 0
   inmuneToDamage: 0
-  inmuneToStun: 1
+  inmuneToRegularStun: 0
+  inmuneToLargeStun: 0
   attackType: {fileID: 11400000, guid: d45f5105994166144840c606360f074d, type: 2}

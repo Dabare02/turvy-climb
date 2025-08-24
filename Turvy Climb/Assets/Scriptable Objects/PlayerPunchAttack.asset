@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   range: 1
-  rangeForPerformingAttack: 3.5
+  rangeForPerformingAttack: 3.25
   launchForce: 7.5
   duration: 0.2
   extraAttackHitTime: 0.3

@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DeathZone : MonoBehaviour
 {
+    public float bottomOffset;
     // Contiene la altura y anchura de la cámara en unidades de Unity.
     private Vector3 _screenBounds;
 
@@ -23,7 +24,7 @@ public class DeathZone : MonoBehaviour
     private void UpdatePos()
     {
         Vector3 newPos = transform.position;
-        newPos.y = Mathf.Clamp(newPos.y, Camera.main.transform.position.y - (_screenBounds.y / 2f), Camera.main.transform.position.y + (_screenBounds.y / 2));
+        newPos.y = Mathf.Clamp(newPos.y, Camera.main.transform.position.y - (_screenBounds.y / 2f) - bottomOffset, Camera.main.transform.position.y + (_screenBounds.y / 2) - bottomOffset);
         transform.position = newPos;
     }
 

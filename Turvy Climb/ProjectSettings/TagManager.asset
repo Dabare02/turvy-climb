@@ -8,6 +8,7 @@ TagManager:
   - Hand
   - GeneralManager
   - LevelManager
+  - Radish
   layers:
   - Default
   - TransparentFX

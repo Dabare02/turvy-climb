@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a6ebbd8d2c18546b1483c899139fa4, type: 3}
+  m_Name: Level1TutorialPage4SO
+  m_EditorClassIdentifier: 
+  title: Aguante
+  previewImage: {fileID: 0}
+  description: "La barra a tu izquierda muestra tu nivel de aguante. Si llega a 0,
+    caer\xE1s al vac\xEDo y perder\xE1s el nivel."

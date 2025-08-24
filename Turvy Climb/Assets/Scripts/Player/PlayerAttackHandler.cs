@@ -64,8 +64,6 @@ public class PlayerAttackHandler : MonoBehaviour
 
     public void StartAttackDetection(DraggableBodyPart bodyPart)
     {
-        // TODO: Añadir soporte para slingshot.
-
         attackPart = bodyPart;
         attackPartCollider = attackPart.GetComponent<CircleCollider2D>();
 
@@ -201,7 +199,7 @@ public class PlayerAttackHandler : MonoBehaviour
 
         // Aflojar SpringJoints y apagar gravedad.
         // _player.ChangeSpringJointsDistance(2f);
-        // _player.ChangeSpringJointsFrequency(0f);
+        _player.ChangeSpringJointsFrequency(0f);
         _player.ActivateGravity(false);
         _player.ActivateEnemyInmunity(true);
 
@@ -215,9 +213,6 @@ public class PlayerAttackHandler : MonoBehaviour
 
     private IEnumerator SlingshotCoroutine()
     {
-        // TODO: Hacer que todas las partes del cuerpo atraviesen a los enemigos,
-        // PERO NO LAS PAREDES.
-
         SlingshotHandler slingshotHandler = attackPart.GetComponent<SlingshotHandler>();
 
         slingshotHandler.attackMode = true;
@@ -227,7 +222,7 @@ public class PlayerAttackHandler : MonoBehaviour
 
         // Resetear SpringJoints y reestablecer gravedad.
         // _player.ChangeSpringJointsDistance();
-        // _player.ChangeSpringJointsFrequency();
+        _player.ChangeSpringJointsFrequency();
         _player.ActivateGravity(true);
 
         yield return new WaitForSeconds(_player.slingshotAttack.extraAttackHitTime);
@@ -256,7 +251,7 @@ public class PlayerAttackHandler : MonoBehaviour
         attackPart.GetComponent<SlingshotHandler>().attackMode = false;
 
         // _player.ChangeSpringJointsDistance();
-        // _player.ChangeSpringJointsFrequency();
+        _player.ChangeSpringJointsFrequency();
         _player.ActivateGravity(true);
         _player.ActivateEnemyInmunity(false);
 

@@ -22,6 +22,8 @@ public class LevelManager : MonoBehaviour
     [Tooltip("Los salientes a los que estará agarrado Player al empezar el nivel.")]
     [SerializeField] private Hold[] startingHolds;
 
+    private List<Collectable> radishes;
+
     public float timePlayed
     {
         get; private set;
@@ -40,6 +42,7 @@ public class LevelManager : MonoBehaviour
 
     void Awake()
     {
+        // Comprobar datos del nivel.
         if (level == null)
         {
             Debug.LogWarning("There is no level data, the level can't start!");
@@ -47,6 +50,7 @@ public class LevelManager : MonoBehaviour
             GeneralManager.Instance.GoToLevelSelect();
         }
 
+        // Obtener referencias a Player.
         _player = FindObjectOfType<Player>();
         if (_player == null)
         {
@@ -54,16 +58,46 @@ public class LevelManager : MonoBehaviour
             gameObject.SetActive(false);
             GeneralManager.Instance.GoToLevelSelect();
         }
+
+        // Comprobar rábanos
+        radishes = new List<Collectable>();
+        GameObject[] radishObjs = GameObject.FindGameObjectsWithTag("Radish");
+        Array.Sort(radishObjs, (a, b) => a.transform.GetSiblingIndex().CompareTo(b.transform.GetSiblingIndex()));
+        foreach (GameObject o in radishObjs)
+        {
+            radishes.Add(o.GetComponent<Collectable>());
+        }
     }
 
     void Start()
     {
+        // LECTURA DATOS
         timePlayed = 0;
         recordLevelProgress = level.progress;
 
+        // Rábanos
+        if (level.radishesCollected.Length != radishes.Count)
+        {
+            level.radishesCollected = new bool[radishes.Count];
+            // ^Con esta acción, se resetea la cuenta de rábanos conseguidos en el nivel.
+        }
+        else
+        {
+            for (int i = 0; i < radishes.Count; i++)
+            {
+                // Se destruyen los rábanos ya recogidos anteriormente.
+                if (level.radishesCollected[i])
+                {
+                    Destroy(radishes[i].gameObject);
+                }
+            }
+        }
+
+        // ACCIONES INICIO NIVEL
         GrabStartingHolds();
         GetComponent<StaminaManager>().LockStaminaChange(false);
 
+        // MÚSICA
         if (levelMusic != null)
         {
             GeneralManager.Instance.audioManager.PlayMusic(levelMusic);
@@ -79,7 +113,7 @@ public class LevelManager : MonoBehaviour
     {
         if (!_completed && !_gameOver && (tutorialMenu == null || !tutorialMenu.activeInHierarchy) && Input.GetKeyDown(KeyCode.Escape))
         {
-            GeneralManager.Instance.OpenOptions(!GeneralManager.Instance.pause);
+            OpenOptions(!GeneralManager.Instance.pause);
         }
 
         UpdateTime();
@@ -195,7 +229,7 @@ public class LevelManager : MonoBehaviour
 
     private void LogStats()
     {
-        // Tiempos
+        // TIEMPOS
         level.totalPlayedTime += timePlayed;
         if (_completed && timePlayed >= level.recordTime)
         {
@@ -203,14 +237,23 @@ public class LevelManager : MonoBehaviour
             Debug.Log("New record!");
         }
 
-        // Progreso.
+        // PROGRESO
         level.progress = recordLevelProgress;
 
-        // Estrellas
+        // RÁBANOS
+        for (int i = 0; i < radishes.Count; i++)
+        {
+            level.radishesCollected[i] = radishes[i] == null;
+        }
+
+        // ESTRELLAS
+        // Estrella 1
         if (_completed)
         {
             level.stars[0] = true;
         }
+
+        // Estrella 2
         bool allTrue = level.radishesCollected != null
             //&& level.radishesCollected.Length > 0
             && level.radishesCollected.All(v => v);
@@ -224,6 +267,11 @@ public class LevelManager : MonoBehaviour
             + "\nTotal time played: " + level.totalPlayedTime
             + "\nRecord progress: " + level.progress
             + "\nRecord time: " + level.recordTime);
+    }
+
+    public void OpenOptions(bool cond)
+    {
+        GeneralManager.Instance.OpenOptions(cond);
     }
 
     public void RestartLevel()

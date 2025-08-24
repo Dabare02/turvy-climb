@@ -18,4 +18,8 @@ public class StaminaCostSO : ScriptableObject
     public bool isStaminaChangeAtStart;
     [Tooltip("Indica si la cantidad de aguante se drena o se regenera al usar el movimiento.")]
     public bool isStaminaRegened;
+    [Tooltip("Indica si se incrementa la cantidad máxima de aguante.")]
+    public bool isMaxStaminaIncreased;
+    [Tooltip("Cantidad de aguante máximo a aumentar. Solo se tiene en cuenta si isMaxStaminaIncreased es true.")]
+    public float maxStaminaIncreaseAmount;
 }

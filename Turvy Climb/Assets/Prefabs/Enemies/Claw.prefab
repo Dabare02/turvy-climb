@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 2468730751922814965}
   - component: {fileID: 269459187212292425}
   - component: {fileID: 5203972940240333236}
-  - component: {fileID: 5975214199965528549}
+  - component: {fileID: 4111683868382537655}
   m_Layer: 8
   m_Name: Claw
   m_TagString: Untagged
@@ -245,8 +245,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 275937419
-  m_SortingLayer: 1
+  m_SortingLayerID: 1459216879
+  m_SortingLayer: 3
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: a761ab7319e110145bb5cf93ef2addb0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -358,7 +358,7 @@ MonoBehaviour:
   weapon: {fileID: 2506453451042804711}
   weaponParent: {fileID: 983941413732904520}
   playerCloseDetector: {fileID: 5203972940240333236}
-  playerImminentDetector: {fileID: 5975214199965528549}
+  playerImminentDetector: {fileID: 4111683868382537655}
 --- !u!58 &5203972940240333236
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -393,9 +393,9 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: -0.2}
   serializedVersion: 2
-  m_Radius: 3
---- !u!58 &5975214199965528549
-CircleCollider2D:
+  m_Radius: 3.3
+--- !u!70 &4111683868382537655
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -426,9 +426,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.2}
-  serializedVersion: 2
-  m_Radius: 1.3
+  m_Offset: {x: -1.28, y: 0}
+  m_Size: {x: 1.39, y: 2.08}
+  m_Direction: 0
 --- !u!1 &9130291601978236873
 GameObject:
   m_ObjectHideFlags: 0
