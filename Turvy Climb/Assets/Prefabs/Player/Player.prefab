@@ -738,9 +738,9 @@ MonoBehaviour:
   - {fileID: 1480614999313343504}
   - {fileID: 8632888563715800895}
   playerTorso: {fileID: 9090026812219999549}
-  handMoveRange: 4
-  torsoMoveRange: 3.5
-  regularHoldDetectRange: 1
+  handMoveRange: 3.5
+  torsoMoveRange: 4
+  regularHoldDetectRange: 0.8
   largeHoldDetectRange: 1.5
   tempGripDisableDuration: 0.8
   punchAttack: {fileID: 11400000, guid: fd92e6b3966d34d47b2d3594e10e7b61, type: 2}

@@ -79,7 +79,7 @@ public class LevelManager : MonoBehaviour
     {
         if (!_completed && !_gameOver && (tutorialMenu == null || !tutorialMenu.activeInHierarchy) && Input.GetKeyDown(KeyCode.Escape))
         {
-            GeneralManager.Instance.OpenOptions(!GeneralManager.Instance.pause);
+            OpenOptions(!GeneralManager.Instance.pause);
         }
 
         UpdateTime();
@@ -224,6 +224,11 @@ public class LevelManager : MonoBehaviour
             + "\nTotal time played: " + level.totalPlayedTime
             + "\nRecord progress: " + level.progress
             + "\nRecord time: " + level.recordTime);
+    }
+
+    public void OpenOptions(bool cond)
+    {
+        GeneralManager.Instance.OpenOptions(cond);
     }
 
     public void RestartLevel()

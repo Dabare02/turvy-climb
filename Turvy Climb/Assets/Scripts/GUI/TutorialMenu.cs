@@ -53,6 +53,7 @@ public class TutorialMenu : PopupMenu
     // Cambia la página del menú tutorial por la siguiente página. Si es la última, vuelve a la primera página.
     public void GoToNextPage()
     {
+        Debug.Log("next page: " + (currentPage + 1) % tutorialMenuData.pages.Length);
         // Simple wrap-around counter.
         SetPage((currentPage + 1) % tutorialMenuData.pages.Length);
     }
