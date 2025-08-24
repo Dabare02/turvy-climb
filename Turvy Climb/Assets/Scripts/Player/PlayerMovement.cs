@@ -60,18 +60,20 @@ public class PlayerMovement : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 newPos = mousePos;
 
-        // Se actualiza el centro del rango de movimiento.
-        if (draggedPart.GetComponent<DraggableHand>() != null) _rangeCenterPos = _player.playerTorso.transform.position;
+        if (draggedPart != null) {
+            // Se actualiza el centro del rango de movimiento.
+            if (draggedPart.GetComponent<DraggableHand>() != null) _rangeCenterPos = _player.playerTorso.transform.position;
 
-        _isMouseInRange = Utilities.IsPointInsideCircle(_rangeCenterPos, _rangeRadius, mousePos);
-        if (!_isMouseInRange)
-        {   // Si el ratón se encuentra FUERA del rango de movimiento.
-            newPos = Utilities.LineThroughCircleCenterIntersec(_rangeCenterPos, _rangeRadius, mousePos);
+            _isMouseInRange = Utilities.IsPointInsideCircle(_rangeCenterPos, _rangeRadius, mousePos);
+            if (!_isMouseInRange)
+            {   // Si el ratón se encuentra FUERA del rango de movimiento.
+                newPos = Utilities.LineThroughCircleCenterIntersec(_rangeCenterPos, _rangeRadius, mousePos);
+            }
+
+            // Mover objeto hacia dirección correcta con la velocidad adecuada.
+            Vector2 direction = newPos - (Vector2)draggedPart.transform.position;
+            draggedPart.velocity = direction * draggedPart.GetComponent<DraggableBodyPart>().dragSpeed;
         }
-
-        // Mover objeto hacia dirección correcta con la velocidad adecuada.
-        Vector2 direction = newPos - (Vector2)draggedPart.transform.position;
-        draggedPart.velocity = direction * draggedPart.GetComponent<DraggableBodyPart>().dragSpeed;
     }
 
     public void StartMovingBodyPart(Rigidbody2D bodyPart)
@@ -139,9 +141,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
             else EventManager.OnPartStoppedMoving(MoveEnum.DragTorso);
-
-            // Evento para recuperar aguante (en caso de que se agarre un saliente por primera vez).
-
 
             _originalPos = new Vector2(float.NaN, float.NaN);
             _rangeCenterPos = new Vector2(float.NaN, float.NaN);

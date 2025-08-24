@@ -31,6 +31,7 @@ public class DraggableHand : DraggableBodyPart
     [NonSerialized] public List<Hold> holdsInRange;
 
     private Animator _anim;
+    private AudioClip gripHoldSFX;
 
     new void Awake()
     {
@@ -39,6 +40,10 @@ public class DraggableHand : DraggableBodyPart
         holdsInRange = new List<Hold>();
         gripEnabled = true;
         _anim = GetComponent<Animator>();
+    }
+
+    public void Setup(AudioClip gripSound) {
+        gripHoldSFX = gripSound;
     }
 
     public void SetRegularHoldDetectRange()
@@ -68,8 +73,9 @@ public class DraggableHand : DraggableBodyPart
             // Indicar a Player que hay un saliente más al que está agarrado.
             _player.IncreaseGrippedHolds(1);
 
-            // Animación agarre saliente
+            // Animación agarre saliente y sonido
             _anim.SetTrigger("CloseHand");
+            GeneralManager.Instance.audioManager.PlaySound(gripHoldSFX);
             
             Debug.Log(this.name + " is gripping hold " + grippedHold.name);
         }

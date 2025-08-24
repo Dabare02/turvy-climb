@@ -57,6 +57,10 @@ public class GeneralManager : Singleton<GeneralManager>
                 levels[i].stars = lvlSaveData.stars;
                 levels[i].radishesCollected = lvlSaveData.radishesCollected;
 
+                if (maxPlayerStamina < 0) {
+                    maxPlayerStamina = 50;
+                    break;
+                }
                 // Calcular y asignar aguante máximo.
                 if (radishSTCost != null)
                 {

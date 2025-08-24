@@ -3639,6 +3639,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1059688620684293326, guid: 7894b5724515bcc8381c51b97ff76a34, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1283574799293209999, guid: 7894b5724515bcc8381c51b97ff76a34, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -6734,6 +6738,10 @@ PrefabInstance:
     - target: {fileID: 3676201046500479735, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3777630984621013395, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
+      propertyPath: maxPlayerStamina
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4435148614022301315, guid: bc3c184efdb84fa4d83ce287b8c34139, type: 3}
       propertyPath: m_AnchorMax.y
