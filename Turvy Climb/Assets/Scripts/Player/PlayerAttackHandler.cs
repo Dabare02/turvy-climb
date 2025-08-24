@@ -213,9 +213,6 @@ public class PlayerAttackHandler : MonoBehaviour
 
     private IEnumerator SlingshotCoroutine()
     {
-        // TODO: Hacer que todas las partes del cuerpo atraviesen a los enemigos,
-        // PERO NO LAS PAREDES.
-
         SlingshotHandler slingshotHandler = attackPart.GetComponent<SlingshotHandler>();
 
         slingshotHandler.attackMode = true;
