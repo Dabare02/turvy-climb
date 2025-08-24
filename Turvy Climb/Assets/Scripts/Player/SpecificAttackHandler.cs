@@ -11,7 +11,7 @@ public class SpecificAttackHandler : MonoBehaviour
 
     [NonSerialized] public PlayerAttackTypeSO attackData;
 
-    public bool attackMode
+    public virtual bool attackMode
     {
         get
         {

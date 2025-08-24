@@ -9,6 +9,25 @@ using UnityEngine.Events;
 // determinar que hacer.
 public class PunchHandler : SpecificAttackHandler
 {
+    private Animator _anim;
+
+    public override bool attackMode
+    {
+        get => base.attackMode;
+        set
+        {
+            //if (value) _anim.SetTrigger("CloseHand");
+            //else _anim.SetTrigger("OpenHand");
+
+            base.attackMode = value;
+        }
+    }
+
+    void Awake()
+    {
+        _anim = GetComponent<Animator>();
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
         Enemy enemy = other.GetComponent<Enemy>();
