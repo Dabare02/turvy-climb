@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 2
   range: 1.5
-  rangeForPerformingAttack: 3.5
+  rangeForPerformingAttack: 3
   launchForce: 15
   duration: 0.25
   extraAttackHitTime: 0.5
-  staminaData: {fileID: 11400000, guid: b79f17fe26a840a4da94be9edcb29323, type: 2}
+  staminaData: {fileID: 11400000, guid: f10eef5c0f711d13eba475bbe5f4849b, type: 2}
   sound: {fileID: 0}
