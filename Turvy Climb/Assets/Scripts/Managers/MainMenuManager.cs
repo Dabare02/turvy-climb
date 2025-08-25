@@ -5,6 +5,7 @@ using UnityEngine;
 public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject tutorialMenu;
+    [SerializeField] private GameObject creditsMenu;
     [SerializeField] private AudioClip mainMenuTheme;
 
     void Start()
@@ -19,12 +20,14 @@ public class MainMenuManager : MonoBehaviour
 
     public void Credits()
     {
-        Debug.LogWarning("Credits not implemented.");
+        GeneralManager.Instance.ButtonPressedSFX();
+        creditsMenu.SetActive(true);
     }
 
     public void CreditsClose()
     {
-        Debug.LogWarning("Credits not implemented.");
+        GeneralManager.Instance.ButtonPressedSFX();
+        creditsMenu.SetActive(false);
     }
 
     public void QuitGame()
@@ -37,4 +40,6 @@ public class MainMenuManager : MonoBehaviour
         GeneralManager.Instance.ButtonPressedSFX();
         tutorialMenu.SetActive(cond);
     }
+
+
 }
