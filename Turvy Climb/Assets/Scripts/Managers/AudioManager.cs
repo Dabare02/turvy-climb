@@ -97,6 +97,6 @@ public class AudioManager : MonoBehaviour
         PlayerPrefs.SetFloat(MUSIC_VOLUME_PARAM, GetMusicVolume());
         PlayerPrefs.SetFloat(SFX_VOLUME_PARAM, GetSFXVolume());
 
-        Debug.Log("Setting master vol: " + GetMasterVolume().ToString());
+        //Debug.Log("Setting master vol: " + GetMasterVolume().ToString());
     }
 }

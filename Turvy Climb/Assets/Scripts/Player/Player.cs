@@ -201,7 +201,7 @@ public class Player : MonoBehaviour
                 EventManager.OnStopFewHandsHolding(MoveEnum.FewHandsHolding);
                 break;
         }
-        Debug.Log("Gripped holds: " + grippedHoldsAmount);
+        //Debug.Log("Gripped holds: " + grippedHoldsAmount);
     }
 
     public void DecreaseGrippedHolds(int amount)
@@ -220,7 +220,7 @@ public class Player : MonoBehaviour
                 EventManager.OnStopFewHandsHolding(MoveEnum.FewHandsHolding);
                 break;
         }
-        Debug.Log("Gripped holds: " + grippedHoldsAmount);
+        //Debug.Log("Gripped holds: " + grippedHoldsAmount);
     }
 
     // Soltar todos los salientes.

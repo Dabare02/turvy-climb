@@ -240,7 +240,7 @@ public class LevelManager : MonoBehaviour
         if (_completed && timePlayed >= level.recordTime)
         {
             level.recordTime = timePlayed;
-            Debug.Log("New record!");
+            //Debug.Log("New record!");
         }
 
         // PROGRESO
@@ -249,7 +249,6 @@ public class LevelManager : MonoBehaviour
         // RÁBANOS
         for (int i = 0; i < radishes.Count; i++)
         {
-            Debug.Log("Radish " + i + " collected? " + radishes[i] == null);
             level.radishesCollected[i] = radishes[i] == null;
         }
 
@@ -268,12 +267,6 @@ public class LevelManager : MonoBehaviour
         {
             level.stars[1] = true;
         }
-
-        Debug.Log("Level data logued!"
-            + "\nTime played: " + timePlayed
-            + "\nTotal time played: " + level.totalPlayedTime
-            + "\nRecord progress: " + level.progress
-            + "\nRecord time: " + level.recordTime);
     }
 
     public void OpenOptions(bool cond)

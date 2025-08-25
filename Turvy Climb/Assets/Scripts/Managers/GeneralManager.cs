@@ -28,9 +28,6 @@ public class GeneralManager : Singleton<GeneralManager>
 
     [Header("Otros")]
     public AudioClip menuSFX;
-
-    // DELETE BEFORE BUILD
-    private int imgNumber = 0;
     
 
     private bool paused = false;
@@ -88,29 +85,6 @@ public class GeneralManager : Singleton<GeneralManager>
                 levels[i].stars = new bool[] { false, false };
                 levels[i].radishesCollected = new bool[] { };   // Depende del nivel, por lo que su contenido real no se decidirá hasta que se cargue el nivel.
             }
-        }
-    }
-
-    void Update()
-    {
-        // DELETE BEFORE BUILD
-        if (Input.GetKeyDown(KeyCode.Insert))
-        {
-            ScreenCapture.CaptureScreenshot(Application.persistentDataPath + "/picture" + imgNumber + ".png");
-            imgNumber++;
-        }
-    }
-
-    public void GoToNextLevel(float waitTime = -1)
-    {
-        if (SceneManager.GetActiveScene().buildIndex == SceneManager.sceneCountInBuildSettings - 1)
-        {
-            Debug.Log("Last level finished.");
-        }
-        else
-        {
-            Debug.Log("Loading next level...");
-            StartCoroutine(WaitAndLoadNextScene(waitTime));
         }
     }
 

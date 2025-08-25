@@ -60,13 +60,6 @@ public abstract class Enemy : MonoBehaviour
         {
             weapon.ReadyWeapon();
         }
-
-        // DEBUG v
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            Debug.Log(state);
-        }
-        // DEBUG ^
     }
 
     public void ResetHealth()
@@ -92,7 +85,7 @@ public abstract class Enemy : MonoBehaviour
         if (!enemyData.inmuneToDamage)
         {
             hitPoints -= damage;
-            Debug.Log("Enemy " + this.name + " has taken " + damage + " points of damage (" + hitPoints + " remaining).");
+            //Debug.Log("Enemy " + this.name + " has taken " + damage + " points of damage (" + hitPoints + " remaining).");
 
             if (hitPoints <= 0)
             {
@@ -151,7 +144,7 @@ public abstract class Enemy : MonoBehaviour
         weapon.ResetWeapon();
         state = EnemyState.DEAD;
 
-        Debug.Log("Enemy " + this.name + " died!");
+        //Debug.Log("Enemy " + this.name + " died!");
         Destroy(gameObject);
     }
 }

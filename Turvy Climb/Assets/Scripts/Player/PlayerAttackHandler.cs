@@ -90,15 +90,11 @@ public class PlayerAttackHandler : MonoBehaviour
             _rangeCenterPos = _player.playerTorso.transform.position;
         }
 
-        bool prevReadiness = _isAttackReady;  // DEBUG
-
         _isAttackReady = !Utilities.IsPointInsideCircle(_rangeCenterPos,
                                                         _rangeRadius,
                                                         attackPart.transform.position);
         _isAttackReady &= (attackPart.GetType() == typeof(DraggableHand) && !((DraggableHand)attackPart).isGripped)
             || (attackPart.GetType() == typeof(DraggableTorso) && _player.grippedHoldsAmount == 4);
-            
-        if (!prevReadiness && _isAttackReady) Debug.Log("Attack is ready.");   // DEBUG
 
         if (_isAttackReady)
         {

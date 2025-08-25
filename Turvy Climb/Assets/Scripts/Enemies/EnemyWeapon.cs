@@ -124,7 +124,7 @@ public class EnemyWeapon : MonoBehaviour
         {
             GeneralManager.Instance.audioManager.PlaySound(_enemy.enemyData.attackType.weaponSuccessSound);
         }
-        Debug.Log("Enemy " + _enemy.name + " attacked Player for " + attackData.damage + " stamina!");
+        //Debug.Log("Enemy " + _enemy.name + " attacked Player for " + attackData.damage + " stamina!");
 
         if (useWeaponCoroutine != null)
         {

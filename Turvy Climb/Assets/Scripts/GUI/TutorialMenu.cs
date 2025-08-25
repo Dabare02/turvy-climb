@@ -54,7 +54,7 @@ public class TutorialMenu : PopupMenu
     public void GoToNextPage()
     {
         GeneralManager.Instance.ButtonPressedSFX();
-        Debug.Log("next page: " + (currentPage + 1) % tutorialMenuData.pages.Length);
+        //.Log("next page: " + (currentPage + 1) % tutorialMenuData.pages.Length);
         // Simple wrap-around counter.
         SetPage((currentPage + 1) % tutorialMenuData.pages.Length);
     }
@@ -112,6 +112,6 @@ public class TutorialMenu : PopupMenu
             descriptionTMP.text = tutorialMenuData.pages[pageNumber].description;
         }
 
-        Debug.Log("Switched tutorial menu to page " + pageNumber);
+        //Debug.Log("Switched tutorial menu to page " + pageNumber);
     }
 }
