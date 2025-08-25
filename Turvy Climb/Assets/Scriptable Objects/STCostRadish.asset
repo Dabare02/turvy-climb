@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cea36a61eb19e514cb4ecc632ab3288c, type: 3}
   m_Name: STCostRadish
   m_EditorClassIdentifier: 
-  staminaCost: 10000
+  staminaCost: 20
   isStaminaCostImmediate: 1
   staminaChangeSpeed: 0
   isStaminaChangeAtStart: 0

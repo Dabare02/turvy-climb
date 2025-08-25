@@ -112,7 +112,8 @@ public class PlayerAttackHandler : MonoBehaviour
 
     public void CheckAttack()
     {
-        if (_isAttackReady && attackPart != null)
+        // Parte de la condición se asegura de que no se haya agarrado a un saliente.
+        if (_isAttackReady && attackPart != null && !(attackPart.GetType() == typeof(DraggableHand) && ((DraggableHand)attackPart).isGripped))
         {
             // Indicar que se está realizando el ataque.
             attackState = PlayerAttackState.PERFORMING_ATTACK;

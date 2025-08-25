@@ -21,6 +21,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private GameObject tutorialMenu;
     [Tooltip("Los salientes a los que estará agarrado Player al empezar el nivel.")]
     [SerializeField] private Hold[] startingHolds;
+    [SerializeField] private GameObject energyBarPrefab;
 
     private List<Collectable> radishes;
 
@@ -85,9 +86,11 @@ public class LevelManager : MonoBehaviour
         {
             for (int i = 0; i < radishes.Count; i++)
             {
-                // Se destruyen los rábanos ya recogidos anteriormente.
+                // Se sustituyen los rábanos ya recogidos anteriormente.
                 if (level.radishesCollected[i])
                 {
+                    GameObject eBar = Instantiate(energyBarPrefab, radishes[i].transform.parent);
+                    eBar.transform.position = radishes[i].transform.position;
                     Destroy(radishes[i].gameObject);
                 }
             }

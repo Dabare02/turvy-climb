@@ -127,6 +127,7 @@ public class PlayerMovement : MonoBehaviour
 
             // Evento para dejar de drenar aguante (y para recuperar aguante en caso de que se agarre un
             // saliente por primera vez).
+            bool hasGrippedHold = false;
             DraggableBodyPart part = draggedPart.GetComponent<DraggableBodyPart>();
             if (part.GetType() == typeof(DraggableHand))
             {
@@ -138,6 +139,7 @@ public class PlayerMovement : MonoBehaviour
                     EventManager.OnFirstTimeGrabbedHold(_player.firstGripHoldSTCost.staminaCost);
                     // Indicar que ya ha sido agarrado, para no volver a regenerar aguante la próxima vez.
                     hand.grippedHold.FirstGrip();
+                    hasGrippedHold = true;
                 }
             }
             else EventManager.OnPartStoppedMoving(MoveEnum.DragTorso);
@@ -147,7 +149,8 @@ public class PlayerMovement : MonoBehaviour
             _rangeRadius = 0.0f;
 
             // Indicar al manejador de ataques que realize un ataque si está listo.
-            _player.CheckAttack();
+            // Condición debido a gasto accidental de aguante.
+            if (!hasGrippedHold) _player.CheckAttack();
 
             Debug.Log("Stopped moving " + draggedPart.name);
             draggedPart = null;

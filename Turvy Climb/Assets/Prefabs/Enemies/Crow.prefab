@@ -250,6 +250,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyData: {fileID: 11400000, guid: ccabc8c5ca070924a8558a5018adb14c, type: 2}
   weapon: {fileID: 4661304880512484150}
+  punchedSound: {fileID: 0}
+  slingshotedSound: {fileID: 0}
   pointA: {fileID: 6896107150774074053}
   pointB: {fileID: 8574200837013098355}
 --- !u!1 &3906265684965431472
@@ -383,7 +385,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.6
 --- !u!114 &4661304880512484150
 MonoBehaviour:
   m_ObjectHideFlags: 0

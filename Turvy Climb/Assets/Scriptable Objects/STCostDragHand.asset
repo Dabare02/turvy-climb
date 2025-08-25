@@ -17,3 +17,5 @@ MonoBehaviour:
   staminaChangeSpeed: 0.5
   isStaminaChangeAtStart: 0
   isStaminaRegened: 0
+  isMaxStaminaIncreased: 0
+  maxStaminaIncreaseAmount: 0
