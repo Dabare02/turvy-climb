@@ -15,7 +15,7 @@ public class LevelManager : MonoBehaviour
 
     private Player _player;
     public LevelDataSO level;
-    [SerializeField] private AudioClip levelMusic;
+    [SerializeField] private AudioClip levelTheme, victoryTheme;
     [SerializeField] private GameObject gameOverMenu;
     [SerializeField] private GameObject completionMenu;
     [SerializeField] private GameObject tutorialMenu;
@@ -106,9 +106,9 @@ public class LevelManager : MonoBehaviour
         }
 
         // MÚSICA
-        if (levelMusic != null)
+        if (levelTheme != null)
         {
-            GeneralManager.Instance.audioManager.PlayMusic(levelMusic);
+            GeneralManager.Instance.audioManager.PlayMusic(levelTheme);
         }
     }
 
@@ -189,7 +189,7 @@ public class LevelManager : MonoBehaviour
             Debug.Log("LEVEL COMPLETE");
             _completed = true;
 
-            // TODO
+            GeneralManager.Instance.audioManager.PlayMusicNoLoop(victoryTheme);
 
             OpenLevelComplete(true);
         }
@@ -249,6 +249,7 @@ public class LevelManager : MonoBehaviour
         // RÁBANOS
         for (int i = 0; i < radishes.Count; i++)
         {
+            Debug.Log("Radish " + i + " collected? " + radishes[i] == null);
             level.radishesCollected[i] = radishes[i] == null;
         }
 

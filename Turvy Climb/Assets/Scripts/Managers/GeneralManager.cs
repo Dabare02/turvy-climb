@@ -6,6 +6,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(AudioManager))]
 public class GeneralManager : Singleton<GeneralManager>
@@ -13,7 +14,6 @@ public class GeneralManager : Singleton<GeneralManager>
     [Header("Componentes básicos.")]
     public AudioManager audioManager;
     [SerializeField] GameObject optionsPanel;
-    public AudioClip menuSFX;
 
     [Header("Parámetros generales")]
     public float transitionTime = 3f;
@@ -25,6 +25,10 @@ public class GeneralManager : Singleton<GeneralManager>
 
     [Header("Niveles")]
     public List<LevelDataSO> levels;
+
+    [Header("Otros")]
+    public AudioClip menuSFX;
+    
 
     private bool paused = false;
     public bool pause
@@ -57,7 +61,7 @@ public class GeneralManager : Singleton<GeneralManager>
                 levels[i].stars = lvlSaveData.stars;
                 levels[i].radishesCollected = lvlSaveData.radishesCollected;
 
-                if (maxPlayerStamina < 0)
+                if (maxPlayerStamina < 0f)
                 {
                     maxPlayerStamina = 50;
                     break;
@@ -136,11 +140,20 @@ public class GeneralManager : Singleton<GeneralManager>
     public void OpenOptions(bool cond)
     {
         ButtonPressedSFX();
-        
-        pause = cond;
-        optionsPanel.SetActive(pause);
-        if (pause) EventManager.OnPausedManually();
-        else EventManager.OnUnpausedManually();
+
+        // Mostrar botones dependiendo de si se encuentra en un nivel o no.
+        if (FindObjectOfType<LevelManager>() != null)
+        {
+            pause = cond;
+            if (pause) EventManager.OnPausedManually();
+            else EventManager.OnUnpausedManually();
+        }
+        else
+        {
+
+        }
+
+        optionsPanel.SetActive(cond);
     }
 
     public void GoToMainMenu()
@@ -183,7 +196,6 @@ public class GeneralManager : Singleton<GeneralManager>
 
     public void ButtonPressedSFX()
     {
-        Debug.Log("POP!");
         audioManager.PlaySound(menuSFX);
     }
 }

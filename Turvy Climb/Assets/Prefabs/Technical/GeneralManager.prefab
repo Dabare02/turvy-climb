@@ -1086,6 +1086,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b666e1009c1760043adf8854261a5e55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mainMenuBttn: {fileID: 3621596673965439656}
+  restartLevelBttn: {fileID: 793583932618927693}
   masterVolume: {fileID: 5792822984696304407}
   musicVolume: {fileID: 9182281144880797158}
   sfxVolume: {fileID: 3368909042525190946}
@@ -2434,6 +2436,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d398d9429de92c640b92d64141052fff, type: 3}
+--- !u!114 &3621596673965439656 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2841676732505339349, guid: d398d9429de92c640b92d64141052fff, type: 3}
+  m_PrefabInstance: {fileID: 1526112321192791933}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &5251007519923635831 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6769618972791736586, guid: d398d9429de92c640b92d64141052fff, type: 3}
@@ -2568,6 +2581,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d398d9429de92c640b92d64141052fff, type: 3}
+--- !u!114 &793583932618927693 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2841676732505339349, guid: d398d9429de92c640b92d64141052fff, type: 3}
+  m_PrefabInstance: {fileID: 3201155053256465304}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &8187065945692525202 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6769618972791736586, guid: d398d9429de92c640b92d64141052fff, type: 3}
