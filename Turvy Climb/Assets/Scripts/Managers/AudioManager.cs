@@ -40,7 +40,8 @@ public class AudioManager : MonoBehaviour
 
     float linToLog(float linear)
     {
-        return Mathf.Log10(linear) * 20f;
+        if (linear <= 0) return -80f;
+        else return Mathf.Log10(linear) * 20f;
     }
 
     float logToLin(float logarithmic)

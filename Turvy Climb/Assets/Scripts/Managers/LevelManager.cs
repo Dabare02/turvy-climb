@@ -97,15 +97,15 @@ public class LevelManager : MonoBehaviour
         GrabStartingHolds();
         GetComponent<StaminaManager>().LockStaminaChange(false);
 
+        if (tutorialMenu != null && !level.dontShowTutorialAgain)
+        {
+            OpenTutorial(true);
+        }
+
         // MÚSICA
         if (levelMusic != null)
         {
             GeneralManager.Instance.audioManager.PlayMusic(levelMusic);
-        }
-
-        if (tutorialMenu != null && !level.dontShowTutorialAgain)
-        {
-            OpenTutorial(true);
         }
     }
 
