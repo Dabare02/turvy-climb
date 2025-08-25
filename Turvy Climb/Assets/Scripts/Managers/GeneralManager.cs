@@ -137,7 +137,7 @@ public class GeneralManager : Singleton<GeneralManager>
         }
         else
         {
-            Debug.LogError("The scene " + sceneIndex.HumanName() + " (index: " + (int)sceneIndex + ") is not a level!");
+            Debug.LogError("The scene " + sceneIndex.ToString() + " (index: " + (int)sceneIndex + ") is not a level!");
         }
     }
 
