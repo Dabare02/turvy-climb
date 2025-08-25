@@ -8,7 +8,9 @@ using TMPro;
 public class LevelSelectManager : MonoBehaviour
 {
     [Header("Botones de nivel")]
-    [SerializeField] private GameObject levelSelectButtonPrefab;
+    [SerializeField] private GameObject lvlSelectBttnPrefab;
+    [SerializeField] private GameObject lvlSelectBttnLockedPrefab;
+    [SerializeField] private GameObject lvlSelectBttnNotImplPrefab;
     [SerializeField] private GameObject levelSelectContainer;
 
     [Header("Estadísticas")]
@@ -23,12 +25,28 @@ public class LevelSelectManager : MonoBehaviour
         // Level buttons
         List<LevelDataSO> levels = GeneralManager.Instance.levels;
         BuildIndexes[] indexes = (BuildIndexes[])Enum.GetValues(typeof(BuildIndexes));
-
+        
         for (int i = 0; i < GeneralManager.Instance.GetNumberOfLevels(); i++)
         {
-            GameObject bttn = Instantiate(levelSelectButtonPrefab, levelSelectContainer.transform);
-            bttn.GetComponent<LevelSelectBttn>().SetLevelData(levels[i]);
-            bttn.GetComponent<LevelSelectBttn>().SetLevelIndex(indexes[GeneralManager.Instance.GetFirstLevelIndex() + i]);
+            // Si es el primer nivel.
+            if (i == 0)
+            {
+                GameObject firstLvlBttn = Instantiate(lvlSelectBttnPrefab, levelSelectContainer.transform);
+                firstLvlBttn.GetComponent<LevelSelectBttn>().SetLevelData(levels[0], false);
+                firstLvlBttn.GetComponent<LevelSelectBttn>().SetLevelIndex(indexes[GeneralManager.Instance.GetFirstLevelIndex()]);
+                continue;
+            }
+
+            // Para cualquier otro nivel, primero comprobar que esté implementado.
+            if (!levels[i].implemented)
+            {
+                Instantiate(lvlSelectBttnNotImplPrefab, levelSelectContainer.transform);
+            }
+            else if (levels[i - 1].progress < 1f)
+            {
+                GameObject lockedBttn = Instantiate(lvlSelectBttnLockedPrefab, levelSelectContainer.transform);
+                lockedBttn.GetComponent<LevelSelectBttn>().SetLevelData(levels[0], true);
+            }
         }
 
         // Stats

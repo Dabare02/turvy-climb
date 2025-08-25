@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   number: 0
   title: Ben Nevis
+  preview: {fileID: 0}
+  implemented: 1

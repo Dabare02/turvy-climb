@@ -34,14 +34,17 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        // MOVIMIENTO: Quick grip / drop.
+        if (Input.GetKeyDown(KeyCode.Space)) QuickGripDrop();
+    }
+
+    void FixedUpdate()
+    {
         // MOVIMIENTO: Agarrar y arrastrar mano o torso.
         if (!GeneralManager.Instance.pause && isPartDragging && draggedPart != null)
         {
             MoveBodyPart();
         }
-
-        // MOVIMIENTO: Quick grip / drop.
-            if (Input.GetKeyDown(KeyCode.Space)) QuickGripDrop();
     }
 
     void OnEnable()

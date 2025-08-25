@@ -30,10 +30,8 @@ public class CrowEnemy : Enemy
         _returnToPointA = false;
     }
 
-    protected new void Update()
+    void FixedUpdate()
     {
-        base.Update();
-
         Move();
     }
 
@@ -45,7 +43,7 @@ public class CrowEnemy : Enemy
         else nextPoint = pointB;
 
         // Posición a la que moverse.
-        Vector2 newPos = Vector2.MoveTowards(transform.position, nextPoint.position, Time.deltaTime * enemyData.speed);
+        Vector2 newPos = Vector2.MoveTowards(transform.position, nextPoint.position, enemyData.speed);
 
         if (Vector2.Distance(nextPoint.position, transform.position) < 0.1)
         {   // Si ya está en la posición destino, cambiar destino al otro punto.

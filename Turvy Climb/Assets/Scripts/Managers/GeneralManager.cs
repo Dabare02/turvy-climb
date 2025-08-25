@@ -6,7 +6,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine.UIElements;
 
 [RequireComponent(typeof(AudioManager))]
 public class GeneralManager : Singleton<GeneralManager>
