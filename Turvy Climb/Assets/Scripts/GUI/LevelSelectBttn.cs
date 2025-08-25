@@ -32,7 +32,7 @@ public class LevelSelectBttn : MonoBehaviour
         levelIndex = index;
     }
 
-    public void SetLevelData(LevelDataSO dataSO)
+    public void SetLevelData(LevelDataSO dataSO, bool locked)
     {
         levelData = dataSO;
 
@@ -40,36 +40,39 @@ public class LevelSelectBttn : MonoBehaviour
         {
             previewIMG.sprite = levelData.preview;
         }
-
         titleTMP.text = "Nivel " + (levelData.number + 1) + " - " + levelData.title;
-        progressTMP.text = Mathf.FloorToInt(levelData.progress * 100) + "%";
-        switch (levelData.progress)
-        {
-            case >= 1f:
-                progressTMP.color = completedColor;
-                recordTimeTMP.color = playedTextColor;
-                break;
-            case <= 0f:
-                progressTMP.color = notPlayedTextColor;
-                recordTimeTMP.color = notPlayedTextColor;
-                break;
-            default:
-                progressTMP.color = playedTextColor;
-                recordTimeTMP.color = playedTextColor;
-                break;
-        }
-        recordTimeTMP.text = Utilities.ConvertToMinutesTimerFormat(levelData.recordTime);
 
-        // Estrellas obtenidas.
-        for (int i = 0; i < stars.Count() && i < levelData.stars.Length; i++)
+        if (!locked)
         {
-            if (levelData.stars[i])
+            progressTMP.text = Mathf.FloorToInt(levelData.progress * 100) + "%";
+            switch (levelData.progress)
             {
-                stars[i].sprite = fullStar;
+                case >= 1f:
+                    progressTMP.color = completedColor;
+                    recordTimeTMP.color = playedTextColor;
+                    break;
+                case <= 0f:
+                    progressTMP.color = notPlayedTextColor;
+                    recordTimeTMP.color = notPlayedTextColor;
+                    break;
+                default:
+                    progressTMP.color = playedTextColor;
+                    recordTimeTMP.color = playedTextColor;
+                    break;
             }
-            else
+            recordTimeTMP.text = Utilities.ConvertToMinutesTimerFormat(levelData.recordTime);
+
+            // Estrellas obtenidas.
+            for (int i = 0; i < stars.Count() && i < levelData.stars.Length; i++)
             {
-                stars[i].sprite = emptyStar;
+                if (levelData.stars[i])
+                {
+                    stars[i].sprite = fullStar;
+                }
+                else
+                {
+                    stars[i].sprite = emptyStar;
+                }
             }
         }
     }

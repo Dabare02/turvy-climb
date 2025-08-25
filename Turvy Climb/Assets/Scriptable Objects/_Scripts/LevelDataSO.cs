@@ -8,6 +8,7 @@ public class LevelDataSO : ScriptableObject
     public int number;
     public string title;
     public Sprite preview;
+    public bool implemented;
 
     // User data
     [NonSerialized] public float totalPlayedTime;

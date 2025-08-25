@@ -1700,10 +1700,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f7eba133a17f88be9e8b25ac49e9cc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelSelectButtonPrefab: {fileID: 5982225990651862400, guid: 3e4ede597238084ed898d9ef546017f3, type: 3}
+  lvlSelectBttnPrefab: {fileID: 5982225990651862400, guid: 3e4ede597238084ed898d9ef546017f3, type: 3}
+  lvlSelectBttnLockedPrefab: {fileID: 7511051090911927400, guid: 401c652e16ff6124eb578f20ef606c59, type: 3}
+  lvlSelectBttnNotImplPrefab: {fileID: 5104424883723893075, guid: 236db178a5411094885864393353dd94, type: 3}
   levelSelectContainer: {fileID: 1715971617}
   totalPlayedTimeTMP: {fileID: 377889660}
   radishesCollectedTMP: {fileID: 780769207}
+  levelSelectTheme: {fileID: 0}
 --- !u!1 &1508625645
 GameObject:
   m_ObjectHideFlags: 0

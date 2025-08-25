@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHitPoints: 1
   initialHitPoints: 1
-  speed: 3
+  speed: 0.03
   regularStunDuration: 0
   largeStunDuration: 0
   inmuneToDamage: 0
