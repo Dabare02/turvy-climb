@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level1TutorialPage2SO
   m_EditorClassIdentifier: 
   title: Quick Grip & Drop
-  previewImage: {fileID: 0}
+  previewImage: {fileID: 21300000, guid: fff910e06c1bd6a49915b48c690a6a13, type: 3}
   description: Pulsa Espacio para soltarte de todos los salientes. Pulsalo de nuevo
     en el aire para volver a agarrarte con una mano.
