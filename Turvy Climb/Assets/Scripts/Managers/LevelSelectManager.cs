@@ -15,6 +15,9 @@ public class LevelSelectManager : MonoBehaviour
     [SerializeField] private TMP_Text totalPlayedTimeTMP;
     [SerializeField] private TMP_Text radishesCollectedTMP;
 
+    [Header("Música")]
+    [SerializeField] private AudioClip levelSelectTheme;
+
     void Start()
     {
         // Level buttons
@@ -42,6 +45,9 @@ public class LevelSelectManager : MonoBehaviour
 
         totalPlayedTimeTMP.text = Utilities.ConvertToMinutesTimerFormat(totalPlayedTime);
         radishesCollectedTMP.text = radishesCollected.ToString();
+
+        // Musica
+        if (levelSelectTheme != null) GeneralManager.Instance.audioManager.PlayMusic(levelSelectTheme);
     }
 
     public void GoBackToMainMenu()
