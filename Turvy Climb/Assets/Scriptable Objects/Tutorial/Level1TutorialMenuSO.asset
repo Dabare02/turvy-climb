@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0da5ccdc363572f469532290b389ef1e, type: 3}
+  m_Name: Level1TutorialMenuSO
+  m_EditorClassIdentifier: 
+  pages:
+  - {fileID: 11400000, guid: 7a9e868af0defec4785599c8b680b9f6, type: 2}
+  - {fileID: 11400000, guid: 7f9337ba8b6e3884286b3f03b33dac6b, type: 2}
+  - {fileID: 11400000, guid: 34ca1d61d424d24429d14ea16da613da, type: 2}
+  - {fileID: 11400000, guid: b3854b10912d26f3183b7502c1d902b1, type: 2}
+  - {fileID: 11400000, guid: 418b6b4664076f87aa2c8a36efb6423c, type: 2}
+  - {fileID: 11400000, guid: 3ea79bb8902e4148d8a2495b612e67b7, type: 2}
+  - {fileID: 11400000, guid: 971b5c073a31b7c268e32c7543a5e8ac, type: 2}

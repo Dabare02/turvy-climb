@@ -12,10 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b6410dd62ef7fd479e01eb42dc8f841, type: 3}
   m_Name: PlayerPunchAttack
   m_EditorClassIdentifier: 
-  attackDamage: 1
-  attackRange: 1
-  attackDuration: 0.3
-  attackSound: {fileID: 0}
-  rangeForPerformingAttack: 3.5
-  launchForce: 10
+  damage: 1
+  range: 1
+  rangeForPerformingAttack: 3.25
+  launchForce: 7.5
+  duration: 0.2
   extraAttackHitTime: 0.3
+  staminaData: {fileID: 11400000, guid: 64ae816d150abc74bb528f4f2b088b25, type: 2}
+  attackPerformedSound: {fileID: 0}
+  attackSuccessSound: {fileID: 8300000, guid: 1e0447669cb61402dbebb58331a6c3d8, type: 3}

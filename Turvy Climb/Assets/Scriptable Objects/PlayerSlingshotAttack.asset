@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6410dd62ef7fd479e01eb42dc8f841, type: 3}
+  m_Name: PlayerSlingshotAttack
+  m_EditorClassIdentifier: 
+  damage: 2
+  range: 1.5
+  rangeForPerformingAttack: 3
+  launchForce: 15
+  duration: 0.25
+  extraAttackHitTime: 0.5
+  staminaData: {fileID: 11400000, guid: f10eef5c0f711d13eba475bbe5f4849b, type: 2}
+  attackPerformedSound: {fileID: 0}
+  attackSuccessSound: {fileID: 8300000, guid: 685583100aec8e9d196dbf580a664c33, type: 3}

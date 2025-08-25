@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72a6ebbd8d2c18546b1483c899139fa4, type: 3}
+  m_Name: Level1TutorialPage5SO
+  m_EditorClassIdentifier: 
+  title: Coleccionables
+  previewImage: {fileID: 21300000, guid: 095f28e3fa1d45b47a8326e281958698, type: 3}
+  description: "Recoge barritas energ\xE9ticas para recuperar parte de tu aguante.
+    Cada nivel tiene una cierta cantidad de r\xE1banos que, al recogerlos, aumentar\xE1s
+    tu aguante m\xE1ximo permanentemente!"

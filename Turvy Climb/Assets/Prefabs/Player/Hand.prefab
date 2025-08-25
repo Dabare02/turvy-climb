@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 5960837369491687015}
   - component: {fileID: 4692664125933263782}
   - component: {fileID: 508253556234666548}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Anchor
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,9 +74,9 @@ HingeJoint2D:
   m_BreakForce: Infinity
   m_BreakTorque: Infinity
   m_BreakAction: 3
-  m_AutoConfigureConnectedAnchor: 1
+  m_AutoConfigureConnectedAnchor: 0
   m_Anchor: {x: 0, y: 0}
-  m_ConnectedAnchor: {x: 1.8409905, y: 1.840991}
+  m_ConnectedAnchor: {x: 1.8353332, y: -1.8353333}
   m_UseMotor: 0
   m_Motor:
     m_MotorSpeed: 0
@@ -97,11 +97,12 @@ GameObject:
   - component: {fileID: 4169959755556754193}
   - component: {fileID: 2078592497473213494}
   - component: {fileID: 5109745894126989199}
+  - component: {fileID: 365655710129729710}
   - component: {fileID: 7714380855386629308}
   - component: {fileID: 1539490215107436205}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: Hand
-  m_TagString: Hand
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -116,7 +117,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
+  m_LocalScale: {x: 0.8, y: 0.8, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5960837369491687015}
@@ -163,14 +164,14 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1459216879
-  m_SortingLayer: 4
-  m_SortingOrder: 2
-  m_Sprite: {fileID: -2413806693520163455, guid: 206b253bb408559478f15aa35d6de067, type: 3}
+  m_SortingLayer: 3
+  m_SortingOrder: 5
+  m_Sprite: {fileID: 21300000, guid: a419d3d9e315f5640b3b5e68dfc9548e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -188,7 +189,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
+  m_Mass: 0.25
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
@@ -202,7 +203,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 7
+  m_Constraints: 0
 --- !u!58 &5109745894126989199
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -238,6 +239,27 @@ CircleCollider2D:
   m_Offset: {x: 0.00000012665987, y: -0.0000009536743}
   serializedVersion: 2
   m_Radius: 0.5000001
+--- !u!95 &365655710129729710
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 901807678683312239}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 0d3446c85933cae41855e066955f2653, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &7714380855386629308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -275,9 +297,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3177501586532505210}
   - component: {fileID: 1641514067913899063}
-  m_Layer: 8
+  m_Layer: 10
   m_Name: HitDetector
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -304,7 +326,7 @@ CircleCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944180809922092391}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -331,7 +353,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.5
 --- !u!1 &5761473579383413176
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,7 +366,7 @@ GameObject:
   - component: {fileID: 7723612793110525328}
   m_Layer: 7
   m_Name: HoldDetector
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -11,18 +11,22 @@ public class DraggableBodyPart : MonoBehaviour
     [SerializeField]
     public float dragSpeed = 10f;
 
-    protected void Awake()
+    public bool lockedDrag;
+
+    protected virtual void Awake()
     {
-        _player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        _player = FindObjectOfType<Player>();
         _body = GetComponent<Rigidbody2D>();
+
+        lockedDrag = false;
     }
 
-    protected void OnMouseDown()
+    protected virtual void OnMouseDown()
     {
         _player.StartMovingBodyPart(_body);
     }
 
-    protected void OnMouseUp()
+    protected virtual void OnMouseUp()
     {
         _player.StopMovingBodyPart();
     }

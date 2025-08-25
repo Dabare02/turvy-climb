@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Hold
   - Hand
+  - GeneralManager
+  - LevelManager
+  - Radish
   layers:
   - Default
   - TransparentFX
@@ -13,13 +16,13 @@ TagManager:
   - 
   - Water
   - UI
-  - ArmSegment
+  - PlayerSecondary
   - BgElements
   - Character
   - NoCollision
-  - 
-  - 
-  - 
+  - Player
+  - PlayerEnemyPassthrough
+  - DeathZone
   - 
   - 
   - 
@@ -51,4 +54,7 @@ TagManager:
     locked: 0
   - name: Characters
     uniqueID: 1459216879
+    locked: 0
+  - name: Foreground
+    uniqueID: 2555784497
     locked: 0

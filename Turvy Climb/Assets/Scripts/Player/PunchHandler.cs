@@ -3,42 +3,39 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 // Se encarga específicamente de detectar enemigos cuando se hace un puñetazo y
 // determinar que hacer.
-public class PunchHandler : MonoBehaviour
+public class PunchHandler : SpecificAttackHandler
 {
-    [SerializeField] private CircleCollider2D hitDetector;
+    private Animator _anim;
 
-    private CircleCollider2D _handCollider;
-    [NonSerialized] public PlayerAttackTypeSO punchAttack;
-
-    public bool attackMode
+    public override bool attackMode
     {
-        get
-        {
-            return hitDetector.enabled;
-        }
+        get => base.attackMode;
         set
         {
-            hitDetector.enabled = value;
+            if (value) _anim.SetTrigger("CloseHand");
+            else _anim.SetTrigger("OpenHand");
+
+            base.attackMode = value;
         }
     }
 
     void Awake()
     {
-        _handCollider = GetComponent<CircleCollider2D>();
+        _anim = GetComponent<Animator>();
     }
 
     void OnTriggerEnter2D(Collider2D other)
     {
         Enemy enemy = other.GetComponent<Enemy>();
-        if (enemy != null && attackMode)
+        if (!other.isTrigger && enemy != null && attackMode)
         {
-            //Debug.Log("Enemy " + enemy.name + " detected!");
-            _handCollider.enabled = true;
+            EventManager.OnPunchSucceeded();
 
-            enemy.TakeDamage(punchAttack.attackDamage);
+            enemy.TakeDamage(attackData.damage, MoveEnum.Punch);
         }
     }
 }
