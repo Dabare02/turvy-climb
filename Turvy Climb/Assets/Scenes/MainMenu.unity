@@ -3609,7 +3609,11 @@ MonoBehaviour:
 
     - <u><link="https://toffeecraft.itch.io/ui-user-interface-pack-cozy-coffee">UI
     User Interface Pack - Cozy and Warm</link></u> y <u><link="https://toffeecraft.itch.io/ui-user-interface-pack-black-and-white">UI
-    User Interface Pack - Black and White (free buttons)</link></u> por ToffeeCraft.
+    User Interface Pack - Black and White (free buttons)</link></u>, por ToffeeCraft.
+
+    -
+    <u><link="https://andelrodis.itch.io/1-bit-game-ui-pack">1-bit Game UI Pack</link></u>,
+    por Batuhan.
 
 
 '
@@ -6911,7 +6915,16 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "Para algunos sprites en el juego, se ha utilizado una combinaci\xF3n de
+    ChatGPT y modelos ejecutados de localmente. Los modelos utilizados son:\n- <u><link=\"https://openai.com/index/introducing-4o-image-generation/\">GPT-4o</link></u>,
+    por OpenAI.\n- <u><link=\"https://huggingface.co/stabilityai/stable-diffusion-xl-base-1.0\">Stable
+    Diffusion XL</link></u> (SDXL), publicado bajo la licencia CreativeML Open RAIL++-M.\n-
+    [LORA] <u><link=\"https://civitai.com/models/120096/pixel-art-xl\">Pixel Art
+    XL v1.1 (PixelArtXL)</link></u>, por NeriJS.\n\nLos sprites generados con IA
+    son los siguientes, con los modelos usados entre par\xE9ntesis:\n- Sprites del
+    protagonista. (GPT-4o, SDXL, PixelArtXL)\n- Sprites de los enemigos \"crow\"
+    (GPT-4o) y \"claw\" (SDXL+PixelArtXL).\n- \n- Sprtes de los coleccionables \"barrita
+    energ\xE9tica\" y \"r\xE1bano\" (GPT-4o)."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f862c03e20ff4604988f28694c2cd83b, type: 2}
   m_sharedMaterial: {fileID: -3494311776465021636, guid: f862c03e20ff4604988f28694c2cd83b, type: 2}
