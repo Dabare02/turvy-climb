@@ -796,7 +796,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '- <u><link="https://qoupy.itch.io/qoupys-rock-ore-and-gem-nodes">Animated
+  m_text: '- <u><link="https://artisan-studio.itch.io/2d-pixel-art-semi-realistic-clouds">Pixel
+    Art Semi-Realistic Clouds</link></u>, por Artisan.
+
+    - <u><link="https://qoupy.itch.io/qoupys-rock-ore-and-gem-nodes">Animated
     2D Pixel Mining Resource Pack - Qoupy''s Rock, Ore and Gem Nodes</link></u> por
     Qoupy.
 
@@ -6924,7 +6927,8 @@ MonoBehaviour:
     son los siguientes, con los modelos usados entre par\xE9ntesis:\n- Sprites del
     protagonista. (GPT-4o, SDXL, PixelArtXL)\n- Sprites de los enemigos \"crow\"
     (GPT-4o) y \"claw\" (SDXL+PixelArtXL).\n- \n- Sprtes de los coleccionables \"barrita
-    energ\xE9tica\" y \"r\xE1bano\" (GPT-4o)."
+    energ\xE9tica\" y \"r\xE1bano\" (GPT-4o).\n\nTodos los dem\xE1s assets utilizados
+    y no mencionados en estos cr\xE9ditos han sido hechos por el creador del juego."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f862c03e20ff4604988f28694c2cd83b, type: 2}
   m_sharedMaterial: {fileID: -3494311776465021636, guid: f862c03e20ff4604988f28694c2cd83b, type: 2}
