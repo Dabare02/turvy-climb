@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level1TutorialPage4SO
   m_EditorClassIdentifier: 
   title: Aguante
-  previewImage: {fileID: 0}
+  previewImage: {fileID: 21300000, guid: 54ec9f642c69b4945a6c94695835c9ea, type: 3}
   description: "La barra a tu izquierda muestra tu nivel de aguante. Si llega a 0,
     caer\xE1s al vac\xEDo y perder\xE1s el nivel."

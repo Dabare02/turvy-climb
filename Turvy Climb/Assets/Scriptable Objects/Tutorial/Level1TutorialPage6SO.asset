@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Level1TutorialPage6SO
   m_EditorClassIdentifier: 
   title: Como ganar
-  previewImage: {fileID: 0}
+  previewImage: {fileID: 21300000, guid: cd1ca26125d993b439eddf571960ced9, type: 3}
   description: "La barra a tu derecha indica en que parte del nivel te encuentras.
     Llega a la cima de la monta\xF1a para ganar el nivel!"

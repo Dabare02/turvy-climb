@@ -28,6 +28,9 @@ public class GeneralManager : Singleton<GeneralManager>
 
     [Header("Otros")]
     public AudioClip menuSFX;
+
+    // DELETE BEFORE BUILD
+    private int imgNumber = 0;
     
 
     private bool paused = false;
@@ -93,7 +96,8 @@ public class GeneralManager : Singleton<GeneralManager>
         // DELETE BEFORE BUILD
         if (Input.GetKeyDown(KeyCode.Insert))
         {
-            ScreenCapture.CaptureScreenshot(Application.persistentDataPath + "/picture.png");
+            ScreenCapture.CaptureScreenshot(Application.persistentDataPath + "/picture" + imgNumber + ".png");
+            imgNumber++;
         }
     }
 

@@ -16,8 +16,8 @@ public class PunchHandler : SpecificAttackHandler
         get => base.attackMode;
         set
         {
-            //if (value) _anim.SetTrigger("CloseHand");
-            //else _anim.SetTrigger("OpenHand");
+            if (value) _anim.SetTrigger("CloseHand");
+            else _anim.SetTrigger("OpenHand");
 
             base.attackMode = value;
         }
