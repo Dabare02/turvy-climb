@@ -57,7 +57,7 @@ public class GeneralManager : Singleton<GeneralManager>
                 levels[i].stars = lvlSaveData.stars;
                 levels[i].radishesCollected = lvlSaveData.radishesCollected;
 
-                if (maxPlayerStamina < 0)
+                if (maxPlayerStamina < 0f)
                 {
                     maxPlayerStamina = 50;
                     break;
@@ -183,7 +183,6 @@ public class GeneralManager : Singleton<GeneralManager>
 
     public void ButtonPressedSFX()
     {
-        Debug.Log("POP!");
         audioManager.PlaySound(menuSFX);
     }
 }

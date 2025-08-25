@@ -395,7 +395,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tutorialMenu: {fileID: 1058974962}
   creditsMenu: {fileID: 648166395}
-  mainMenuTheme: {fileID: 0}
+  mainMenuTheme: {fileID: 8300000, guid: 051d95c459167ae4e8d1987f5ff457a3, type: 3}
 --- !u!1 &322126538
 GameObject:
   m_ObjectHideFlags: 0

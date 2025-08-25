@@ -1706,7 +1706,7 @@ MonoBehaviour:
   levelSelectContainer: {fileID: 1715971617}
   totalPlayedTimeTMP: {fileID: 377889660}
   radishesCollectedTMP: {fileID: 780769207}
-  levelSelectTheme: {fileID: 0}
+  levelSelectTheme: {fileID: 8300000, guid: 051d95c459167ae4e8d1987f5ff457a3, type: 3}
 --- !u!1 &1508625645
 GameObject:
   m_ObjectHideFlags: 0

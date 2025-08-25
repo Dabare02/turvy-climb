@@ -28,6 +28,15 @@ public class AudioManager : MonoBehaviour
         musicSource.Play();
     }
 
+    public void PlayMusicNoLoop(AudioClip clip)
+    {
+        if (musicSource.isPlaying && musicSource.clip == clip)
+            return; // do not restart the song if it is already playing
+        musicSource.clip = clip;
+        musicSource.loop = false;
+        musicSource.Play();
+    }
+
     public void StopMusic()
     {
         musicSource.Stop();

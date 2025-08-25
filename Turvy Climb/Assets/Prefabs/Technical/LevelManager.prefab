@@ -175,7 +175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   level: {fileID: 0}
-  levelMusic: {fileID: 8300000, guid: a309f6e6a3759a64d854ed27aa73eb1e, type: 3}
+  levelTheme: {fileID: 0}
+  victoryTheme: {fileID: 8300000, guid: 47ec2128bef756741a043ca3ef44b98e, type: 3}
   gameOverMenu: {fileID: 6056873305421745080}
   completionMenu: {fileID: 1421903590244601013}
   tutorialMenu: {fileID: 0}
@@ -184,6 +185,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  energyBarPrefab: {fileID: 4813139624530391537, guid: 6210f7f3160ca784a9d30e77191b86b6, type: 3}
 --- !u!114 &8660746188147244398
 MonoBehaviour:
   m_ObjectHideFlags: 0
