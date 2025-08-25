@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cea36a61eb19e514cb4ecc632ab3288c, type: 3}
   m_Name: STCostFirstGripHold
   m_EditorClassIdentifier: 
-  staminaCost: 1
+  staminaCost: 0.5
   isStaminaCostImmediate: 1
   staminaChangeSpeed: 0
   isStaminaChangeAtStart: 0
   isStaminaRegened: 1
+  isMaxStaminaIncreased: 0
+  maxStaminaIncreaseAmount: 0
