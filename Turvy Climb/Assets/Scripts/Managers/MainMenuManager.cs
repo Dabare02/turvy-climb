@@ -6,6 +6,7 @@ public class MainMenuManager : MonoBehaviour
 {
     [SerializeField] private GameObject tutorialMenu;
     [SerializeField] private GameObject creditsMenu;
+    [SerializeField] private GameObject optionsMenu;
     [SerializeField] private AudioClip mainMenuTheme;
 
     void Start()
@@ -41,5 +42,9 @@ public class MainMenuManager : MonoBehaviour
         tutorialMenu.SetActive(cond);
     }
 
-
+    public void OpenOptions(bool cond)
+    {
+        GeneralManager.Instance.ButtonPressedSFX();
+        optionsMenu.SetActive(cond);
+    }
 }
