@@ -6926,7 +6926,7 @@ MonoBehaviour:
     XL v1.1 (PixelArtXL)</link></u>, por NeriJS.\n\nLos sprites generados con IA
     son los siguientes, con los modelos usados entre par\xE9ntesis:\n- Sprites del
     protagonista. (GPT-4o, SDXL, PixelArtXL)\n- Sprites de los enemigos \"crow\"
-    (GPT-4o) y \"claw\" (SDXL+PixelArtXL).\n- \n- Sprtes de los coleccionables \"barrita
+    (GPT-4o) y \"claw\" (SDXL+PixelArtXL).\n- Sprites de los coleccionables \"barrita
     energ\xE9tica\" y \"r\xE1bano\" (GPT-4o).\n\nTodos los dem\xE1s assets utilizados
     y no mencionados en estos cr\xE9ditos han sido hechos por el creador del juego."
   m_isRightToLeft: 0
