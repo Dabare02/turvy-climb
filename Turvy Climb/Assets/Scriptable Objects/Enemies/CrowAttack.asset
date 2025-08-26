@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CrowAttack
   m_EditorClassIdentifier: 
   damage: 1
-  range: 0.8
+  range: 0.6
   finishDuration: 0
   cooldown: 1
   isWeaponAlwaysReady: 1

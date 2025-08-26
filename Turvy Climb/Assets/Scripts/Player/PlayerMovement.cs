@@ -63,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 newPos = mousePos;
 
-        if (draggedPart != null) {
+        if (draggedPart != null && !draggedPart.GetComponent<DraggableBodyPart>().lockedDrag) {
             // Se actualiza el centro del rango de movimiento.
             if (draggedPart.GetComponent<DraggableHand>() != null) _rangeCenterPos = _player.playerTorso.transform.position;
 

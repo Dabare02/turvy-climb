@@ -16,8 +16,6 @@ public abstract class Enemy : MonoBehaviour
     public EnemyDataSO enemyData;
     [SerializeField] protected EnemyWeapon weapon;
     [NonSerialized] public EnemyState state;
-    public AudioClip punchedSound;
-    public AudioClip slingshotedSound;
     protected int hitPoints;
     public bool isDead
     {
