@@ -29,7 +29,6 @@ public class GeneralManager : Singleton<GeneralManager>
     [Header("Otros")]
     public AudioClip menuSFX;
     
-
     private bool paused = false;
     public bool pause
     {
@@ -47,6 +46,8 @@ public class GeneralManager : Singleton<GeneralManager>
     public override void Awake()
     {
         base.Awake();
+
+        Application.targetFrameRate = 60;
         audioManager = GetComponent<AudioManager>();
 
         for (int i = 0; i < levels.Count; i++)
@@ -95,19 +96,48 @@ public class GeneralManager : Singleton<GeneralManager>
             waitSeconds = transitionTime;
         }
         yield return new WaitForSeconds(waitSeconds);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+        LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
-    public void LoadScene(BuildIndexes sceneIndex)
+    public void LoadScene(int sceneIndex)
     {
-        SceneManager.LoadScene((int)sceneIndex);
+        StartCoroutine(LoadSceneWithTiming(sceneIndex));
+    }
+
+    public IEnumerator LoadSceneWithTiming(int sceneIndex)
+    {
+        // Get old scene name
+        string currentSceneName = SceneManager.GetActiveScene().name;
+
+        // Start timing
+        float startTime = Time.realtimeSinceStartup;
+
+        // Start async load
+        AsyncOperation op = SceneManager.LoadSceneAsync(sceneIndex);
+
+        // Wait until load is complete
+        yield return op;
+        yield return new WaitForEndOfFrame();
+
+        // Stop timing
+        float endTime = Time.realtimeSinceStartup;
+        float duration = endTime - startTime;
+
+        // Get new scene name
+        string newSceneName = SceneManager.GetActiveScene().name;
+
+        TechnicalStats statsScr = GetComponent<TechnicalStats>();
+        if (statsScr != null)
+        {
+            statsScr.SceneLoadDone(currentSceneName, newSceneName, duration);
+        }
     }
 
     public void LoadLevel(BuildIndexes sceneIndex)
     {
         if (sceneIndex >= BuildIndexes.LevelOne)
         {
-            SceneManager.LoadScene((int)sceneIndex);
+            LoadScene((int)sceneIndex);
         }
         else
         {
@@ -137,13 +167,13 @@ public class GeneralManager : Singleton<GeneralManager>
     public void GoToMainMenu()
     {
         ButtonPressedSFX();
-        SceneManager.LoadScene((int)BuildIndexes.MainMenu);
+        LoadScene((int)BuildIndexes.MainMenu);
     }
 
     public void GoToLevelSelect()
     {
         ButtonPressedSFX();
-        SceneManager.LoadScene((int)BuildIndexes.LevelSelectMenu);
+        LoadScene((int)BuildIndexes.LevelSelectMenu);
     }
 
     public void Quit()
@@ -159,7 +189,7 @@ public class GeneralManager : Singleton<GeneralManager>
     public void RestartLevel()
     {
         ButtonPressedSFX();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     public int GetNumberOfLevels()
